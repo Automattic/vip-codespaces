@@ -3,7 +3,7 @@ name: Build Docker Image
 on:
   pull_request:
     branches:
-      - master
+      - trunk
   merge_group:
   workflow_dispatch:
 

@@ -1,0 +1,13 @@
+{
+    "id": "nginx",
+    "name": "nginx",
+    "version": "1.0.0",
+    "description": "Installs nginx into the Dev Environment",
+    "options": {
+        "mediaRedirectURL": {
+            "type": "string",
+            "description": "The URL to redirect for missing media files",
+            "default": ""
+        }
+    }
+}

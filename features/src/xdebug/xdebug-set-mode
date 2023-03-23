@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root" 1>&2
+    exit 1
+fi
+
+: "${PHP_INI_DIR:=/etc/php}"
+
+if [ -f "${PHP_INI_DIR}/conf.d/xdebug.ini" ]; then
+    mode="${1:-"debug,coverage"}"
+    sed -i "s/^xdebug\\.mode.*\$/xdebug.mode = ${mode}/" "${PHP_INI_DIR}/conf.d/xdebug.ini"
+    sv restart php-fpm
+    echo "xdebug.mode set to ${mode}"
+else
+    echo "Unable to find ${PHP_INI_DIR}/conf.d/xdebug.ini"
+    exit 1
+fi

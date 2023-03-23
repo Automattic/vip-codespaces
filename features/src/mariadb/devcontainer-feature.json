@@ -1,0 +1,13 @@
+{
+    "name": "MariaDB",
+    "id": "mariadb",
+    "version": "1.0.0",
+    "description": "Sets up MariaDB into the Dev Environment",
+    "options": {
+        "installDatabaseToWorkspaces": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set MariaDB data directory to /workspaces/mysql-data to persist data between container rebuilds (GHCS)"
+        }
+    }
+}

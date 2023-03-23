@@ -1,0 +1,17 @@
+{
+    "id": "phpmyadmin",
+    "name": "phpMyAdmin",
+    "version": "1.0.0",
+    "description": "Installs phpMyAdmin into the Dev Environment",
+    "options": {
+        "enabled": {
+            "description": "Enable phpMyAdmin",
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/php",
+        "ghcr.io/automattic/vip-codespaces/nginx"
+    ]
+}

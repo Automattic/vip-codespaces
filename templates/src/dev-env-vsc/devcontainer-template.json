@@ -1,0 +1,96 @@
+{
+    "id": "dev-env-vsc",
+    "name": "VIP Development Environment (VSCode/devcontainers)",
+    "version": "0.0.1",
+    "options": {
+        "mailhogEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Mailhog"
+        },
+        "memcachedEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable Memcached"
+        },
+        "phpVersion": {
+            "type": "string",
+            "enum": ["7.4", "8.0", "8.1", "8.2"],
+            "default": "8.0",
+            "description": "PHP version"
+        },
+        "wordpressVersion": {
+            "type": "string",
+            "default": "latest",
+            "proposals": ["latest", "nightly"],
+            "description": "WordPress version"
+        },
+        "wordpressDomain": {
+            "type": "string",
+            "default": "${localWorkspaceFolderBasename}.lndo.site",
+            "description": "WordPress domain"
+        },
+        "wordpressMultisite": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable WordPress Multisite"
+        },
+        "wordpressMultisiteStyle": {
+            "type": "string",
+            "enum": ["subdirectory", "subdomain"],
+            "default": "subdirectory",
+            "description": "WordPress Multisite style"
+        },
+        "wpcliNightly": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to install WP CLI nightly"
+        },
+        "xdebugEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable XDebug"
+        },
+        "xdebugMode": {
+            "type": "string",
+            "default": "debug",
+            "description": "XDebug mode",
+            "proposals": ["off", "develop", "coverage", "debug", "gcstats", "profile", "trace"]
+        },
+        "mcEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Midnight Commander"
+        },
+        "mediaRedirectURL": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to redirect for missing media files"
+        },
+        "vipCliEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable VIP CLI"
+        },
+        "pmaEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable phpMyAdmin"
+        },
+        "vipGoMuPluginsEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable VIP Go mu-plugins"
+        },
+        "vipGoMuPluginsKeepGit": {
+            "type": "boolean",
+            "default": false,
+            "description": "Do not remove .git for VIP Go mu-plugins"
+        },
+        "esEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Elasticsearch"
+        }
+    }
+}

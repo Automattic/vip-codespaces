@@ -1,0 +1,9 @@
+{
+    "id": "dev-tools",
+    "name": "Dev Tools",
+    "version": "1.0.0",
+    "description": "Installs Development tools into the Dev Environment",
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/vip-go-mu-plugins"
+    ]
+}

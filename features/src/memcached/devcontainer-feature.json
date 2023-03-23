@@ -1,0 +1,16 @@
+{
+    "name": "memcached",
+    "id": "memcached",
+    "version": "1.0.0",
+    "description": "Sets up memcached into the Dev Environment",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable memcached"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/wordpress"
+    ]
+}

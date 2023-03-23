@@ -1,0 +1,30 @@
+{
+    "name": "XDebug",
+    "id": "xdebug",
+    "version": "1.0.0",
+    "description": "Configures XDebug for the Dev Environment",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable XDebug feature"
+        },
+        "mode": {
+            "type": "string",
+            "default": "debug",
+            "description": "XDebug mode",
+            "proposals": [
+                "off",
+                "develop",
+                "coverage",
+                "debug",
+                "gcstats",
+                "profile",
+                "trace"
+            ]
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/php"
+    ]
+}

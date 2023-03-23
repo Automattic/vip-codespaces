@@ -1,0 +1,16 @@
+{
+    "id": "mailhog",
+    "name": "MailHog",
+    "description": "Sets up MailHog into the Dev Environment",
+    "version": "1.0.0",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable MailHog"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/php"
+    ]
+}

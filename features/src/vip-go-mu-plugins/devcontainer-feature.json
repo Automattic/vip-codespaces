@@ -1,0 +1,21 @@
+{
+    "id": "vip-go-mu-plugins",
+    "name": "VIP Go MU Plugins",
+    "version": "1.0.0",
+    "description": "Installs VIP Go MU Plugins into the Dev Environment",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to install VIP Go MU Plugins"
+        },
+        "retainGit": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to retain the .git directory"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/wordpress"
+    ]
+}

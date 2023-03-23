@@ -1,0 +1,4 @@
+#!/bin/sh
+
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+exec xdebug-set-mode off

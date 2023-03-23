@@ -1,0 +1,94 @@
+{
+    "name": "VIP Development Environment",
+    "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+    "overrideCommand": false,
+    "forwardPorts": [80, 81, 8025],
+    "portsAttributes": {
+        "80": {
+            "label": "Application",
+            "onAutoForward": "notify",
+            "elevateIfNeeded": true
+        },
+        "81": {
+            "label": "phpMyAdmin",
+            "onAutoForward": "notify",
+            "elevateIfNeeded": true
+        },
+        "8025": {
+            "label": "MailHog",
+            "onAutoForward": "notify"
+        },
+        "1025": {
+            "label": "MailHog SMTP",
+            "onAutoForward": "ignore"
+        },
+        "3306": {
+            "label": "MySQL",
+            "onAutoForward": "ignore"
+        },
+        "9000": {
+            "label": "php-fpm",
+            "onAutoForward": "ignore"
+        },
+        "9003": {
+            "label": "XDebug Client Port",
+            "onAutoForward": "notify"
+        }
+    },
+    "postCreateCommand": "/usr/local/bin/setup-wordpress.sh",
+    "features": {
+        // Mandatory features
+        "ghcr.io/automattic/vip-codespaces/nginx:latest": {
+            "mediaRedirectURL": "${templateOption:mediaRedirectURL}"
+        },
+        "ghcr.io/automattic/vip-codespaces/php:latest": {
+            "version": "${templateOption:phpVersion}",
+            "composer": true
+        },
+        "ghcr.io/automattic/vip-codespaces/mariadb:latest": {
+            "installDatabaseToWorkspaces": "${templateOption:persistMariaDBDatabases}"
+        },
+        "ghcr.io/automattic/vip-codespaces/wordpress:latest": {
+            "version": "${templateOption:wordpressVersion}",
+            "moveUploadsToWorkspaces": "${templateOption:persistWordPressUploads}",
+            "multisite": "${templateOption:wordpressMultisite}",
+            "multisiteStyle": "subdirectory"
+        },
+        "ghcr.io/automattic/vip-codespaces/wp-cli:latest": {
+            "nightly": "${templateOption:wpcliNightly}"
+        },
+        "ghcr.io/automattic/vip-codespaces/vip-go-mu-plugins:latest": {
+            "enabled": true,
+            "retainGit": false
+        },
+        "ghcr.io/automattic/vip-codespaces/dev-tools:latest": {},
+        // Elasticsearch
+        "ghcr.io/automattic/vip-codespaces/elasticsearch:latest": {
+            "enabled": "${templateOption:esEnabled}",
+            "installDataToWorkspaces": "${templateOption:esPersistData}"
+        },
+        // Recommended features
+        "ghcr.io/automattic/vip-codespaces/memcached:latest": {
+            "enabled": "${templateOption:memcachedEnabled}"
+        },
+        "ghcr.io/automattic/vip-codespaces/vip-cli:latest": {
+            "enabled": "${templateOption:vipCliEnabled}"
+        },
+        // Tools
+        "ghcr.io/automattic/vip-codespaces/mailhog:latest": {
+            "enabled": "${templateOption:mailhogEnabled}"
+        },
+        "ghcr.io/automattic/vip-codespaces/phpmyadmin:latest": {
+            "enabled": "${templateOption:pmaEnabled}"
+        },
+        // Debugging
+        "ghcr.io/automattic/vip-codespaces/xdebug:latest": {
+            "enabled": "${templateOption:xdebugEnabled}",
+            "mode": "${templateOption:xdebugMode}"
+        },
+        // Misc
+        "ghcr.io/automattic/vip-codespaces/mc:latest": {
+            "enabled": "${templateOption:mcEnabled}"
+        }
+    }
+}

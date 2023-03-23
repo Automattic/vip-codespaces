@@ -1,0 +1,13 @@
+{
+    "id": "mc",
+    "name": "Midnight Commander",
+    "description": "Installs Midnight Commander into the Dev Environment",
+    "version": "1.0.0",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install Midnight Commander"
+        }
+    }
+}

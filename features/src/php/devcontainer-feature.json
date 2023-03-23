@@ -1,0 +1,23 @@
+{
+    "id": "php",
+    "name": "PHP",
+    "description": "Installs PHP into the Dev Environment",
+    "version": "1.0.0",
+    "containerEnv": {
+        "PHP_INI_DIR": "/etc/php",
+        "COMPOSER_ALLOW_SUPERUSER": "1"
+    },
+    "options": {
+        "version": {
+            "type": "string",
+            "enum": ["7.4", "8.0", "8.1", "8.2"],
+            "default": "8.0",
+            "description": "PHP version"
+        },
+        "composer": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to install Composer"
+        }
+    }
+}

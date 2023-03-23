@@ -1,0 +1,90 @@
+{
+    "id": "dev-env-ghcs",
+    "name": "VIP Development Environment",
+    "version": "0.0.1",
+    "options": {
+        "mailhogEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Mailhog"
+        },
+        "memcachedEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable Memcached"
+        },
+        "phpVersion": {
+            "type": "string",
+            "enum": ["7.4", "8.0", "8.1", "8.2"],
+            "default": "8.0",
+            "description": "PHP version"
+        },
+        "wordpressVersion": {
+            "type": "string",
+            "default": "latest",
+            "proposals": ["latest", "nightly"],
+            "description": "WordPress version"
+        },
+        "wordpressMultisite": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable WordPress Multisite"
+        },
+        "persistWordPressUploads": {
+            "type": "boolean",
+            "default": true,
+            "description": "Persist WordPress uploads between container rebuilds"
+        },
+        "wpcliNightly": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to install WP CLI nightly"
+        },
+        "xdebugEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable XDebug"
+        },
+        "xdebugMode": {
+            "type": "string",
+            "default": "debug",
+            "description": "XDebug mode",
+            "proposals": ["off", "develop", "coverage", "debug", "gcstats", "profile", "trace"]
+        },
+        "persistMariaDBDatabases": {
+            "type": "boolean",
+            "default": true,
+            "description": "Persist databases between container rebuilds"
+        },
+        "mcEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Midnight Commander"
+        },
+        "mediaRedirectURL": {
+            "type": "string",
+            "default": "",
+            "description": "The URL to redirect for missing media files"
+        },
+        "vipCliEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable VIP CLI"
+        },
+        "pmaEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable phpMyAdmin"
+        },
+        "esEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Elasticsearch"
+        },
+        "esPersistData": {
+            "type": "boolean",
+            "default": true,
+            "description": "Persist Elasticsearch data between container rebuilds"
+        }
+    }
+}

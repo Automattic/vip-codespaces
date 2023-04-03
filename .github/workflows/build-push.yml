@@ -25,7 +25,7 @@ jobs:
             image-name: alpine-base
             image-version-major: 1
             image-version-minor: 0
-            image-version-patch: 0
+            image-version-patch: 1
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3

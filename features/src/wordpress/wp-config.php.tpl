@@ -3,7 +3,7 @@
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'wordpress' );
 define( 'DB_PASSWORD', 'wordpress' );
-define( 'DB_HOST', '%DB_HOST%' );
+define( 'DB_HOST', '127.0.0.1' );
 
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
@@ -30,3 +30,5 @@ if ( ! defined( 'WP_DEBUG_DISPLAY' ) ) {
 }
 
 require( __DIR__ . '/wp-config-defaults.php' );
+
+/* That's all, stop editing! Happy blogging. */

@@ -53,18 +53,23 @@ else
     sudo install -d -o "${MY_UID}" -g "${MY_GID}" -m 0755 /wp/wp-content/uploads
 fi
 
-MY_UID="$(id -u)"
-MY_GID="$(id -g)"
-sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config
+sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config /wp/logs
 
-sed -e "s/%DB_HOST%/${db_host}/" /usr/share/wordpress/wp-config.php.tpl > /wp/config/wp-config.php
+cp -f /usr/share/wordpress/wp-config.php.tpl /wp/config/wp-config.php
 if [ -n "${multisite_domain}" ]; then
-    sed -e "s/%DOMAIN%/${multisite_domain}/" /usr/share/wordpress/wp-config-multisite.php.tpl >> /wp/config/wp-config.php
+    wp config set WP_ALLOW_MULTISITE true --raw  --config-file=/wp/config/wp-config.php
+    wp config set MULTISITE true --raw  --config-file=/wp/config/wp-config.php
+    wp config set DOMAIN_CURRENT_SITE "${multisite_domain}"  --config-file=/wp/config/wp-config.php
+    wp config set PATH_CURRENT_SITE /  --config-file=/wp/config/wp-config.php
+    wp config set SITE_ID_CURRENT_SITE 1 --raw  --config-file=/wp/config/wp-config.php
+    wp config set BLOG_ID_CURRENT_SITE 1 --raw  --config-file=/wp/config/wp-config.php
     if [ "${multisite_type}" != "subdomain" ]; then
-        sed -i "s/define( 'SUBDOMAIN_INSTALL', true );/define( 'SUBDOMAIN_INSTALL', false );/" /wp/config/wp-config.php
+        wp config set SUBDOMAIN_INSTALL false --raw --config-file=/wp/config/wp-config.php
+    else
+        wp config set SUBDOMAIN_INSTALL true --raw --config-file=/wp/config/wp-config.php
     fi
 fi
-curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> /wp/config/wp-config.php
+wp config shuffle-salts --config-file=/wp/config/wp-config.php
 
 echo "Waiting for MySQL to come online..."
 second=0
@@ -88,10 +93,7 @@ if ! mysql -h "${db_host}" -u wordpress -pwordpress wordpress -e "SELECT 'testin
 fi
 
 echo "Checking for WordPress installation..."
-site_exist_check_output="$(wp option get siteurl 2>&1)"
-site_exist_return_value=$?
-
-if echo "$site_exist_check_output" | grep -Eq "(Site .* not found)|(The site you have requested is not installed)"; then
+if ! wp core is-installed >/dev/null 2>&1; then
     echo "No installation found, installing WordPress..."
 
     wp db clean --yes 2> /dev/null
@@ -137,9 +139,6 @@ if echo "$site_exist_check_output" | grep -Eq "(Site .* not found)|(The site you
 
         wp vip-search index --skip-confirm --setup
     fi
-elif [ "$site_exist_return_value" != 0 ] ; then
-    echo "ERROR: Could not find out if site exists."
-    echo "$site_exist_check_output"
 else
     echo "WordPress already installed"
 fi

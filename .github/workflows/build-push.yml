@@ -40,8 +40,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: https://ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: wpcomvip-bot
+          password: ${{ secrets.WPCOM_VIP_BOT_TOKEN }}
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
@@ -74,8 +74,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: https://ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: wpcomvip-bot
+          password: ${{ secrets.WPCOM_VIP_BOT_TOKEN }}
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
@@ -100,8 +100,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: https://ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: wpcomvip-bot
+          password: ${{ secrets.WPCOM_VIP_BOT_TOKEN }}
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli

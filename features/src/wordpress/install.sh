@@ -32,7 +32,7 @@ else
 fi
 
 install -m 0755 -o root -g root setup-wordpress.sh /usr/local/bin/setup-wordpress.sh
-install -m 0644 -o root -g root wp-config.php.tpl wp-config-multisite.php.tpl /usr/share/wordpress/
+install -m 0644 -o root -g root wp-config.php.tpl /usr/share/wordpress/
 
 WP_DOMAIN="${DOMAIN:-localhost}"
 if [ "${MULTISITE}" != 'true' ]; then

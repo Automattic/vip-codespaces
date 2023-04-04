@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - trunk
+      - test
   workflow_dispatch:
 
 permissions:
@@ -81,7 +82,7 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Publish features
-        run: devcontainer features publish features/src --namespace "${{ github.repository }}"
+        run: devcontainer features publish features/src --namespace "${{ github.repository }}" --log-level trace --registry ghcr.io
 
   publish-templates:
     name: Publish templates

@@ -1,0 +1,22 @@
+name: ShellCheck
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: Lint with shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3.5.0
+
+      - name: Add error matcher
+        run: echo "::add-matcher::$(pwd)/.github/problem-matcher-gcc.json"
+
+      - name: Run shellcheck
+        run: shellcheck -o all -s sh -f gcc $(find . -path ./.git -prune -o -type f -executable -print)

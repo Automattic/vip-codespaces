@@ -2,7 +2,7 @@
     "id": "mailhog",
     "name": "MailHog",
     "description": "Sets up MailHog into the Dev Environment",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "options": {
         "enabled": {
             "type": "boolean",

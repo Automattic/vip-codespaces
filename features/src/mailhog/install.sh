@@ -18,14 +18,17 @@ fi
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing MailHog...'
 
-    if [ "$(arch)" = "arm64" ]; then
-        wget -q https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_arm -O /usr/local/bin/mailhog
-    elif [ "$(arch)" = "x86_64" ]; then
-        wget -q https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64 -O /usr/local/bin/mailhog
+    ARCH="$(arch)"
+    if [ "${ARCH}" = "arm64" ] || [ "${ARCH}" = "aarch64" ]; then
+        ARCH="arm"
+    elif [ "${ARCH}" = "x86_64" ] || [ "${ARCH}" = "amd64" ]; then
+        ARCH="amd64"
     else
-        echo "(!) Unsupported architecture: $(arch)"
+        echo "(!) Unsupported architecture: ${ARCH}"
         exit 1
     fi
+
+    wget -q "https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_${ARCH}" -O /usr/local/bin/mailhog
 
     : "${PHP_INI_DIR:=/etc/php}":
 

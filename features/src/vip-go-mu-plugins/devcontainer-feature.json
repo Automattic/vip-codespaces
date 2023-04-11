@@ -1,7 +1,7 @@
 {
     "id": "vip-go-mu-plugins",
     "name": "VIP Go MU Plugins",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs VIP Go MU Plugins into the Dev Environment",
     "options": {
         "enabled": {

@@ -6,10 +6,13 @@ PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 ES_VERSION="7.17.2"
 ES_TARBALL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}-no-jdk-linux-x86_64.tar.gz"
 
-if [ "$(id -u)" -ne 0 ]; then
+if [ "$(id -u || true)" -ne 0 ]; then
     echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
     exit 1
 fi
+
+: "${ENABLED:?}"
+: "${INSTALLDATATOWORKSPACES:?}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Elasticsearch...'

@@ -1,7 +1,7 @@
 {
     "name": "MariaDB",
     "id": "mariadb",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Sets up MariaDB into the Dev Environment",
     "options": {
         "installDatabaseToWorkspaces": {

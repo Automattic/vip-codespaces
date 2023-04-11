@@ -1,7 +1,7 @@
 {
     "id": "nginx",
     "name": "nginx",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs nginx into the Dev Environment",
     "options": {
         "mediaRedirectURL": {

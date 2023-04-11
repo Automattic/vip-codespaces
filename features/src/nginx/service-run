@@ -11,9 +11,8 @@ fi
 
 : "${NGINX_USER:=nginx}"
 
-COMMAND=/usr/sbin/nginx
 PID_FILE=/run/nginx/nginx.pid
 
 /usr/bin/install -d -o "${NGINX_USER}" -g "${NGINX_USER}" "${PID_FILE%/*}" /var/log/nginx
 /usr/bin/install -d -o "${NGINX_USER}" -g "${NGINX_USER}" -m 0750 /var/lib/nginx
-exec ${COMMAND} -c /etc/nginx/nginx.conf -g "pid $PID_FILE; daemon off;"
+exec /usr/sbin/nginx -c /etc/nginx/nginx.conf -g "pid ${PID_FILE}; daemon off;"

@@ -78,7 +78,7 @@ jobs:
           password: ${{ secrets.WPCOM_VIP_BOT_TOKEN }}
 
       - name: Install @devcontainers/cli
-        run: npm install -g @devcontainers/cli@0.35.0
+        run: npm install -g @devcontainers/cli
 
       - name: Publish features
         run: devcontainer features publish features/src --namespace "${{ github.repository }}"
@@ -104,7 +104,7 @@ jobs:
           password: ${{ secrets.WPCOM_VIP_BOT_TOKEN }}
 
       - name: Install @devcontainers/cli
-        run: npm install -g @devcontainers/cli@0.35.0
+        run: npm install -g @devcontainers/cli
 
       - name: Publish templates
         run: devcontainer templates publish templates/src --namespace "${{ github.repository }}"

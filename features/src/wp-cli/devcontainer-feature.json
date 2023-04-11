@@ -1,7 +1,7 @@
 {
     "id": "wp-cli",
     "name": "WP CLI",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Sets up wp-cli into the Dev Environment",
     "containerEnv": {
         "WP_CLI_ALLOW_ROOT": "1"

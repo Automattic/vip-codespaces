@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "containerEnv": {
         "PHP_INI_DIR": "/etc/php",
         "COMPOSER_ALLOW_SUPERUSER": "1"

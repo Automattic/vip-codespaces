@@ -280,10 +280,13 @@ setup_php82() {
     true
 }
 
-if [ "$(id -u)" -ne 0 ]; then
+if [ "$(id -u || true)" -ne 0 ]; then
     echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
     exit 1
 fi
+
+: "${VERSION:?}"
+: "${COMPOSER:=}"
 
 echo "(*) Installing PHP ${VERSION}..."
 case "${VERSION}" in
@@ -346,7 +349,7 @@ ln -sf /etc/sv/php-fpm /etc/service/php-fpm
 if [ "${COMPOSER}" = "true" ]; then
     wget -q https://getcomposer.org/installer -O composer-setup.php
     HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
-    php -r "if (hash_file('sha384', 'composer-setup.php') === '$HASH') { echo 'Installer verified', PHP_EOL; } else { echo 'Installer corrupt', PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '${HASH}') { echo 'Installer verified', PHP_EOL; } else { echo 'Installer corrupt', PHP_EOL; unlink('composer-setup.php'); exit(1); }"
     php composer-setup.php --install-dir="/usr/local/bin" --filename=composer
     rm -f composer-setup.php
 fi

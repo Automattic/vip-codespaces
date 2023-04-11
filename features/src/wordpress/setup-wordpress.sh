@@ -97,7 +97,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
     echo "No installation found, installing WordPress..."
 
     wp db clean --yes 2> /dev/null
-    if [ -n "$multisite_domain" ]; then
+    if [ -n "${multisite_domain}" ]; then
         if [ "${multisite_type}" = "subdomain" ]; then
             type="--subdomains"
         else
@@ -113,7 +113,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
             --skip-email \
             --skip-plugins \
             --skip-themes \
-            ${type} \
+            "${type}" \
             --skip-config
     else
         wp core install \

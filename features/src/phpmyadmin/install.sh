@@ -4,10 +4,12 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
-if [ "$(id -u)" -ne 0 ]; then
+if [ "$(id -u || true)" -ne 0 ]; then
     echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
     exit 1
 fi
+
+: "${ENABLED:=}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing phpMyAdmin...'
@@ -29,7 +31,7 @@ if [ "${ENABLED}" = "true" ]; then
 
     homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
     echo "echo \"phpMyAdmin username: vipgo\"" >> "${homedir}/.bashrc"
-    echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password)\"" >> "${homedir}/.bashrc"
+    echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password || true)\"" >> "${homedir}/.bashrc"
 
     install -m 0640 nginx-phpmyadmin.conf /etc/nginx/http.d/phpmyadmin.conf
     install -d -m 0777 -o "${WEB_USER}" -g "${WEB_USER}" /usr/share/webapps/phpmyadmin/tmp

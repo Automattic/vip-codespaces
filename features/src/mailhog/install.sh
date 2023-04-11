@@ -18,6 +18,11 @@ fi
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing MailHog...'
 
+    if [ -f /usr/local/bin/mailpit ]; then
+        echo '(!) MailHog cannot be installed along with Mailpit.'
+        exit 1
+    fi
+
     ARCH="$(arch)"
     if [ "${ARCH}" = "arm64" ] || [ "${ARCH}" = "aarch64" ]; then
         ARCH="arm"

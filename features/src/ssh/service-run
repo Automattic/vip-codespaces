@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -eu
+exec 2>&1
+
+if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+    ssh-keygen -q -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa -b 3072
+fi
+
+exec /usr/sbin/sshd

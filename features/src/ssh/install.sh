@@ -19,9 +19,5 @@ if [ "${ENABLED:-}" = "true" ]; then
     install -D -m 0755 -o root -g root service-run /etc/sv/openssh/run
     ln -sf /etc/sv/openssh /etc/service/openssh
 
-    if [ -n "${_REMOTE_USER}" ]; then
-        echo "${_REMOTE_USER}:${_REMOTE_USER}" | chpasswd
-    fi
-
     echo 'Done!'
 fi

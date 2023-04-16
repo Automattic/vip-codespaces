@@ -13,6 +13,7 @@ if [ "${ENABLED:-}" = "true" ]; then
     echo '(*) Installing OpenSSH server...'
 
     apk add --no-cache openssh-server
+    rm -f /etc/conf.d/sshd /etc/init.d/sshd
     install -D -d -m 0555 -o root -g root /var/empty
     install -d -m 0755 -o root -g root /etc/service
     install -D -m 0755 -o root -g root service-run /etc/sv/openssh/run

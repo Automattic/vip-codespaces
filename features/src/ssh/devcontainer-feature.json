@@ -2,7 +2,7 @@
     "id": "ssh",
     "name": "SSH",
     "description": "Sets up SSH into the Dev Environment",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "options": {
         "enabled": {
             "type": "boolean",

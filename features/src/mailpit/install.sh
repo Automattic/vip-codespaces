@@ -18,7 +18,7 @@ fi
 : "${ENABLED:=}"
 
 if [ "${ENABLED}" = "true" ]; then
-    echo '(*) Installing MailHog...'
+    echo '(*) Installing Mailpit...'
 
     if [ -f /usr/local/bin/mailhog ]; then
         echo '(!) Mailpit cannot be installed along with MailHog.'
@@ -37,11 +37,13 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     mkdir -p /tmp/mailpit
-    cd /tmp/mailpit
-    wget -q "https://github.com/axllent/mailpit/releases/download/${LATEST}/mailpit-linux-${ARCH}.tar.gz" -O - | tar -xz
-    install -m 0755 -o root -g root mailpit /usr/local/bin/mailpit
-    cd ..
-    rm -rf /tmp/mailpit
+    ( \
+        cd /tmp/mailpit && \
+        wget -q "https://github.com/axllent/mailpit/releases/download/${LATEST}/mailpit-linux-${ARCH}.tar.gz" -O - | tar -xz && \
+        install -m 0755 -o root -g root mailpit /usr/local/bin/mailpit && \
+        cd .. && \
+        rm -rf /tmp/mailpit \
+    )
 
     : "${PHP_INI_DIR:=/etc/php}":
 

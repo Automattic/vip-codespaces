@@ -7,7 +7,7 @@
         "enabled": {
             "type": "boolean",
             "default": true,
-            "description": "Enable Mailpit"
+            "description": "Enable OpenSSH"
         }
     }
 }

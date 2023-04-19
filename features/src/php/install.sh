@@ -100,6 +100,7 @@ setup_php80() {
         php8-intl@edget \
         php8-json@edget \
         php8-mbstring@edget \
+        php8-pecl-igbinary@edget \
         php8-pecl-mcrypt@edget \
         php8-pecl-memcache@edget \
         php8-pecl-memcached@edget \
@@ -140,6 +141,10 @@ setup_php80() {
 }
 
 setup_php81() {
+    if ! grep -Eq '^@edgec' /etc/apk/repositories; then
+        echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+    fi
+
     if ! grep -Eq '^@edget' /etc/apk/repositories; then
         echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
     fi
@@ -162,6 +167,7 @@ setup_php81() {
         php81-intl \
         php81-json \
         php81-mbstring \
+        php81-pecl-igbinary@edgec \
         php81-pecl-mcrypt@edget \
         php81-pecl-memcache \
         php81-pecl-memcached \
@@ -234,8 +240,10 @@ setup_php82() {
         php82-iconv@edgec \
         php82-intl@edgec \
         php82-mbstring@edgec \
+        php82-pecl-igbinary@edgec \
         php82-pecl-memcache@edget \
         php82-pecl-memcached@edgec \
+        php82-pecl-mcrypt@edget \
         php82-mysqli@edgec \
         php82-mysqlnd@edgec \
         php82-opcache@edgec \
@@ -261,7 +269,7 @@ setup_php82() {
         php82-xmlwriter@edgec \
         php82-zip@edgec
 
-    # Missing: php82-pecl-ssh2, php82-pecl-mcrypt
+    # Missing: php82-pecl-ssh2
 
     apk add --no-cache php82-dev@edgec gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
     pecl82 channel-update pecl.php.net

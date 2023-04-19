@@ -4,72 +4,6 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
-setup_php74() {
-    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
-        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
-    apk add --no-cache \
-        libssl3@edgem icu-libs@edgem icu-data-full@edgem ghostscript \
-        php7@edget php7-fpm@edget php7-pear@edget \
-        php7-pecl-apcu@edget \
-        php7-bcmath@edget \
-        php7-calendar@edget \
-        php7-ctype@edget \
-        php7-curl@edget \
-        php7-dom@edget \
-        php7-exif@edget \
-        php7-fileinfo@edget \
-        php7-ftp@edget \
-        php7-gd@edget \
-        php7-pecl-gmagick@edget \
-        php7-gmp@edget \
-        php7-iconv@edget \
-        php7-intl@edget \
-        php7-json@edget \
-        php7-mbstring@edget \
-        php7-pecl-mcrypt@edget \
-        php7-pecl-memcache@edget \
-        php7-pecl-memcached@edget \
-        php7-mysqli@edget \
-        php7-mysqlnd@edget \
-        php7-opcache@edget \
-        php7-openssl@edget \
-        php7-pcntl@edget \
-        php7-pdo@edget \
-        php7-pdo_sqlite@edget \
-        php7-phar@edget \
-        php7-posix@edget \
-        php7-session@edget \
-        php7-shmop@edget \
-        php7-simplexml@edget \
-        php7-soap@edget \
-        php7-sockets@edget \
-        php7-sodium@edget \
-        php7-sqlite3@edget \
-        php7-pecl-ssh2@edget \
-        php7-sysvsem@edget \
-        php7-sysvshm@edget \
-        php7-pecl-timezonedb@edget \
-        php7-tokenizer@edget \
-        php7-xml@edget \
-        php7-xmlreader@edget \
-        php7-xmlwriter@edget \
-        php7-zip@edget
-
-    ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
-    ln -s /usr/bin/php7 /usr/bin/php
-    ln -s /usr/bin/pecl7 /usr/bin/pecl
-    ln -s /usr/bin/pear7 /usr/bin/pear
-    ln -s /usr/bin/peardev7 /usr/bin/peardev
-    ln -s /usr/bin/phar7 /usr/bin/phar
-    ln -s /usr/bin/phar7.phar /usr/bin/phar.phar
-}
-
 setup_php80() {
     if ! grep -Eq '^@edgem' /etc/apk/repositories; then
         echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
@@ -298,13 +232,6 @@ fi
 
 echo "(*) Installing PHP ${VERSION}..."
 case "${VERSION}" in
-    "7.4")
-        setup_php74
-        PHP_INI_DIR=/etc/php7
-        echo "export PHP_INI_DIR=/etc/php7" > /etc/profile.d/php_ini_dir.sh
-        ln -sf /etc/php7 /etc/php
-    ;;
-
     "8.0")
         setup_php80
         echo "export PHP_INI_DIR=/etc/php8" > /etc/profile.d/php_ini_dir.sh

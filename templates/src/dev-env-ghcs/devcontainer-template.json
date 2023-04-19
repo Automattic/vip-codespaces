@@ -15,7 +15,7 @@
         },
         "phpVersion": {
             "type": "string",
-            "enum": ["7.4", "8.0", "8.1", "8.2"],
+            "enum": ["8.0", "8.1", "8.2"],
             "default": "8.0",
             "description": "PHP version"
         },

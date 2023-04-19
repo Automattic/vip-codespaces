@@ -1,18 +1,18 @@
 {
-    "name": "XDebug",
+    "name": "Xdebug",
     "id": "xdebug",
-    "version": "1.0.1",
-    "description": "Configures XDebug for the Dev Environment",
+    "version": "1.0.2",
+    "description": "Configures Xdebug for the Dev Environment",
     "options": {
         "enabled": {
             "type": "boolean",
             "default": false,
-            "description": "Enable XDebug feature"
+            "description": "Enable Xdebug feature"
         },
         "mode": {
             "type": "string",
             "default": "debug",
-            "description": "XDebug mode",
+            "description": "Xdebug mode",
             "proposals": [
                 "off",
                 "develop",

@@ -4,14 +4,6 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
-xdebug_74() {
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
-    apk add --no-cache --force-overwrite php7-pecl-xdebug@edget
-}
-
 xdebug_80() {
     if ! grep -Eq '^@edget' /etc/apk/repositories; then
         echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
@@ -54,9 +46,7 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     if [ ! -f /etc/dev-env-features/php ]; then
-        if apk list --installed php7 2>/dev/null; then
-            version="7.4"
-        elif apk list --installed php8 2>/dev/null; then
+        if apk list --installed php8 2>/dev/null; then
             version="8.0"
         elif apk list --installed php81 2>/dev/null; then
             version="8.1"
@@ -71,9 +61,6 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     case "${version}" in
-        7.4)
-            xdebug_74
-        ;;
         8.0)
             xdebug_80
         ;;

@@ -32,7 +32,7 @@ fi
 : "${ENABLED:=}"
 
 if [ "${ENABLED}" = "true" ]; then
-    echo '(*) Installing XDebug...'
+    echo '(*) Installing Xdebug...'
     : MODE="${MODE:-debug}"
     if [ -f /etc/profile.d/php_ini_dir.sh ]; then
         # shellcheck source=/dev/null

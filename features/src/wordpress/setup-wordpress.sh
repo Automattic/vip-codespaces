@@ -1,5 +1,8 @@
 #!/bin/sh
 
+XDEBUG_MODE=off
+export XDEBUG_MODE
+
 if [ -f /etc/conf.d/wordpress ]; then
     # shellcheck source=/dev/null
     . /etc/conf.d/wordpress

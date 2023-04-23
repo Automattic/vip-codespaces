@@ -13,7 +13,11 @@ fi
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
-    apk add --no-cache nodejs npm
+    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
+        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+    fi
+
+    apk add --no-cache nodejs npm || apk add --no-cache nodejs@edgem npm@edgem
     npm i -g @automattic/vip
     echo 'Done!'
 fi

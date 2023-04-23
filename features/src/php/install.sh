@@ -149,6 +149,10 @@ setup_php81() {
 }
 
 setup_php82() {
+    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
+        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+    fi
+
     if ! grep -Eq '^@edgec' /etc/apk/repositories; then
         echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
     fi
@@ -158,7 +162,7 @@ setup_php82() {
     fi
 
     apk add --no-cache \
-        icu-data-full ghostscript \
+        icu-data-full icu-libs@edgem ghostscript \
         php82@edgec php82-fpm@edgec php82-pear@edgec \
         php82-pecl-apcu@edgec \
         php82-bcmath@edgec \

@@ -20,7 +20,7 @@ if [ "${ENABLED}" = "true" ]; then
         PHP_USER="${_REMOTE_USER}"
     fi
 
-    apk add --no-cache php8-pecl-memcache php8-pecl-memcached memcached
+    apk add --no-cache memcached
     install -D -m 0755 -o root -g root service-run /etc/sv/memcached/run
     install -d -m 0755 -o root -g root /etc/service
     install -d -m 0755 -o "${PHP_USER}" -g "${PHP_USER}" /wp

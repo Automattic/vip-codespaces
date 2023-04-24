@@ -10,8 +10,22 @@ permissions:
   contents: read
 
 jobs:
-  publish-base-image:
-    name: 'Publish image: ${{ matrix.image.image-name }}'
+  prepare:
+    name: Prepare list of images to build
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.set-matrix.outputs.images }}
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set matrix
+        id: set-matrix
+        run: echo images="$(jq '."x-build"' images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
+
+  publish-images:
+    needs: prepare
+    name: 'Publish ${{ matrix.image.name }}'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -19,35 +33,70 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image:
-          - name: Alpine Base
-            workspace-folder: images/src/alpine-base
-            image-name: alpine-base
-            image-version-major: 1
-            image-version-minor: 0
-            image-version-patch: 1
+        image: ${{ fromJson(needs.prepare.outputs.images) }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            base="${{ github.event.before }}"
+            head="${{ github.event.after }}"
+            image="images/src/${{ matrix.image.image-name }}"
+            changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+            if [ -n "${changes}" ]; then
+              echo needs_build=true >> "${GITHUB_OUTPUT}"
+            else
+              echo needs_build=false >> "${GITHUB_OUTPUT}"
+            fi
+          else
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          fi
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v2
+        if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repository name
+        run: echo "REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> "${GITHUB_ENV}"
+  
+      - name: Set versions
+        if: steps.changes.outputs.needs_build == 'true'
+        id: set-versions
+        run: |
+          echo major="$(echo "${{ matrix.image.image-version }}" | cut -d. -f1)" >> "${GITHUB_OUTPUT}"
+          echo minor="$(echo "${{ matrix.image.image-version }}" | cut -d. -f2)" >> "${GITHUB_OUTPUT}"
+          echo patch="$(echo "${{ matrix.image.image-version }}" | cut -d. -f3)" >> "${GITHUB_OUTPUT}"
+
+      - name: Check if image already exists
+        if: steps.changes.outputs.needs_build == 'true'
+        id: exists
+        run: |
+          if docker buildx imagetools inspect "ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }}.${{ steps.set-versions.outputs.patch }}" > /dev/null 2>&1; then
+            echo exists=true >> "${GITHUB_OUTPUT}"
+          else
+            echo exists=false >> "${GITHUB_OUTPUT}"
+          fi
+  
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
-
-      - name: Lowercase repository name
-        run: echo "REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
 
       - name: Build image
         run: |
@@ -59,6 +108,7 @@ jobs:
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ matrix.image.image-version-major }} \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:latest \
             --push
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
 
   publish-features:
     name: Publish features
@@ -69,6 +119,25 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            base="${{ github.event.before }}"
+            head="${{ github.event.after }}"
+            path="features/src"
+            changes="$(git diff --name-only "${base}" "${head}" -- "${path}" | grep -Fv "/README.md" || true)"
+            if [ -n "${changes}" ]; then
+              echo needs_build=true >> "${GITHUB_OUTPUT}"
+            else
+              echo needs_build=false >> "${GITHUB_OUTPUT}"
+            fi
+          else
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          fi
 
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v2
@@ -76,35 +145,57 @@ jobs:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
           password: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Publish features
         run: devcontainer features publish features/src --namespace "${{ github.repository }}"
+        if: steps.changes.outputs.needs_build == 'true'
 
   publish-templates:
     name: Publish templates
     runs-on: ubuntu-latest
-    needs:
-      - publish-base-image
-      - publish-features
     permissions:
       contents: read
       packages: write
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
+      - name: Check changed files
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            base="${{ github.event.before }}"
+            head="${{ github.event.after }}"
+            path="templates/src"
+            changes="$(git diff --name-only "${base}" "${head}" -- "${path}" | grep -Fv "/README.md" || true)"
+            if [ -n "${changes}" ]; then
+              echo needs_build=true >> "${GITHUB_OUTPUT}"
+            else
+              echo needs_build=false >> "${GITHUB_OUTPUT}"
+            fi
+          else
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          fi
+  
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v2
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
           password: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Publish templates
         run: devcontainer templates publish templates/src --namespace "${{ github.repository }}"
+        if: steps.changes.outputs.needs_build == 'true'

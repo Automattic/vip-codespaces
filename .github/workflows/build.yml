@@ -11,31 +11,58 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build image ${{ matrix.image.name }}
+  prepare:
+    name: Prepare list of images to build
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        image:
-          - name: Alpine Base
-            workspace-folder: images/src/alpine-base
+    outputs:
+      images: ${{ steps.set-matrix.outputs.images }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Set matrix
+        id: set-matrix
+        run: echo images="$(jq '."x-build"' images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
+
+  build:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.prepare.outputs.images) }}
+    name: Build image ${{ matrix.image.name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changes
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          image="images/src/${{ matrix.image.image-name }}"
+          changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+          if [ -n "${changes}" ]; then
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          else
+            echo needs_build=false >> "${GITHUB_OUTPUT}"
+          fi
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Build image
-        run: |
-          devcontainer build \
-            --workspace-folder ${{ matrix.image.workspace-folder }} \
-            --platform linux/amd64,linux/arm64 \
-            --output type=image
+        run: devcontainer build --workspace-folder "images/src/${{ matrix.image.image-name }}" --platform linux/amd64,linux/arm64 --output type=image
+        if: steps.changes.outputs.needs_build == 'true'

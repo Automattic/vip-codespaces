@@ -1,0 +1,59 @@
+name: Sanity Checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Check whether devcontainer files are updated
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v3.5.2
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files (images)
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          for image in images/src/*; do
+            changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${image}/.devcontainer.json"; then
+              echo "::error::Changes were made to ${image}, but the corresponding .devcontainer.json was not updated"
+              echo FAIL=1 >> "${GITHUB_ENV}"
+            fi
+          done
+
+      - name: Check changed files (features)
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          for feature in features/src/*; do
+            changes="$(git diff --name-only "${base}" "${head}" -- "${feature}" | grep -Fv "${feature}/README.md" || true)"
+            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${feature}/devcontainer-feature.json"; then
+              echo "::error::Changes were made to ${feature}, but the corresponding devcontainer-feature.json was not updated"
+              echo FAIL=1 >> "${GITHUB_ENV}"
+            fi
+          done
+
+      - name: Check changed files (templates)
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          for template in templates/src/*; do
+            changes="$(git diff --name-only "${base}" "${head}" -- "${template}" | grep -Fv "${template}/README.md" || true)"
+            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${template}/devcontainer-template.json"; then
+              echo "::error::Changes were made to ${template}, but the corresponding devcontainer-template.json was not updated"
+              echo FAIL=1 >> "${GITHUB_ENV}"
+            fi
+          done
+
+      - name: Set check status
+        run: |
+          if [ "${{ env.FAIL }}" = "1" ]; then
+            exit 1
+          fi

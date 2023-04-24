@@ -119,6 +119,25 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            base="${{ github.event.before }}"
+            head="${{ github.event.after }}"
+            path="features/src"
+            changes="$(git diff --name-only "${base}" "${head}" -- "${path}" | grep -Fv "/README.md" || true)"
+            if [ -n "${changes}" ]; then
+              echo needs_build=true >> "${GITHUB_OUTPUT}"
+            else
+              echo needs_build=false >> "${GITHUB_OUTPUT}"
+            fi
+          else
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          fi
 
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v2
@@ -126,12 +145,15 @@ jobs:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
           password: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli
+        if: steps.changes.outputs.needs_build == 'true'
 
       - name: Publish features
         run: devcontainer features publish features/src --namespace "${{ github.repository }}"
+        if: steps.changes.outputs.needs_build == 'true'
 
   publish-templates:
     name: Publish templates

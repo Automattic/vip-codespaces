@@ -1,0 +1,76 @@
+name: Smoke tests
+
+on:
+  push:
+    paths:
+      - 'features/src/**'
+      - 'test/**'
+      - '.github/workflows/smoke-tests.yml'
+      - '!**/README.md'
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    name: Prepare list of tests
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Set matrix
+        id: set-matrix
+        working-directory: test
+        run: |
+          echo matrix="$(find . -name "devcontainer*.json" -exec basename {} \; | jq -R . | jq -sc)" >> "${GITHUB_OUTPUT}"
+
+  smoke-tests:
+    needs: prepare
+    name: ${{ matrix.file }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        file: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    permissions:
+      contents: read
+      packages: read
+    env:
+      BUILDKIT_PROGRESS: plain
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Copy features
+        working-directory: test
+        run: |
+          mkdir -p .devcontainer/features
+          rsync -a --delete ../features/src/* .devcontainer/features
+          sed -i 's!ghcr.io/automattic/vip-codespaces/!./.devcontainer/features/!' .devcontainer/features/*/devcontainer-feature.json
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Expose GitHub Runtime
+        uses: crazy-max/ghaction-github-runtime@v2
+
+      - name: Install @devcontainers/cli
+        run: npm install -g @devcontainers/cli
+
+      - name: Build images
+        working-directory: images/src
+        run: |
+          REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
+          for image in *; do
+            docker buildx build -t "ghcr.io/${REPO}/${image}:latest" --cache-from type=gha --cache-to type=gha,mode=max "./${image}"
+          done
+
+      - name: Build
+        working-directory: test
+        run: devcontainer build --config "${{ matrix.file }}" --workspace-folder .

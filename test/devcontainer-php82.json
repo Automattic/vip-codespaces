@@ -1,0 +1,55 @@
+{
+    "name": "VIP Development Environment",
+    "image": "ghcr.io/automattic/vip-codespaces/alpine-base",
+    "overrideCommand": false,
+    "postCreateCommand": "/usr/local/bin/setup-wordpress.sh",
+    "features": {
+        "./.devcontainer/features/nginx": {
+            "mediaRedirectURL": ""
+        },
+        "./.devcontainer/features/php": {
+            "version": "8.2",
+            "composer": true
+        },
+        "./.devcontainer/features/mariadb": {
+            "installDatabaseToWorkspaces": true
+        },
+        "./.devcontainer/features/wordpress": {
+            "version": "latest",
+            "moveUploadsToWorkspaces": true,
+            "multisite": true,
+            "multisiteStyle": "subdirectory"
+        },
+        "./.devcontainer/features/wp-cli": {
+            "nightly": false
+        },
+        "./.devcontainer/features/vip-go-mu-plugins": {
+            "enabled": true,
+            "retainGit": true
+        },
+        "./.devcontainer/features/dev-tools": {},
+        "./.devcontainer/features/elasticsearch": {
+            "enabled": true,
+            "installDataToWorkspaces": true
+        },
+        "./.devcontainer/features/memcached": {
+            "enabled": true
+        },
+        "./.devcontainer/features/vip-cli": {
+            "enabled": true
+        },
+        "./.devcontainer/features/mailpit": {
+            "enabled": true
+        },
+        "./.devcontainer/features/phpmyadmin": {
+            "enabled": true
+        },
+        "./.devcontainer/features/xdebug": {
+            "enabled": true,
+            "mode": "debug,develop"
+        },
+        "./.devcontainer/features/mc": {
+            "enabled": true
+        }
+    }
+}

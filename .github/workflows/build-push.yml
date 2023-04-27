@@ -103,9 +103,9 @@ jobs:
           devcontainer build \
             --workspace-folder images/src/alpine-base \
             --platform linux/amd64,linux/arm64 \
-            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ matrix.image.image-version-major }}.${{ matrix.image.image-version-minor }}.${{ matrix.image.image-version-patch }} \
-            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ matrix.image.image-version-major }}.${{ matrix.image.image-version-minor }} \
-            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ matrix.image.image-version-major }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }}.${{ steps.set-versions.outputs.patch }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }} \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:latest \
             --push
         if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}

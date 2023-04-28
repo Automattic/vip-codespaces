@@ -45,8 +45,7 @@ RUN apk add --no-cache \
     strace \
     mandoc man-pages \
     git \
-    su-exec gettext && \
-    ln -sf /sbin/runit-init /sbin/init
+    su-exec gettext
 
 ADD rootfs /
 
@@ -60,4 +59,4 @@ ENV CHARSET UTF-8
 ENV LANG C.UTF-8
 ENV LC_COLLATE C
 
-ENTRYPOINT ["/sbin/init"]
+ENTRYPOINT ["/usr/local/bin/runit-wrapper"]

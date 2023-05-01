@@ -179,7 +179,7 @@ setup_php82() {
         php82-intl@edgec \
         php82-mbstring@edgec \
         php82-pecl-igbinary@edgec \
-        php82-pecl-memcache@edget \
+        php82-pecl-memcache@edgec \
         php82-pecl-memcached@edgec \
         php82-pecl-mcrypt@edget \
         php82-mysqli@edgec \

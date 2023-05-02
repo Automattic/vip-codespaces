@@ -18,8 +18,6 @@ chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
 
 if [ ! -d "${MARIADB_DATADIR}/mysql" ]; then
     /usr/bin/mysql_install_db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
-else
-    rm -f "${MARIADB_DATADIR}/aria_log_control"
 fi
 
 exec /sbin/su-exec "${MARIADB_USER}" \

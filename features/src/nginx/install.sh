@@ -27,12 +27,11 @@ ln -sf /etc/sv/nginx /etc/service/nginx
 
 install -d -D -m 0755 -o root -g root /etc/nginx/http.d /etc/nginx/conf.extra
 
-export NGINX_USER
+export NGINX_USER MEDIA_REDIRECT_URL
 # shellcheck disable=SC2016
-envsubst '$NGINX_USER' < conf-nginx.tpl > /etc/conf.d/nginx
+envsubst '$NGINX_USER $MEDIA_REDIRECT_URL' < conf-nginx.tpl > /etc/conf.d/nginx
 
 if [ -n "${MEDIA_REDIRECT_URL}" ]; then
-    export MEDIA_REDIRECT_URL
     # shellcheck disable=SC2016
     envsubst '$MEDIA_REDIRECT_URL' < media-redirect.tpl > /etc/nginx/conf.extra/media-redirect.conf
 fi

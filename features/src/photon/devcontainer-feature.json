@@ -1,0 +1,26 @@
+{
+    "id": "photon",
+    "name": "Photon",
+    "version": "1.0.0",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable Photon"
+        },
+        "disable_optimizations": {
+            "type": "boolean",
+            "default": true,
+            "description": "Disable optimizations"
+        },
+        "only_images_with_qs": {
+            "type": "boolean",
+            "default": true,
+            "description": "Photon should process images only if they have a query string in their URL"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/php",
+        "ghcr.io/automattic/vip-codespaces/nginx"
+    ]
+}

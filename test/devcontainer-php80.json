@@ -50,6 +50,10 @@
         },
         "./.devcontainer/features/mc": {
             "enabled": true
+        },
+        "./.devcontainer/features/photon": {
+            "enabled": true,
+            "disable_optimizations": false
         }
     }
 }

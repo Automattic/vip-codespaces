@@ -35,6 +35,7 @@ if [ "${ENABLED:-}" = 'true' ]; then
     svn co https://code.svn.wordpress.org/photon/ /usr/share/webapps/photon
     rm -rf /usr/share/webapps/photon/.svn /usr/share/webapps/photon/tests
     chown -R "${PHOTON_USER}:${PHOTON_USER}" /usr/share/webapps/photon
+    ln -s /etc/photon/config.php /usr/share/webapps/photon/config.php
 
     rm -f /etc/nginx/conf.extra/media-redirect.conf
 

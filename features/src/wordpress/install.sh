@@ -48,4 +48,10 @@ export WP_DOMAIN WP_MULTISITE WP_MULTISITE_TYPE WP_PERSIST_UPLOADS
 # shellcheck disable=SC2016
 envsubst '$WP_DOMAIN $WP_MULTISITE $WP_MULTISITE_TYPE $WP_PERSIST_UPLOADS' < conf-wordpress.tpl > /etc/conf.d/wordpress
 
+cat >> ~/.bashrc << EOF
+if [ -f ~/.wplogin ]; then
+    . ~/.wplogin
+fi
+EOF
+
 echo 'Done!'

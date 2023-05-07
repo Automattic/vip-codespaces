@@ -131,6 +131,10 @@ if ! wp core is-installed >/dev/null 2>&1; then
             --skip-themes
     fi
 
+    export WP_URL="${wp_url}"
+    # shellcheck disable=SC2016
+    envsubst '${WP_URL}' < /usr/share/wpvip/.wplogin.tpl > ~/.wplogin
+
     wp user add-cap 1 view_query_monitor
 
     if [ -e /etc/service/elasticsearch ] && wp cli has-command vip-search; then

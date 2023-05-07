@@ -30,8 +30,12 @@ if [ "${ENABLED}" = "true" ]; then
     chmod 0600 /etc/conf.d/phpmyadmin-password /etc/nginx/conf.extra/.htpasswd-pma
 
     homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
-    echo "echo \"phpMyAdmin username: vipgo\"" >> "${homedir}/.bashrc"
-    echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password || true)\"" >> "${homedir}/.bashrc"
+    {
+        echo "echo \"*** phpMyAdmin Credetials\""
+        echo "echo \"phpMyAdmin username: vipgo\""
+        echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password || true)\""
+        echo "echo"
+    } >> "${homedir}/.bashrc"
 
     install -m 0640 nginx-phpmyadmin.conf /etc/nginx/http.d/phpmyadmin.conf
     install -d -m 0777 -o "${WEB_USER}" -g "${WEB_USER}" /usr/share/webapps/phpmyadmin/tmp

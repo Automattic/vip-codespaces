@@ -35,6 +35,7 @@ fi
 
 install -m 0755 -o root -g root setup-wordpress.sh /usr/local/bin/setup-wordpress.sh
 install -m 0644 -o root -g root wp-config.php.tpl /usr/share/wordpress/
+install -m 0644 -o root -g root .wplogin.tpl /usr/share/wordpress/
 
 WP_DOMAIN="${DOMAIN:-localhost}"
 if [ "${MULTISITE}" != 'true' ]; then
@@ -48,7 +49,8 @@ export WP_DOMAIN WP_MULTISITE WP_MULTISITE_TYPE WP_PERSIST_UPLOADS
 # shellcheck disable=SC2016
 envsubst '$WP_DOMAIN $WP_MULTISITE $WP_MULTISITE_TYPE $WP_PERSIST_UPLOADS' < conf-wordpress.tpl > /etc/conf.d/wordpress
 
-cat >> ~/.bashrc << EOF
+homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
+cat >> "${homedir}/.bashrc" << EOF
 if [ -f ~/.wplogin ]; then
     . ~/.wplogin
 fi

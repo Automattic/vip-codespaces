@@ -133,7 +133,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
 
     export WP_URL="${wp_url}"
     # shellcheck disable=SC2016
-    envsubst '${WP_URL}' < /usr/share/wpvip/.wplogin.tpl > ~/.wplogin
+    envsubst '${WP_URL}' < /usr/share/wordpress/.wplogin.tpl > ~/.wplogin
 
     wp user add-cap 1 view_query_monitor
 

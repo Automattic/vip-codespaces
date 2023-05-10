@@ -54,6 +54,11 @@
         "./.devcontainer/features/photon": {
             "enabled": true,
             "disable_optimizations": false
+        },
+        "./.devcontainer/features/cron": {
+            "enabled": true,
+            "run_wp_cron": true,
+            "wp_cron_schedule": "*/15 * * * *"
         }
     }
 }

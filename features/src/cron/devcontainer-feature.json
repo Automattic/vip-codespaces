@@ -1,0 +1,23 @@
+{
+    "id": "cron",
+    "name": "Cron",
+    "description": "Enables cron in the Dev Environment",
+    "version": "1.0.0",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable cron"
+        },
+        "run_wp_cron": {
+            "type": "boolean",
+            "default": false,
+            "description": "Run wp-cron.php from cron"
+        },
+        "wp_cron_schedule": {
+            "type": "string",
+            "default": "*/15 * * * *",
+            "description": "Interval for wp-cron.php"
+        }
+    }
+}

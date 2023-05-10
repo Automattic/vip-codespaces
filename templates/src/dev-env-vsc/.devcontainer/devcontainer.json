@@ -86,6 +86,12 @@
         // Misc
         "ghcr.io/automattic/vip-codespaces/mc:latest": {
             "enabled": "${templateOption:mcEnabled}"
+        },
+        // Cron
+        "ghcr.io/automattic/vip-codespaces/cron:latest": {
+            "enabled": "${templateOption:cronEnabled}",
+            "run_wp_cron": "${templateOption:cronRunWpCron}",
+            "wp_cron_schedule": "${templateOption:cronWpCronSchedule}"
         }
     },
     "mounts": [

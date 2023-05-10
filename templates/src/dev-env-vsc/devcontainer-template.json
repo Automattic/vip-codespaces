@@ -91,6 +91,21 @@
             "type": "boolean",
             "default": false,
             "description": "Enable Elasticsearch"
+        },
+        "cronEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable cron"
+        },
+        "cronRunWpCron": {
+            "type": "boolean",
+            "default": false,
+            "description": "Run wp-cron from cron"
+        },
+        "cronWpCronSchedule": {
+            "type": "string",
+            "default": "*/15 * * * *",
+            "description": "Schedule for wp-cron"
         }
     }
 }

@@ -140,7 +140,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
     if [ -e /etc/service/elasticsearch ] && wp cli has-command vip-search; then
         echo "Waiting for Elasticsearch to come online..."
         second=0
-        while ! curl -s 'http://127.0.0.1:9200/_cluster/health' > /dev/null; do
+        while ! curl -s 'http://127.0.0.1:9200/_cluster/health' > /dev/null && [ "${second}" -lt 60 ]; do
             sleep 1
             second=$((second+1))
         done

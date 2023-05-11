@@ -24,7 +24,7 @@ if [ "${ENABLED:-}" = 'true' ]; then
             WEB_USER="${_REMOTE_USER}"
         fi
 
-        echo "${WP_CRON_SCHEDULE} [ -x /usr/local/bin/wp ] && /usr/local/bin/wp cron event run --due-now" | crontab -u "${WEB_USER}" -
+        echo "${WP_CRON_SCHEDULE} [ -x /usr/local/bin/wp ] && /usr/local/bin/wp core is-installed && /usr/bin/flock -n /tmp/wp-cron.lock /usr/local/bin/wp cron event run --due-now" | crontab -u "${WEB_USER}" -
     fi
 
     echo 'Done!'

@@ -3,4 +3,10 @@
 set -eu
 exec 2>&1
 
+PHP_USER="${CONTAINER_USER:-www-data}"
+
+touch /var/log/php-fpm/php-fpm.log
+chown "root:${PHP_USER}" /var/log/php-fpm/php-fpm.log
+chmod a+r /var/log/php-fpm/php-fpm.log
+
 exec /usr/sbin/php-fpm --nodaemonize

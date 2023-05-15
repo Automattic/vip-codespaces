@@ -15,6 +15,7 @@ if [ "${ENABLED:-}" = 'true' ]; then
 
     install -D -m 0755 -o root -g root service-run /etc/sv/cron/run
     install -d -m 0755 -o root -g root /etc/service
+    install -m 0755 -o root -g root wp-cron.sh /usr/local/bin/wp-cron.sh
     ln -sf /etc/sv/cron /etc/service/cron
 
     if [ "${RUN_WP_CRON:-}" = 'true' ] && [ -n "${WP_CRON_SCHEDULE:-}" ]; then
@@ -24,7 +25,7 @@ if [ "${ENABLED:-}" = 'true' ]; then
             WEB_USER="${_REMOTE_USER}"
         fi
 
-        echo "${WP_CRON_SCHEDULE} [ -x /usr/local/bin/wp ] && /usr/local/bin/wp core is-installed && /usr/bin/flock -n /tmp/wp-cron.lock /usr/local/bin/wp cron event run --due-now" | crontab -u "${WEB_USER}" -
+        echo "${WP_CRON_SCHEDULE} /usr/bin/flock -n /tmp/wp-cron.lock /usr/local/bin/wp-cron.sh" | crontab -u "${WEB_USER}" -
     fi
 
     echo 'Done!'

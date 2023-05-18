@@ -10,9 +10,8 @@ if [ "$(id -u || true)" -ne 0 ]; then
 fi
 
 : "${ENABLED:=}"
-: "${RETAIN_GIT:=}"
 : "${BRANCH:=staging}"
-: "${DELETE_UNNECESSARY_FILES:=true}"
+: "${DEVELOPMENT_MODE:=false}"
 
 if [ "${ENABLED}" != "false" ]; then
     echo '(*) Installing VIP Go mu-plugins...'
@@ -26,18 +25,13 @@ if [ "${ENABLED}" != "false" ]; then
     mkdir -p /wp/wp-content/mu-plugins
     git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/Automattic/vip-go-mu-plugins.git /tmp/mu-plugins --branch "${BRANCH}" --single-branch
     git clone --depth=1 https://github.com/Automattic/vip-go-mu-plugins-ext.git /tmp/mu-plugins-ext
-    if [ "${DELETE_UNNECESSARY_FILES}" = 'true' ]; then
+    if [ "${DEVELOPMENT_MODE}" != 'true' ]; then
         rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins --exclude-from="/tmp/mu-plugins/.dockerignore" --exclude-from="/tmp/mu-plugins-ext/.dockerignore"
         find /wp/wp-content/mu-plugins -name .svn -type d -exec rm -rfv {} \; 2> /dev/null
         find /wp/wp-content/mu-plugins -name .github -type d -exec rm -rfv {} \; 2> /dev/null
+        find /wp/wp-content/mu-plugins -name ".git*" -exec rm -rfv {} \; 2> /dev/null
     else
         rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins
-    fi
-
-    if [ "${RETAIN_GIT}" = 'true' ]; then
-        mv -f /tmp/mu-plugins/.git /wp/wp-content/mu-plugins/
-    else
-        find /wp/wp-content/mu-plugins -name ".git*" -exec rm -rfv {} \; 2> /dev/null
     fi
 
     rm -rf /tmp/mu-plugins /tmp/mu-plugins-ext

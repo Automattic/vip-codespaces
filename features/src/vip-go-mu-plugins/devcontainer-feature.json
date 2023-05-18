@@ -1,7 +1,7 @@
 {
     "id": "vip-go-mu-plugins",
     "name": "VIP Go MU Plugins",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Installs VIP Go MU Plugins into the Dev Environment",
     "options": {
         "enabled": {
@@ -19,15 +19,10 @@
                 "develop"
             ]
         },
-        "retain_git": {
+        "development_mode": {
             "type": "boolean",
             "default": false,
-            "description": "Whether to retain the .git directory"
-        },
-        "delete_unnecessary_files": {
-            "type": "boolean",
-            "default": true,
-            "description": "Whether to delete unnecessary files (like tests, dotfiles, etc). It is recommended to set this to false if retain_git is true."
+            "description": "Set to true to install all files necessary for development of VIP MU plugins."
         }
     },
     "installsAfter": [

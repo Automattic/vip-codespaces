@@ -25,7 +25,8 @@
         },
         "./.devcontainer/features/vip-go-mu-plugins": {
             "enabled": true,
-            "retainGit": true
+            "retain_git": false,
+            "delete_unnecessary_files": true
         },
         "./.devcontainer/features/dev-tools": {},
         "./.devcontainer/features/elasticsearch": {

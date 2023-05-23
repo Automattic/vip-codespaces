@@ -10,6 +10,7 @@ if [ "$(id -u || true)" -ne 0 ]; then
 fi
 
 : "${ENABLED:=}"
+: "${VERSION:=latest}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
@@ -18,6 +19,6 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     apk add --no-cache nodejs npm || apk add --no-cache nodejs@edgem npm@edgem
-    npm i -g @automattic/vip
+    npm i -g "@automattic/vip@${VERSION}"
     echo 'Done!'
 fi

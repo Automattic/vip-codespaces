@@ -3,7 +3,7 @@
 set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
-ES_VERSION="7.17.2"
+ES_VERSION="7.17.10"
 ES_TARBALL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}-no-jdk-linux-x86_64.tar.gz"
 
 if [ "$(id -u || true)" -ne 0 ]; then

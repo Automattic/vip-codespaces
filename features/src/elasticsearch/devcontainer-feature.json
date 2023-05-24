@@ -2,7 +2,7 @@
     "id": "elasticsearch",
     "name": "Elasticsearch",
     "description": "Sets up Elasticsearch into the Dev Environment",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "containerEnv": {
         "ES_TMPDIR": "/opt/elasticsearch/tmp"
     },
@@ -17,5 +17,8 @@
             "default": false,
             "description": "Set Elasticseatch data directory to /workspaces/es-data to persist data between container rebuilds (GHCS)"
         }
-    }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/wordpress"
+    ]
 }

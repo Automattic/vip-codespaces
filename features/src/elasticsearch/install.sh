@@ -67,5 +67,7 @@ if [ "${ENABLED}" = "true" ]; then
     install -d -m 0755 -o root -g root /etc/service
     ln -sf /etc/sv/elasticsearch /etc/service/elasticsearch
 
+    install -D -m 0755 -o root -g root post-wp-install.sh /var/lib/wordpress/postinstall.d/50-elasticsearch.sh
+
     echo 'Done!'
 fi

@@ -151,6 +151,8 @@ if ! wp core is-installed >/dev/null 2>&1; then
 
         wp vip-search index --skip-confirm --setup
     fi
+
+    run-parts /var/lib/wordpress/postinstall.d
 else
     echo "WordPress already installed"
 fi

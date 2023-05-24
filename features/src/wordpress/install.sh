@@ -36,6 +36,7 @@ fi
 install -m 0755 -o root -g root setup-wordpress.sh /usr/local/bin/setup-wordpress.sh
 install -m 0644 -o root -g root wp-config.php.tpl /usr/share/wordpress/
 install -m 0644 -o root -g root .wplogin.tpl /usr/share/wordpress/
+install -d -D -m 0755 -o root -g root /var/lib/wordpress/postinstall.d
 
 WP_DOMAIN="${DOMAIN:-localhost}"
 if [ "${MULTISITE}" != 'true' ]; then

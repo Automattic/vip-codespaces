@@ -2,7 +2,7 @@
     "id": "wordpress",
     "name": "WordPress",
     "description": "Sets up WordPress into the Dev Environment",
-    "version": "2.0.6",
+    "version": "2.1.0",
     "containerEnv": {
         "WP_CLI_CONFIG_PATH": "/etc/wp-cli/wp-cli.yaml"
     },

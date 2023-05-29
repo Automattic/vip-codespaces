@@ -141,3 +141,5 @@ if ! wp core is-installed >/dev/null 2>&1; then
 else
     echo "WordPress already installed"
 fi
+
+exit 0

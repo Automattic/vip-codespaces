@@ -16,10 +16,10 @@ if [ ! -f ~/.config/configstore/vip-go-cli.json ]; then
     mkdir -p ~/.config/configstore
     echo "${VIP_CLI_TOKEN}" > ~/.config/configstore/vip-go-cli.json
 else
-    echo "$⚠️ {HOME}/.config/configstore/vip-go-cli.json already exists, not updating."
+    echo "⚠️ ${HOME}/.config/configstore/vip-go-cli.json already exists, not updating."
 fi
 
-# We cannot use `vip whoami` to check if the user is logged in: its exit status is always 0 :-()
+# We cannot use `vip whoami` to check if the user is logged in: its exit status is always 0 :-(
 
 echo "ℹ️ Exporting the database…"
 vip export sql "${VIP_APP}" --output=/tmp/export.sql.gz

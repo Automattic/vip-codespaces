@@ -23,7 +23,7 @@ if [ "${ENABLED}" = "true" ]; then
     npm i -g "@automattic/vip@${VERSION}"
 
     if [ "${IMPORT_DB}" = 'true' ]; then
-        install -D -n 0755 -o root -g root import-db.sh /var/lib/wordpress/postinstall.d/40-vip-import-db.sh
+        install -D -m 0755 -o root -g root import-db.sh /var/lib/wordpress/postinstall.d/40-vip-import-db.sh
     fi
 
     echo 'Done!'

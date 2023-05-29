@@ -11,6 +11,7 @@ fi
 
 : "${ENABLED:=}"
 : "${VERSION:=latest}"
+: "${IMPORT_DB:=false}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
@@ -20,5 +21,10 @@ if [ "${ENABLED}" = "true" ]; then
 
     apk add --no-cache nodejs npm || apk add --no-cache nodejs@edgem npm@edgem
     npm i -g "@automattic/vip@${VERSION}"
+
+    if [ "${IMPORT_DB}" = 'true' ]; then
+        install -D -n 0755 -o root -g root import-db.sh /var/lib/wordpress/postinstall.d/40-vip-import-db.sh
+    fi
+
     echo 'Done!'
 fi

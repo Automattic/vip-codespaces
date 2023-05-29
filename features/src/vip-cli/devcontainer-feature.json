@@ -1,7 +1,7 @@
 {
     "id": "vip-cli",
     "name": "VIP CLI",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Installs VIP CLI into the Dev Environment",
     "options": {
         "enabled": {
@@ -14,6 +14,11 @@
             "description": "Which version of VIP CLI to install",
             "default": "latest",
             "proposals": ["latest", "next"]
+        },
+        "import_db": {
+            "type": "boolean",
+            "description": "Import the database from the VIP Go environment",
+            "default": false
         }
     }
 }

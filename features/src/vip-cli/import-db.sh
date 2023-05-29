@@ -23,8 +23,9 @@ fi
 
 echo "ℹ️ Exporting the database…"
 vip export sql "${VIP_APP}" --output=/tmp/export.sql.gz
-if [ ! -f /tmp/export.sql ]; then
+if [ ! -f /tmp/export.sql.gz ]; then
     echo "✕ Unable to export the database from VIP."
+    exit 1
 fi
 
 echo "ℹ️ Extracting archive…"
@@ -36,6 +37,9 @@ DEST_URL="$(wp option get home)"
 echo "ℹ️ Importing database dump…"
 wp db import /tmp/export.sql
 rm -f /tmp/export.sql
+
+echo "ℹ️ Flushing cache…"
+wp cache flush
 
 echo "ℹ️ Retrieving URL to replace…"
 SRC_URL="$(wp option get home)"

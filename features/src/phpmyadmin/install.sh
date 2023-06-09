@@ -31,7 +31,7 @@ if [ "${ENABLED}" = "true" ]; then
 
     homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
     {
-        echo "echo \"*** phpMyAdmin Credetials\""
+        echo "echo \"*** phpMyAdmin Credentials\""
         echo "echo \"phpMyAdmin username: vipgo\""
         echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password || true)\""
         echo "echo"

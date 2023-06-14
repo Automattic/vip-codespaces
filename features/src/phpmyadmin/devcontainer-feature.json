@@ -1,7 +1,7 @@
 {
     "id": "phpmyadmin",
     "name": "phpMyAdmin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Installs phpMyAdmin into the Dev Environment",
     "options": {
         "enabled": {

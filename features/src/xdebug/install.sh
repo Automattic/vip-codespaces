@@ -5,10 +5,6 @@ set -e
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
 xdebug_80() {
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache --force-overwrite php8-pecl-xdebug@edget
 }
 
@@ -17,18 +13,10 @@ xdebug_81() {
 }
 
 xdebug_82() {
-    if ! grep -Eq '^@edgec' /etc/apk/repositories; then
-        echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache --force-overwrite php82-pecl-xdebug@edgec
 }
 
 xdebug_83() {
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache --force-overwrite php83-pecl-xdebug@edget
 }
 

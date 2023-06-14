@@ -15,7 +15,7 @@ if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing phpMyAdmin...'
 
     if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
-        WEB_USER=www-data
+        WEB_USER="${CONTAINER_USER:-www-data}"
     else
         WEB_USER="${_REMOTE_USER}"
     fi
@@ -31,11 +31,11 @@ if [ "${ENABLED}" = "true" ]; then
 
     homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
     {
-        echo "echo \"*** phpMyAdmin Credentials\""
+        echo "echo \"*** phpMyAdmin Credentials\" ***"
         echo "echo \"phpMyAdmin username: vipgo\""
         echo "echo \"phpMyAdmin password: $(cat /etc/conf.d/phpmyadmin-password || true)\""
         echo "echo"
-    } >> "${homedir}/.bashrc"
+    } >> "${homedir}/.local/share/vip-codespaces/login/050-phpmyadmin.sh"
 
     install -m 0640 nginx-phpmyadmin.conf /etc/nginx/http.d/phpmyadmin.conf
     install -d -m 0777 -o "${WEB_USER}" -g "${WEB_USER}" /usr/share/webapps/phpmyadmin/tmp

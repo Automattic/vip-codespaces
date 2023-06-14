@@ -12,7 +12,7 @@ fi
 echo '(*) Downloading WordPress...'
 
 if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
-    WEB_USER=www-data
+    WEB_USER="${CONTAINER_USER:-www-data}"
 else
     WEB_USER="${_REMOTE_USER}"
 fi
@@ -35,7 +35,7 @@ fi
 
 install -m 0755 -o root -g root setup-wordpress.sh /usr/local/bin/setup-wordpress.sh
 install -m 0644 -o root -g root wp-config.php.tpl /usr/share/wordpress/
-install -m 0644 -o root -g root .wplogin.tpl /usr/share/wordpress/
+install -m 0644 -o root -g root 010-wplogin.tpl /usr/share/wordpress/
 install -d -D -m 0755 -o root -g root /var/lib/wordpress/postinstall.d
 
 WP_DOMAIN="${DOMAIN:-localhost}"

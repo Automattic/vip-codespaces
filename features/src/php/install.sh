@@ -5,14 +5,6 @@ set -e
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
 setup_php80() {
-    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
-        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache \
         icu-data-full@edgem icu-libs@edgem libssl3@edgem ghostscript \
         php8@edget \
@@ -75,14 +67,6 @@ setup_php80() {
 }
 
 setup_php81() {
-    if ! grep -Eq '^@edgec' /etc/apk/repositories; then
-        echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache \
         icu-data-full ghostscript \
         php81 php81-fpm php81-pear \
@@ -149,18 +133,6 @@ setup_php81() {
 }
 
 setup_php82() {
-    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
-        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edgec' /etc/apk/repositories; then
-        echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache \
         icu-data-full icu-libs@edgem ghostscript \
         php82@edgec php82-fpm@edgec php82-pear@edgec \
@@ -227,18 +199,6 @@ setup_php82() {
 }
 
 setup_php83() {
-    if ! grep -Eq '^@edgem' /etc/apk/repositories; then
-        echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edgec' /etc/apk/repositories; then
-        echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    fi
-
-    if ! grep -Eq '^@edget' /etc/apk/repositories; then
-        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    fi
-
     apk add --no-cache \
         icu-data-full icu-libs@edgem ghostscript \
         php83@edget php83-fpm@edget php83-pear@edget \

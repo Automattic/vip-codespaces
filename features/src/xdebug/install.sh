@@ -24,6 +24,14 @@ xdebug_82() {
     apk add --no-cache --force-overwrite php82-pecl-xdebug@edgec
 }
 
+xdebug_83() {
+    if ! grep -Eq '^@edget' /etc/apk/repositories; then
+        echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+    fi
+
+    apk add --no-cache --force-overwrite php83-pecl-xdebug@edget
+}
+
 if [ "$(id -u || true)" -ne 0 ]; then
     echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
     exit 1
@@ -52,6 +60,8 @@ if [ "${ENABLED}" = "true" ]; then
             version="8.1"
         elif apk list --installed php82 2>/dev/null; then
             version="8.2"
+        elif apk list --installed php83 2>/dev/null; then
+            version="8.3"
         else
             echo "(!) Unable to find out PHP version."
             exit 1
@@ -69,6 +79,9 @@ if [ "${ENABLED}" = "true" ]; then
         ;;
         8.2)
             xdebug_82
+        ;;
+        8.3)
+            xdebug_83
         ;;
         *)
             echo "(!) Unsupported PHP version: ${version}"

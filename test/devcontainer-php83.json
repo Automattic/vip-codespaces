@@ -4,6 +4,7 @@
     "overrideCommand": false,
     "postCreateCommand": "/usr/local/bin/setup-wordpress.sh",
     "features": {
+        "./.devcontainer/features/base": {},
         "./.devcontainer/features/nginx": {
             "mediaRedirectURL": ""
         },

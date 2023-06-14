@@ -1,10 +1,10 @@
 {
     "id": "base",
     "name": "VIP Codespaces Base",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Base feature for VIP Codespaces",
     "containerEnv": {
-        "PAGER": "/usr/bin/less -R"
+        "PAGER": "\"/usr/bin/less -R\""
     },
     "customizations": {
         "vscode": {

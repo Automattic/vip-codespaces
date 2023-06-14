@@ -2,12 +2,15 @@
     "id": "ssh",
     "name": "SSH",
     "description": "Sets up SSH into the Dev Environment",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "options": {
         "enabled": {
             "type": "boolean",
             "default": true,
             "description": "Enable OpenSSH"
         }
-    }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/base"
+    ]
 }

@@ -2,7 +2,7 @@
     "id": "cron",
     "name": "Cron",
     "description": "Enables cron in the Dev Environment",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "options": {
         "enabled": {
             "type": "boolean",
@@ -19,5 +19,8 @@
             "default": "*/15 * * * *",
             "description": "Interval for wp-cron.php"
         }
-    }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/wordpress"
+    ]
 }

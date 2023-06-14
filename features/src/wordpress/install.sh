@@ -50,11 +50,4 @@ export WP_DOMAIN WP_MULTISITE WP_MULTISITE_TYPE WP_PERSIST_UPLOADS
 # shellcheck disable=SC2016
 envsubst '$WP_DOMAIN $WP_MULTISITE $WP_MULTISITE_TYPE $WP_PERSIST_UPLOADS' < conf-wordpress.tpl > /etc/conf.d/wordpress
 
-homedir=$(getent passwd "${WEB_USER}" | cut -d: -f6)
-cat >> "${homedir}/.bashrc" << EOF
-if [ -f ~/.wplogin ]; then
-    . ~/.wplogin
-fi
-EOF
-
 echo 'Done!'

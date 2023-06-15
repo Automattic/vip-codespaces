@@ -6,7 +6,7 @@
     "x-build": {
         "name": "Alpine",
         "image-name": "alpine-base",
-        "image-version": "1.2.1"
+        "image-version": "1.2.2"
     },
     "remoteUser": "vscode"
 }

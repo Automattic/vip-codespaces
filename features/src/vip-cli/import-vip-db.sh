@@ -8,13 +8,13 @@ if [ -n "${VIP_CLI_TOKEN}" ] && [ ! -f ~/.config/configstore/vip-go-cli.json ]; 
     echo "${VIP_CLI_TOKEN}" > ~/.config/configstore/vip-go-cli.json
 fi
 
-out="$(vip whoami 2>/dev/null)"
+out="$(vip whoami </dev/null 2>/dev/null)"
 if ! echo "${out}" | grep -Eq "^- Howdy "; then
     echo "⚠️ You are not logged in to VIP."
     vip login
 fi
 
-out="$(vip whoami 2>/dev/null)"
+out="$(vip whoami </dev/null 2>/dev/null)"
 if ! echo "${out}" | grep -Eq "^- Howdy "; then
     echo "✕ Unable to log in to VIP. Please try again."
     exit 1

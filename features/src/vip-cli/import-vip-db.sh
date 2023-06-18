@@ -24,8 +24,17 @@ name="$(echo "${out}" | sed -n 's/^- Howdy //; s/!//; p; q')"
 uid="$(echo "${out}" | awk '/^- Your user ID is/ { print $6 }')"
 echo "✓ Logged in as ${name} (${uid})"
 
+if [ -n "${VIP_APP_ID}" ]; then
+    if [ "${VIP_APP_ID}" = "${VIP_APP_ID#@}" ]; then
+        VIP_APP_ID="@${VIP_APP_ID}"
+    fi
+
+    echo "ℹ️ Using VIP_APP_ID (${VIP_APP_ID}) to select the application."
+fi
+
 echo "ℹ️ Exporting the database…"
-vip export sql --output=/tmp/export.sql.gz
+# shellcheck disable=SC2086
+vip export sql ${VIP_APP_ID} --output=/tmp/export.sql.gz
 if [ ! -f /tmp/export.sql.gz ]; then
     echo "✕ Unable to export the database from VIP."
     exit 1

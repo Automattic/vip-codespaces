@@ -41,7 +41,7 @@ if [ ! -f /tmp/export.sql.gz ]; then
 fi
 
 echo "ℹ️ Extracting archive…"
-gunzip /tmp/export.sql.gz
+gunzip -f /tmp/export.sql.gz
 
 echo "ℹ️ Retrieving site URL…"
 DEST_URL="$(wp option get home)"

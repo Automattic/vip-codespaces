@@ -106,6 +106,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
         else
             type=""
         fi
+        # shellcheck disable=SC2248,SC2086 # see https://github.com/Automattic/vip-codespaces/issues/86
         wp core multisite-install \
             --path=/wp \
             --url="${wp_url}" \
@@ -116,7 +117,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
             --skip-email \
             --skip-plugins \
             --skip-themes \
-            "${type}" \
+            ${type} \
             --skip-config
     else
         wp core install \

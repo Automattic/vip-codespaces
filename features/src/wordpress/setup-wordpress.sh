@@ -15,7 +15,10 @@ fi
 : "${WP_MULTISITE_TYPE:=subdirectory}"
 : "${WP_PERSIST_UPLOADS:=""}"
 
-env | sort > /workspaces/env.txt
+if [ "${CODESPACES:-}" = 'true' ] && [ "${CLOUDENV_ENVIRONMENT_ID:-}" = 'null' ] && [ -n "${GITHUB_TOKEN}" ]; then
+    echo "Prebuild detected, skipping WordPress setup"
+    exit 0
+fi
 
 if [ -n "${CODESPACE_NAME}" ] && [ -n "${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}" ]; then
     WP_DOMAIN="${CODESPACE_NAME}-80.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"

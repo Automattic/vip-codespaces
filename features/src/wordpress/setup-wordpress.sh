@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 XDEBUG_MODE=off
 export XDEBUG_MODE
 
@@ -12,6 +14,8 @@ fi
 : "${WP_MULTISITE:=""}"
 : "${WP_MULTISITE_TYPE:=subdirectory}"
 : "${WP_PERSIST_UPLOADS:=""}"
+
+env | sort > /workspaces/env.txt
 
 if [ -n "${CODESPACE_NAME}" ] && [ -n "${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}" ]; then
     WP_DOMAIN="${CODESPACE_NAME}-80.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"

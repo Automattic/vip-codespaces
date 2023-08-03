@@ -34,6 +34,7 @@ else
 fi
 
 install -m 0755 -o root -g root setup-wordpress.sh /usr/local/bin/setup-wordpress.sh
+install -m 0755 -o root -g root wordpress-post-create.sh /usr/local/bin/wordpress-post-create.sh
 install -m 0644 -o root -g root wp-config.php.tpl /usr/share/wordpress/
 install -m 0644 -o root -g root 010-wplogin.tpl /usr/share/wordpress/
 install -d -D -m 0755 -o root -g root /var/lib/wordpress/postinstall.d

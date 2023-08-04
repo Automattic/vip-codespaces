@@ -252,7 +252,7 @@ setup_php83() {
 
     apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool libmemcached-dev
 
-    echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
+    # echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
     echo "extension=memcache.so" > /etc/php83/conf.d/40_memcache.ini
     echo "extension=memcached.so" > /etc/php83/conf.d/40_memcached.ini
     echo "extension=timezonedb.so" > /etc/php83/conf.d/40_timezonedb.ini

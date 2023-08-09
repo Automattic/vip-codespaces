@@ -46,7 +46,7 @@
             "enabled": true
         },
         "./.devcontainer/features/xdebug": {
-            "enabled": false,
+            "enabled": true,
             "mode": "debug,develop"
         },
         "./.devcontainer/features/mc": {

@@ -2,10 +2,11 @@
     "id": "wordpress",
     "name": "WordPress",
     "description": "Sets up WordPress into the Dev Environment",
-    "version": "2.1.8",
+    "version": "2.2.0",
     "containerEnv": {
         "WP_CLI_CONFIG_PATH": "/etc/wp-cli/wp-cli.yaml"
     },
+    "updateContentCommand": "composer install -n || true",
     "postCreateCommand": "/usr/local/bin/wordpress-post-create.sh",
     "options": {
         "version": {

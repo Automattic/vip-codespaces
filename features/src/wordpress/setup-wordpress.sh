@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 XDEBUG_MODE=off
 export XDEBUG_MODE
 

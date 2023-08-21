@@ -49,12 +49,12 @@
         "xdebugEnabled": {
             "type": "boolean",
             "default": false,
-            "description": "Enable XDebug"
+            "description": "Enable Xdebug"
         },
         "xdebugMode": {
             "type": "string",
             "default": "debug",
-            "description": "XDebug mode",
+            "description": "Xdebug mode",
             "proposals": ["off", "develop", "coverage", "debug", "gcstats", "profile", "trace"]
         },
         "mcEnabled": {

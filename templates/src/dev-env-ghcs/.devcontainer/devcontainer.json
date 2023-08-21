@@ -31,7 +31,7 @@
             "onAutoForward": "ignore"
         },
         "9003": {
-            "label": "XDebug Client Port",
+            "label": "Xdebug Client Port",
             "onAutoForward": "notify"
         }
     },

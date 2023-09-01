@@ -134,7 +134,7 @@ setup_php81() {
 
 setup_php82() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem ghostscript \
+        icu-data-full icu-libs@edgem libavif@edgem ghostscript \
         php82@edgec php82-fpm@edgec php82-pear@edgec \
         php82-pecl-apcu@edgec \
         php82-bcmath@edgec \
@@ -200,7 +200,7 @@ setup_php82() {
 
 setup_php83() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem ghostscript \
+        icu-data-full icu-libs@edgem libavif@edgem ghostscript \
         php83@edget php83-fpm@edget php83-pear@edget \
         php83-pecl-apcu@edget \
         php83-bcmath@edget \

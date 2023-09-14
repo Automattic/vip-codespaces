@@ -55,7 +55,7 @@ jobs:
           sed -i 's!ghcr.io/automattic/vip-codespaces/!./.devcontainer/features/!' .devcontainer/features/*/devcontainer-feature.json
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v3

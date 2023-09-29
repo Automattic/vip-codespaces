@@ -1,4 +1,4 @@
-FROM alpine:3.18.3
+FROM alpine:3.18.4
 
 ARG USERNAME=vscode
 ARG USER_UID=1000

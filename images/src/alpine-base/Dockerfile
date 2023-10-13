@@ -45,7 +45,7 @@ RUN apk add --no-cache \
     strace \
     mandoc man-pages \
     git \
-    su-exec gettext subversion
+    su-exec gettext subversion github-cli
 
 ADD rootfs /
 

@@ -6,7 +6,7 @@ PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
 setup_php80() {
     apk add --no-cache \
-        icu-data-full@edgem icu-libs@edgem libssl3@edgem ghostscript \
+        icu-data-full@edgem icu-libs@edgem libssl3@edgem libsodium@edgem ghostscript \
         php8@edget \
         php8-fpm@edget \
         php8-pear@edget \
@@ -134,7 +134,7 @@ setup_php81() {
 
 setup_php82() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem libavif@edgem ghostscript \
+        icu-data-full icu-libs@edgem libavif@edgem libsodium@edgem ghostscript \
         php82@edgec php82-fpm@edgec php82-pear@edgec \
         php82-pecl-apcu@edgec \
         php82-bcmath@edgec \
@@ -200,7 +200,7 @@ setup_php82() {
 
 setup_php83() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem libavif@edgem ghostscript \
+        icu-data-full icu-libs@edgem libavif@edgem libsodium@edgem ghostscript \
         php83@edget php83-fpm@edget php83-pear@edget \
         php83-pecl-apcu@edget \
         php83-bcmath@edget \

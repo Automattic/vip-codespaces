@@ -1,0 +1,13 @@
+{
+    "id": "setup-wptl",
+    "name": "WordPress with Test Library",
+    "description": "Sets up WordPress and WordPress Test Library",
+    "version": "0.0.1",
+    "options": {
+        "versions": {
+            "type": "string",
+            "default": "",
+            "description": "Versions to install"
+        }
+    }
+}

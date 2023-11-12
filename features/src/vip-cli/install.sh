@@ -15,7 +15,7 @@ fi
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
 
-    apk add --no-cache nodejs@edgem npm@edgem
+    apk add --no-cache nodejs@edgem npm@edgem || apk add --no-cache nodejs npm
     npm i -g "@automattic/vip@${VERSION}"
 
     install -D -m 0755 -o root -g root import-vip-db.sh /usr/local/bin/import-vip-db

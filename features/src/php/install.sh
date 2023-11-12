@@ -24,7 +24,7 @@ setup_php81() {
         php81-json \
         php81-mbstring \
         php81-pecl-igbinary@edgec \
-        php81-pecl-mcrypt@edget \
+        php81-pecl-mcrypt@edgec \
         php81-pecl-memcache \
         php81-pecl-memcached \
         php81-mysqli \
@@ -46,7 +46,7 @@ setup_php81() {
         php81-pecl-ssh2 \
         php81-sysvsem \
         php81-sysvshm \
-        php81-pecl-timezonedb@edget \
+        php81-pecl-timezonedb@edgec \
         php81-tokenizer \
         php81-xml \
         php81-xmlreader \

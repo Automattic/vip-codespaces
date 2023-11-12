@@ -4,68 +4,6 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
-setup_php80() {
-    apk add --no-cache \
-        icu-data-full@edgem icu-libs@edgem libssl3@edgem libsodium@edgem ghostscript \
-        php8@edget \
-        php8-fpm@edget \
-        php8-pear@edget \
-        php8-pecl-apcu@edget \
-        php8-bcmath@edget \
-        php8-calendar@edget \
-        php8-ctype@edget \
-        php8-curl@edget \
-        php8-dom@edget \
-        php8-exif@edget \
-        php8-fileinfo@edget \
-        php8-ftp@edget \
-        php8-gd@edget \
-        php8-pecl-gmagick@edget \
-        php8-gmp@edget \
-        php8-iconv@edget \
-        php8-intl@edget \
-        php8-json@edget \
-        php8-mbstring@edget \
-        php8-pecl-igbinary@edget \
-        php8-pecl-mcrypt@edget \
-        php8-pecl-memcache@edget \
-        php8-pecl-memcached@edget \
-        php8-mysqli@edget \
-        php8-mysqlnd@edget \
-        php8-opcache@edget \
-        php8-openssl@edget \
-        php8-pcntl@edget \
-        php8-pdo@edget \
-        php8-pdo_sqlite@edget \
-        php8-phar@edget \
-        php8-posix@edget \
-        php8-session@edget \
-        php8-shmop@edget \
-        php8-simplexml@edget \
-        php8-soap@edget \
-        php8-sockets@edget \
-        php8-sodium@edget \
-        php8-sqlite3@edget \
-        php8-pecl-ssh2@edget \
-        php8-sysvsem@edget \
-        php8-sysvshm@edget \
-        php8-pecl-timezonedb@edget \
-        php8-tokenizer@edget \
-        php8-xml@edget \
-        php8-xmlreader@edget \
-        php8-xmlwriter@edget \
-        php8-zip@edget
-
-    [ ! -f /usr/sbin/php-fpm ] && ln -s /usr/sbin/php-fpm8 /usr/sbin/php-fpm
-    [ ! -f /usr/bin/php ] && ln -s /usr/bin/php8 /usr/bin/php
-    [ ! -f /usr/bin/pecl ] && ln -s /usr/bin/pecl8 /usr/bin/pecl
-    [ ! -f /usr/bin/pear ] && ln -s /usr/bin/pear8 /usr/bin/pear
-    [ ! -f /usr/bin/peardev ] && ln -s /usr/bin/peardev8 /usr/bin/peardev
-    [ ! -f /usr/bin/phar ] && ln -s /usr/bin/phar8 /usr/bin/phar
-    [ ! -f /usr/bin/phar.phar ] && ln -s /usr/bin/phar8 /usr/bin/phar.phar
-    true
-}
-
 setup_php81() {
     apk add --no-cache \
         icu-data-full ghostscript \
@@ -277,14 +215,8 @@ fi
 
 echo "(*) Installing PHP ${VERSION}..."
 case "${VERSION}" in
-    "8.0")
-        setup_php80
-        echo "export PHP_INI_DIR=/etc/php8" > /etc/profile.d/php_ini_dir.sh
-        PHP_INI_DIR=/etc/php8
-        ln -sf /etc/php8 /etc/php
-    ;;
-
-    "8.1")
+    "8.0"|"8.1")
+        VERSION="8.1"
         setup_php81
         echo "export PHP_INI_DIR=/etc/php81" > /etc/profile.d/php_ini_dir.sh
         PHP_INI_DIR=/etc/php81

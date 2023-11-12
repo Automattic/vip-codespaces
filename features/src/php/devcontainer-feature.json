@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.2.3",
+    "version": "2.2.4",
     "containerEnv": {
         "PHP_INI_DIR": "/etc/php"
     },
@@ -10,7 +10,7 @@
         "version": {
             "type": "string",
             "enum": ["8.0", "8.1", "8.2", "8.3"],
-            "default": "8.0",
+            "default": "8.2",
             "description": "PHP version"
         },
         "composer": {

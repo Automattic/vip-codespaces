@@ -91,7 +91,7 @@ setup_php82() {
         php82-pecl-igbinary@edgec \
         php82-pecl-memcache@edgec \
         php82-pecl-memcached@edgec \
-        php82-pecl-mcrypt@edget \
+        php82-pecl-mcrypt@edgec \
         php82-mysqli@edgec \
         php82-mysqlnd@edgec \
         php82-opcache@edgec \
@@ -110,7 +110,7 @@ setup_php82() {
         php82-sqlite3@edgec \
         php82-sysvsem@edgec \
         php82-sysvshm@edgec \
-        php82-pecl-timezonedb@edget \
+        php82-pecl-timezonedb@edgec \
         php82-tokenizer@edgec \
         php82-xml@edgec \
         php82-xmlreader@edgec \

@@ -4,10 +4,6 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
-xdebug_80() {
-    apk add --no-cache --force-overwrite php8-pecl-xdebug@edget
-}
-
 xdebug_81() {
     apk add --no-cache --force-overwrite php81-pecl-xdebug
 }
@@ -17,7 +13,7 @@ xdebug_82() {
 }
 
 xdebug_83() {
-    apk add --no-cache --force-overwrite php83-pecl-xdebug@edget
+    apk add --no-cache --force-overwrite php83-pecl-xdebug@edgec
 }
 
 if [ "$(id -u || true)" -ne 0 ]; then
@@ -59,10 +55,7 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     case "${version}" in
-        8.0)
-            xdebug_80
-        ;;
-        8.1)
+        8.0|8.1)
             xdebug_81
         ;;
         8.2)

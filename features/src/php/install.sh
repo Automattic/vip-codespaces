@@ -139,60 +139,58 @@ setup_php82() {
 setup_php83() {
     apk add --no-cache \
         icu-data-full icu-libs@edgem libavif@edgem libsodium@edgem ghostscript \
-        php83@edget php83-fpm@edget php83-pear@edget \
-        php83-pecl-apcu@edget \
-        php83-bcmath@edget \
-        php83-calendar@edget \
-        php83-ctype@edget \
-        php83-curl@edget \
-        php83-dom@edget \
-        php83-exif@edget \
-        php83-fileinfo@edget \
-        php83-ftp@edget \
-        php83-gd@edget \
-        php83-gmp@edget \
-        php83-iconv@edget \
-        php83-intl@edget \
-        php83-mbstring@edget \
-        php83-pecl-igbinary@edget \
-        php83-mysqli@edget \
-        php83-mysqlnd@edget \
-        php83-opcache@edget \
-        php83-openssl@edget \
-        php83-pcntl@edget \
-        php83-pdo@edget \
-        php83-pdo_sqlite@edget \
-        php83-phar@edget \
-        php83-posix@edget \
-        php83-session@edget \
-        php83-shmop@edget \
-        php83-simplexml@edget \
-        php83-soap@edget \
-        php83-sockets@edget \
-        php83-sodium@edget \
-        php83-sqlite3@edget \
-        php83-sysvsem@edget \
-        php83-sysvshm@edget \
-        php83-tokenizer@edget \
-        php83-xml@edget \
-        php83-xmlreader@edget \
-        php83-xmlwriter@edget \
-        php83-zip@edget
+        php83@edgec php83-fpm@edgec php83-pear@edgec \
+        php83-pecl-apcu@edgec \
+        php83-bcmath@edgec \
+        php83-calendar@edgec \
+        php83-ctype@edgec \
+        php83-curl@edgec \
+        php83-dom@edgec \
+        php83-exif@edgec \
+        php83-fileinfo@edgec \
+        php83-ftp@edgec \
+        php83-gd@edgec \
+        php83-gmp@edgec \
+        php83-iconv@edgec \
+        php83-intl@edgec \
+        php83-mbstring@edgec \
+        php83-pecl-igbinary@edgec \
+        php83-pecl-memcache@edgec \
+        php83-pecl-memcached@edgec \
+        php83-mysqli@edgec \
+        php83-mysqlnd@edgec \
+        php83-opcache@edgec \
+        php83-openssl@edgec \
+        php83-pcntl@edgec \
+        php83-pdo@edgec \
+        php83-pdo_sqlite@edgec \
+        php83-phar@edgec \
+        php83-posix@edgec \
+        php83-session@edgec \
+        php83-shmop@edgec \
+        php83-simplexml@edgec \
+        php83-soap@edgec \
+        php83-sockets@edgec \
+        php83-sodium@edgec \
+        php83-sqlite3@edgec \
+        php83-sysvsem@edgec \
+        php83-sysvshm@edgec \
+        php83-tokenizer@edgec \
+        php83-xml@edgec \
+        php83-xmlreader@edgec \
+        php83-xmlwriter@edgec \
+        php83-zip@edgec
 
-    # Missing: php83-pecl-ssh2 php83-pecl-timezonedb php83-pecl-memcache php83-pecl-memcached php83-pecl-mcrypt
+    # Missing: php83-pecl-ssh2 php83-pecl-timezonedb php83-pecl-mcrypt
 
-    apk add --no-cache php83-dev@edget gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp libmemcached libmemcached-dev
+    apk add --no-cache php83-dev@edgec gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
     pecl83 channel-update pecl.php.net
     pecl83 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-    pecl83 install memcache < /dev/null || true
-    pecl83 install memcached < /dev/null || true
     pecl83 install timezonedb < /dev/null || true
 
-    apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool libmemcached-dev
+    apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool
 
     echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
-    echo "extension=memcache.so" > /etc/php83/conf.d/40_memcache.ini
-    echo "extension=memcached.so" > /etc/php83/conf.d/40_memcached.ini
     echo "extension=timezonedb.so" > /etc/php83/conf.d/40_timezonedb.ini
 
     [ ! -f /usr/sbin/php-fpm ] && ln -s /usr/sbin/php-fpm83 /usr/sbin/php-fpm

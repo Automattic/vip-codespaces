@@ -1,7 +1,7 @@
 {
     "name": "Xdebug",
     "id": "xdebug",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Configures Xdebug for the Dev Environment",
     "options": {
         "enabled": {

@@ -72,59 +72,60 @@ setup_php81() {
 
 setup_php82() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem libavif@edgem libsodium@edgem ghostscript \
-        php82@edgec php82-fpm@edgec php82-pear@edgec \
-        php82-pecl-apcu@edgec \
-        php82-bcmath@edgec \
-        php82-calendar@edgec \
-        php82-ctype@edgec \
-        php82-curl@edgec \
-        php82-dom@edgec \
-        php82-exif@edgec \
-        php82-fileinfo@edgec \
-        php82-ftp@edgec \
-        php82-gd@edgec \
-        php82-gmp@edgec \
-        php82-iconv@edgec \
-        php82-intl@edgec \
-        php82-mbstring@edgec \
-        php82-pecl-igbinary@edgec \
-        php82-pecl-memcache@edgec \
-        php82-pecl-memcached@edgec \
-        php82-pecl-mcrypt@edgec \
-        php82-mysqli@edgec \
-        php82-mysqlnd@edgec \
-        php82-opcache@edgec \
-        php82-openssl@edgec \
-        php82-pcntl@edgec \
-        php82-pdo@edgec \
-        php82-pdo_sqlite@edgec \
-        php82-phar@edgec \
-        php82-posix@edgec \
-        php82-session@edgec \
-        php82-shmop@edgec \
-        php82-simplexml@edgec \
-        php82-soap@edgec \
-        php82-sockets@edgec \
-        php82-sodium@edgec \
-        php82-sqlite3@edgec \
-        php82-sysvsem@edgec \
-        php82-sysvshm@edgec \
-        php82-pecl-timezonedb@edgec \
-        php82-tokenizer@edgec \
-        php82-xml@edgec \
-        php82-xmlreader@edgec \
-        php82-xmlwriter@edgec \
-        php82-zip@edgec
+        icu-data-full ghostscript \
+        php82 php82-fpm php82-pear \
+        php82-pecl-apcu \
+        php82-bcmath \
+        php82-calendar \
+        php82-ctype \
+        php82-curl \
+        php82-dom \
+        php82-exif \
+        php82-fileinfo \
+        php82-ftp \
+        php82-gd \
+        php82-gmp \
+        php82-iconv \
+        php82-intl \
+        php82-mbstring \
+        php82-pecl-igbinary \
+        php82-pecl-memcache \
+        php82-pecl-memcached \
+        php82-pecl-ssh2 \
+        php82-mysqli \
+        php82-mysqlnd \
+        php82-opcache \
+        php82-openssl \
+        php82-pcntl \
+        php82-pdo \
+        php82-pdo_sqlite \
+        php82-phar \
+        php82-posix \
+        php82-session \
+        php82-shmop \
+        php82-simplexml \
+        php82-soap \
+        php82-sockets \
+        php82-sodium \
+        php82-sqlite3 \
+        php82-sysvsem \
+        php82-sysvshm \
+        php82-tokenizer \
+        php82-xml \
+        php82-xmlreader \
+        php82-xmlwriter \
+        php82-zip
 
-    # Missing: php82-pecl-ssh2
+    # missing: php82-pecl-mcrypt php82-pecl-timezonedb
 
-    apk add --no-cache php82-dev@edgec gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
+    apk add --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
     pecl82 channel-update pecl.php.net
     pecl82 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
+    pecl82 install timezonedb < /dev/null || true
     apk del --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool
 
     echo "extension=gmagick.so" > /etc/php82/conf.d/40_gmagick.ini
+    echo "extension=timezonedb.so" > /etc/php82/conf.d/40_timezonedb.ini
 
     [ ! -f /usr/sbin/php-fpm ] && ln -s /usr/sbin/php-fpm82 /usr/sbin/php-fpm
     [ ! -f /usr/bin/php ] && ln -s /usr/bin/php82 /usr/bin/php

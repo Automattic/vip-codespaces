@@ -58,7 +58,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Expose GitHub Runtime
-        uses: crazy-max/ghaction-github-runtime@v3
+        uses: Automattic/vip-actions/expose-github-runtime@trunk
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli

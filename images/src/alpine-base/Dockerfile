@@ -1,4 +1,4 @@
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -30,7 +30,7 @@ RUN apk add --no-cache \
     libstdc++ \
     krb5-libs \
     libintl \
-    libssl1.1 \
+    libssl3 \
     lttng-ust \
     tzdata \
     userspace-rcu \

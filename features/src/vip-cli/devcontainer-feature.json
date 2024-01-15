@@ -1,7 +1,7 @@
 {
     "id": "vip-cli",
     "name": "VIP CLI",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "description": "Installs VIP CLI into the Dev Environment",
     "options": {
         "enabled": {

@@ -25,11 +25,7 @@ if [ "${ENABLED}" = "true" ]; then
     install -d -m 0755 -o root -g root /etc/service
     install -d -m 0755 -o "${PHP_USER}" -g "${PHP_USER}" /wp
     install -d -m 0755 -o "${PHP_USER}" -g "${PHP_USER}" /wp/wp-content
-
-    find object-cache -type f -exec chmod 0644 {} \;
-    sudo chown -R "${PHP_USER}:${PHP_USER}" object-cache
-    cp -ar object-cache/* /wp/wp-content/
-
+    install -m 0644 -o "${PHP_USER}" -g "${PHP_USER}" object-cache.php /wp/wp-content/
     ln -sf /etc/sv/memcached /etc/service/memcached
     echo 'Done!'
 fi

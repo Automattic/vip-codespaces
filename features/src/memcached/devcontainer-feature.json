@@ -1,7 +1,7 @@
 {
     "name": "memcached",
     "id": "memcached",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Sets up memcached into the Dev Environment",
     "options": {
         "enabled": {

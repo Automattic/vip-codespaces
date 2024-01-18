@@ -1,7 +1,7 @@
 <?php
 
-if ( file_exists( __DIR__ . '/mu-plugins/dropins/object-cache.php' ) ) {
-	require_once __DIR__ . '/mu-plugins/dropins/object-cache.php';
+if ( file_exists( __DIR__ . '/mu-plugins/drop-ins/object-cache.php' ) ) {
+	require_once __DIR__ . '/mu-plugins/drop-ins/object-cache.php';
 }
 
 // We are not loading `../wp-includes/cache.php` as a fallback because `wp_start_object_cache()` does that for us.

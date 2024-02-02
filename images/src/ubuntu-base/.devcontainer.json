@@ -1,0 +1,16 @@
+{
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": "."
+    },
+    "x-build": {
+        "name": "Ubuntu",
+        "image-name": "ubuntu-base",
+        "image-version": "0.0.1"
+    },
+    "remoteUser": "vscode",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1.0.11": {},
+        "ghcr.io/devcontainers/features/git:1.2.0": {}
+    }
+}

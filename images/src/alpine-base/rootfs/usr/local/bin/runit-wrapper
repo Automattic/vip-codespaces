@@ -4,7 +4,7 @@ PID=
 
 onterm() {
     if [ -n "${PID}" ]; then
-        kill -SIGHUP "${PID}"
+        kill -HUP "${PID}"
     fi
 }
 

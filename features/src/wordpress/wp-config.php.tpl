@@ -1,9 +1,9 @@
 <?php
 
-define( 'DB_NAME', 'wordpress' );
-define( 'DB_USER', 'wordpress' );
-define( 'DB_PASSWORD', 'wordpress' );
-define( 'DB_HOST', '127.0.0.1' );
+define( 'DB_NAME', '${WP_DATABASE}' );
+define( 'DB_USER', '${WP_USERNAME}' );
+define( 'DB_PASSWORD', '${WP_PASSWORD}' );
+define( 'DB_HOST', '${WP_DBHOST}' );
 
 define( 'DB_CHARSET', 'utf8mb4' );
 define( 'DB_COLLATE', 'utf8mb4_unicode_520_ci' );

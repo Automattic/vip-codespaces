@@ -17,28 +17,45 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && yes | unminimize 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        apt-transport-https \
+        apt-utils \
+        bzip2 \
         ca-certificates \
         curl \
-        gnupg \
-        netbase \
-        wget \
-        tzdata \
-        lsof \
-        htop \
+        dialog \
+        dirmngr \
         gettext \
-        subversion \
-        zip \
-        unzip \
-        less \
-        rsync \
-        nano \
-        vim \
-        moreutils \
-        software-properties-common \
-        sudo \
+        gnupg2 \
+        htop \
+        iproute2 \
         jq \
+        less \
+        locales \
+        lsb-release \
+        lsof \
+        man-db \
+        manpages \
+        manpages-dev \
+        moreutils \
+        nano \
+        ncdu \
+        net-base \
+        net-tools \
         openssh-client \
+        psmisc \
+        procps \
+        rsync \
         runit \
+        software-properties-common \
+        strace \
+        subversion \
+        sudo \
+        tzdata \
+        unzip \
+        vim-tiny \
+        wget \
+        xz-utils \
+        zip \
     && rm -rf /var/lib/apt/lists/*
 
 ADD rootfs /

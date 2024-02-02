@@ -39,7 +39,6 @@ RUN apt-get update \
         moreutils \
         nano \
         ncdu \
-        net-base \
         net-tools \
         openssh-client \
         psmisc \
@@ -58,7 +57,7 @@ RUN apt-get update \
         zip \
     && rm -rf /var/lib/apt/lists/*
 
-ADD rootfs /
+RUN update-rc.d procps remove
 
 RUN \
     groupadd --gid "${USER_GID}" "${USERNAME}" && \
@@ -66,4 +65,4 @@ RUN \
     echo "${USERNAME} ALL=(root) NOPASSWD:ALL" > "/etc/sudoers.d/${USERNAME}" && \
     chmod 0440 "/etc/sudoers.d/${USERNAME}"
 
-ENTRYPOINT ["/usr/local/bin/runit-wrapper"]
+ENTRYPOINT ["/usr/sbin/runit"]

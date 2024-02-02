@@ -63,6 +63,14 @@ fi
 
 sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config /wp/logs
 
+export WP_USERNAME="wordpress"
+export WP_PASSWORD="wordpress"
+export WP_DATABASE="wordpress"
+export WP_DBHOST="${db_host}"
+
+# shellcheck disable=SC2016
+envsubst '$WP_USERNAME $WP_PASSWORD $WP_DATABASE $WP_DBHOST' < /usr/share/wordpress/wp-config.php.tpl > /wp/config/wp-config.php
+
 cp -f /usr/share/wordpress/wp-config.php.tpl /wp/config/wp-config.php
 if [ -n "${multisite_domain}" ]; then
     wp config set WP_ALLOW_MULTISITE true --raw  --config-file=/wp/config/wp-config.php
@@ -91,13 +99,25 @@ if ! mysqladmin ping -u "${db_admin_user}" -h "${db_host}" --silent; then
 fi
 
 echo "Checking for database connectivity..."
-if ! mysql -h "${db_host}" -u wordpress -pwordpress wordpress -e "SELECT 'testing_db'" >/dev/null 2>&1; then
+if ! mysql -h "${db_host}" -u "${WP_USERNAME}" -p"${WP_PASSWORD}" "${WP_DATABASE}" -e "SELECT 'testing_db'" >/dev/null 2>&1; then
     echo "No WordPress database exists, provisioning..."
-    echo "CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY 'wordpress'" | mysql -h "${db_host}" -u "${db_admin_user}"
-    echo "CREATE USER IF NOT EXISTS 'wordpress'@'%' IDENTIFIED BY 'wordpress'" | mysql -h "${db_host}" -u "${db_admin_user}"
-    echo "GRANT ALL ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;" | mysql -h "${db_host}" -u "${db_admin_user}"
-    echo "GRANT ALL ON *.* TO 'wordpress'@'%' WITH GRANT OPTION;" | mysql -h "${db_host}" -u "${db_admin_user}"
-    echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mysql -h "${db_host}" -u "${db_admin_user}"
+    {
+        echo "CREATE USER IF NOT EXISTS '${WP_USERNAME}'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
+        echo "CREATE USER IF NOT EXISTS '${WP_USERNAME}'@'%' IDENTIFIED BY '${WP_PASSWORD}';";
+        echo "GRANT ALL ON *.* TO '${WP_USERNAME}'@'localhost';"
+        echo "GRANT ALL ON *.* TO '${WP_USERNAME}'@'%';"
+        echo "CREATE DATABASE IF NOT EXISTS ${WP_DATABASE};"
+    } | mysql -h "${db_host}" -u "${db_admin_user}"
+fi
+
+if ! mysql -h "${db_host}" -unetapp -p"${WP_PASSWORD}" "${WP_DATABASE}" -e "SELECT 'testing_db'" >/dev/null 2>&1; then
+    echo "Provisioning netapp user..."
+    {
+        echo "CREATE USER IF NOT EXISTS 'netapp'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
+        echo "CREATE USER IF NOT EXISTS 'netapp'@'%' IDENTIFIED BY '${WP_PASSWORD}';";
+        echo "GRANT ALL ON *.* TO 'netapp'@'localhost';"
+        echo "GRANT ALL ON *.* TO 'netapp'@'%';"
+    } | mysql -h "${db_host}" -u "${db_admin_user}"
 fi
 
 echo "Checking for WordPress installation..."
@@ -147,7 +167,7 @@ fi
 if [ ! -f "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh" ]; then
     export WP_URL="${wp_url}"
     # shellcheck disable=SC2016
-    envsubst '${WP_URL}' < /usr/share/wordpress/010-wplogin.tpl > "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh"
+    envsubst '$WP_URL' < /usr/share/wordpress/010-wplogin.tpl > "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh"
 fi
 
 exit 0

@@ -70,8 +70,6 @@ export WP_DBHOST="${db_host}"
 
 # shellcheck disable=SC2016
 envsubst '$WP_USERNAME $WP_PASSWORD $WP_DATABASE $WP_DBHOST' < /usr/share/wordpress/wp-config.php.tpl > /wp/config/wp-config.php
-
-cp -f /usr/share/wordpress/wp-config.php.tpl /wp/config/wp-config.php
 if [ -n "${multisite_domain}" ]; then
     wp config set WP_ALLOW_MULTISITE true --raw  --config-file=/wp/config/wp-config.php
     wp config set MULTISITE true --raw  --config-file=/wp/config/wp-config.php

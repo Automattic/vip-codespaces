@@ -1,7 +1,7 @@
 {
     "id": "base",
     "name": "VIP Codespaces Base",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Base feature for VIP Codespaces",
     "containerEnv": {
         "PAGER": "\"/usr/bin/less -R\""

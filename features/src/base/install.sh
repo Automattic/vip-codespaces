@@ -15,13 +15,6 @@ else
     THE_USER="${_REMOTE_USER}"
 fi
 
-{
-    echo "@edgem https://dl-cdn.alpinelinux.org/alpine/edge/main"
-    echo "@edgec https://dl-cdn.alpinelinux.org/alpine/edge/community"
-    echo "@edget https://dl-cdn.alpinelinux.org/alpine/edge/testing"
-} >> /etc/apk/repositories
-
-
 HOME_DIR="$(getent passwd "${THE_USER}" | cut -d: -f6)"
 
 install -d -D -m 0755 -o "${THE_USER}" -g "${THE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"

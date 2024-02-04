@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.2.6",
+    "version": "2.3.0",
     "containerEnv": {
         "PHP_INI_DIR": "/etc/php"
     },

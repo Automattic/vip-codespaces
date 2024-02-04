@@ -23,8 +23,8 @@ setup_php81() {
         php81-intl \
         php81-json \
         php81-mbstring \
-        php81-pecl-igbinary@edgec \
-        php81-pecl-mcrypt@edgec \
+        php81-pecl-igbinary \
+        php81-pecl-mcrypt \
         php81-pecl-memcache \
         php81-pecl-memcached \
         php81-mysqli \
@@ -46,7 +46,7 @@ setup_php81() {
         php81-pecl-ssh2 \
         php81-sysvsem \
         php81-sysvshm \
-        php81-pecl-timezonedb@edgec \
+        php81-pecl-timezonedb \
         php81-tokenizer \
         php81-xml \
         php81-xmlreader \
@@ -89,6 +89,7 @@ setup_php82() {
         php82-intl \
         php82-mbstring \
         php82-pecl-igbinary \
+        php82-pecl-mcrypt \
         php82-pecl-memcache \
         php82-pecl-memcached \
         php82-pecl-ssh2 \
@@ -110,22 +111,19 @@ setup_php82() {
         php82-sqlite3 \
         php82-sysvsem \
         php82-sysvshm \
+        php82-pecl-timezonedb \
         php82-tokenizer \
         php82-xml \
         php82-xmlreader \
         php82-xmlwriter \
         php82-zip
 
-    # missing: php82-pecl-mcrypt php82-pecl-timezonedb
-
     apk add --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
     pecl82 channel-update pecl.php.net
     pecl82 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-    pecl82 install timezonedb < /dev/null || true
     apk del --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool
 
     echo "extension=gmagick.so" > /etc/php82/conf.d/40_gmagick.ini
-    echo "extension=timezonedb.so" > /etc/php82/conf.d/40_timezonedb.ini
 
     [ ! -f /usr/sbin/php-fpm ] && ln -s /usr/sbin/php-fpm82 /usr/sbin/php-fpm
     [ ! -f /usr/bin/php ] && ln -s /usr/bin/php82 /usr/bin/php
@@ -139,52 +137,53 @@ setup_php82() {
 
 setup_php83() {
     apk add --no-cache \
-        icu-data-full icu-libs@edgem libavif@edgem libsodium@edgem ghostscript \
-        php83@edgec php83-fpm@edgec php83-pear@edgec \
-        php83-pecl-apcu@edgec \
-        php83-bcmath@edgec \
-        php83-calendar@edgec \
-        php83-ctype@edgec \
-        php83-curl@edgec \
-        php83-dom@edgec \
-        php83-exif@edgec \
-        php83-fileinfo@edgec \
-        php83-ftp@edgec \
-        php83-gd@edgec \
-        php83-gmp@edgec \
-        php83-iconv@edgec \
-        php83-intl@edgec \
-        php83-mbstring@edgec \
-        php83-pecl-igbinary@edgec \
-        php83-pecl-memcache@edgec \
-        php83-pecl-memcached@edgec \
-        php83-mysqli@edgec \
-        php83-mysqlnd@edgec \
-        php83-opcache@edgec \
-        php83-openssl@edgec \
-        php83-pcntl@edgec \
-        php83-pdo@edgec \
-        php83-pdo_sqlite@edgec \
-        php83-phar@edgec \
-        php83-posix@edgec \
-        php83-session@edgec \
-        php83-shmop@edgec \
-        php83-simplexml@edgec \
-        php83-soap@edgec \
-        php83-sockets@edgec \
-        php83-sodium@edgec \
-        php83-sqlite3@edgec \
-        php83-sysvsem@edgec \
-        php83-sysvshm@edgec \
-        php83-tokenizer@edgec \
-        php83-xml@edgec \
-        php83-xmlreader@edgec \
-        php83-xmlwriter@edgec \
-        php83-zip@edgec
+        icu-data-full ghostscript \
+        php83 php83-fpm php83-pear \
+        php83-pecl-apcu \
+        php83-bcmath \
+        php83-calendar \
+        php83-ctype \
+        php83-curl \
+        php83-dom \
+        php83-exif \
+        php83-fileinfo \
+        php83-ftp \
+        php83-gd \
+        php83-gmp \
+        php83-iconv \
+        php83-intl \
+        php83-mbstring \
+        php83-pecl-igbinary \
+        php83-pecl-memcache \
+        php83-pecl-memcached \
+        php83-pecl-ssh2 \
+        php83-mysqli \
+        php83-mysqlnd \
+        php83-opcache \
+        php83-openssl \
+        php83-pcntl \
+        php83-pdo \
+        php83-pdo_sqlite \
+        php83-phar \
+        php83-posix \
+        php83-session \
+        php83-shmop \
+        php83-simplexml \
+        php83-soap \
+        php83-sockets \
+        php83-sodium \
+        php83-sqlite3 \
+        php83-sysvsem \
+        php83-sysvshm \
+        php83-tokenizer \
+        php83-xml \
+        php83-xmlreader \
+        php83-xmlwriter \
+        php83-zip
 
-    # Missing: php83-pecl-ssh2 php83-pecl-timezonedb php83-pecl-mcrypt
+    # Missing: php83-pecl-mcrypt
 
-    apk add --no-cache php83-dev@edgec gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
+    apk add --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
     pecl83 channel-update pecl.php.net
     pecl83 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
     pecl83 install timezonedb < /dev/null || true

@@ -5,15 +5,15 @@ set -e
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
 xdebug_81() {
-    apk add --no-cache --force-overwrite php81-pecl-xdebug
+    apk add --no-cache php81-pecl-xdebug
 }
 
 xdebug_82() {
-    apk add --no-cache --force-overwrite php82-pecl-xdebug@edgec
+    apk add --no-cache php82-pecl-xdebug
 }
 
 xdebug_83() {
-    apk add --no-cache --force-overwrite php83-pecl-xdebug@edgec
+    apk add --no-cache php83-pecl-xdebug
 }
 
 if [ "$(id -u || true)" -ne 0 ]; then

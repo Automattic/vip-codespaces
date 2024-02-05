@@ -44,14 +44,18 @@ jobs:
         id: changes
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            base="${{ github.event.before }}"
-            head="${{ github.event.after }}"
-            image="images/src/${{ matrix.image.image-name }}"
-            changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
-            if [ -n "${changes}" ]; then
+            if [ "${{ github.event.forced }}" = "true" ]; then
               echo needs_build=true >> "${GITHUB_OUTPUT}"
             else
-              echo needs_build=false >> "${GITHUB_OUTPUT}"
+              base="${{ github.event.before }}"
+              head="${{ github.event.after }}"
+              image="images/src/${{ matrix.image.image-name }}"
+              changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+              if [ -n "${changes}" ]; then
+                echo needs_build=true >> "${GITHUB_OUTPUT}"
+              else
+                echo needs_build=false >> "${GITHUB_OUTPUT}"
+              fi
             fi
           else
             echo needs_build=true >> "${GITHUB_OUTPUT}"

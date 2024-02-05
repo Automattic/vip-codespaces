@@ -102,6 +102,10 @@ jobs:
         run: npm install -g @devcontainers/cli
         if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
 
+      - name: Expose GitHub Runtime
+        uses: Automattic/vip-actions/expose-github-runtime@trunk
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
+
       - name: Build image
         run: |
           devcontainer build \
@@ -111,6 +115,8 @@ jobs:
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }} \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }} \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:latest \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max
             --push
         if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
 

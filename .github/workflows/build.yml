@@ -63,6 +63,16 @@ jobs:
         run: npm install -g @devcontainers/cli
         if: steps.changes.outputs.needs_build == 'true'
 
+      - name: Expose GitHub Runtime
+        uses: Automattic/vip-actions/expose-github-runtime@trunk
+        if: steps.changes.outputs.needs_build == 'true'
+
       - name: Build image
-        run: devcontainer build --workspace-folder "images/src/${{ matrix.image.image-name }}" --platform linux/amd64,linux/arm64 --output type=image
+        run: |
+          devcontainer build \
+            --workspace-folder "images/src/${{ matrix.image.image-name }}" \
+            --platform linux/amd64,linux/arm64 \
+            --output type=image \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max
         if: steps.changes.outputs.needs_build == 'true'

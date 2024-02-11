@@ -21,7 +21,7 @@ jobs:
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
           for image in images/src/*; do
-            changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+            changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
             if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${image}/.devcontainer.json"; then
               echo "::error::Changes were made to ${image}, but the corresponding .devcontainer.json was not updated"
               echo FAIL=1 >> "${GITHUB_ENV}"
@@ -33,7 +33,7 @@ jobs:
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
           for feature in features/src/*; do
-            changes="$(git diff --name-only "${base}" "${head}" -- "${feature}" | grep -Fv "${feature}/README.md" || true)"
+            changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${feature}" | grep -Fv "${feature}/README.md" || true)"
             if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${feature}/devcontainer-feature.json"; then
               echo "::error::Changes were made to ${feature}, but the corresponding devcontainer-feature.json was not updated"
               echo FAIL=1 >> "${GITHUB_ENV}"
@@ -45,7 +45,7 @@ jobs:
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
           for template in templates/src/*; do
-            changes="$(git diff --name-only "${base}" "${head}" -- "${template}" | grep -Fv "${template}/README.md" || true)"
+            changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${template}" | grep -Fv "${template}/README.md" || true)"
             if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${template}/devcontainer-template.json"; then
               echo "::error::Changes were made to ${template}, but the corresponding devcontainer-template.json was not updated"
               echo FAIL=1 >> "${GITHUB_ENV}"

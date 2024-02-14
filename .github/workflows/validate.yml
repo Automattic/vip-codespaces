@@ -11,6 +11,9 @@ permissions:
 
 jobs:
   validate:
+    name: Validate devcontainer-feature.json files
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

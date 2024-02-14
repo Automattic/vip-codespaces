@@ -1,0 +1,23 @@
+name: Validate Features
+
+on:
+  pull_request:
+    paths:
+      - "features/src/**/devcontainer-feature.json"
+      - ".github/workflows/validate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: "Validate devcontainer-feature.json files"
+        uses: devcontainers/action@v1.4.1
+        with:
+          validate-only: "true"
+          base-path-to-features: "./features/src"

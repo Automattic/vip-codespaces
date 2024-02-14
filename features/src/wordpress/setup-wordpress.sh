@@ -96,27 +96,13 @@ if ! mysqladmin ping -u "${db_admin_user}" -h "${db_host}" --silent; then
     exit 1;
 fi
 
-echo "Checking for database connectivity..."
-if ! mysql -h "${db_host}" -u "${WP_USERNAME}" -p"${WP_PASSWORD}" "${WP_DATABASE}" -e "SELECT 'testing_db'" >/dev/null 2>&1; then
-    echo "No WordPress database exists, provisioning..."
-    {
-        echo "CREATE USER IF NOT EXISTS '${WP_USERNAME}'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
-        echo "CREATE USER IF NOT EXISTS '${WP_USERNAME}'@'%' IDENTIFIED BY '${WP_PASSWORD}';";
-        echo "GRANT ALL ON *.* TO '${WP_USERNAME}'@'localhost';"
-        echo "GRANT ALL ON *.* TO '${WP_USERNAME}'@'%';"
-        echo "CREATE DATABASE IF NOT EXISTS ${WP_DATABASE};"
-    } | mysql -h "${db_host}" -u "${db_admin_user}"
-fi
-
-if ! mysql -h "${db_host}" -unetapp -p"${WP_PASSWORD}" "${WP_DATABASE}" -e "SELECT 'testing_db'" >/dev/null 2>&1; then
-    echo "Provisioning netapp user..."
-    {
-        echo "CREATE USER IF NOT EXISTS 'netapp'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
-        echo "CREATE USER IF NOT EXISTS 'netapp'@'%' IDENTIFIED BY '${WP_PASSWORD}';";
-        echo "GRANT ALL ON *.* TO 'netapp'@'localhost';"
-        echo "GRANT ALL ON *.* TO 'netapp'@'%';"
-    } | mysql -h "${db_host}" -u "${db_admin_user}"
-fi
+{
+    echo "CREATE USER IF NOT EXISTS '${WP_USERNAME}'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
+    echo "CREATE USER IF NOT EXISTS 'netapp'@'localhost' IDENTIFIED BY '${WP_PASSWORD}';";
+    echo "CREATE DATABASE IF NOT EXISTS ${WP_DATABASE};"
+    echo "GRANT ALL ON ${WP_DATABASE}.* TO '${WP_USERNAME}'@'localhost';"
+    echo "GRANT ALL ON ${WP_DATABASE}.* TO 'netapp'@'localhost';"
+} | mysql -h "${db_host}" -u "${db_admin_user}"
 
 echo "Checking for WordPress installation..."
 if ! wp core is-installed >/dev/null 2>&1; then

@@ -1,10 +1,5 @@
 #!/bin/sh
-# system one time tasks
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
-# /etc/init.d/rcS
-# /etc/init.d/rmnologin
-
-touch /etc/runit/stopit
-chmod 0 /etc/runit/stopit
+install -m 0000 /dev/null /run/runit.stopit

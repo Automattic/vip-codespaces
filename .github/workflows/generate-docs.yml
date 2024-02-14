@@ -1,0 +1,47 @@
+name: Generate docs
+
+on:
+  push:
+    paths:
+      - 'features/src/**/devcontainer-feature.json'
+      - 'features/src/**/NOTES.md'
+      - '.github/workflows/generate-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-feature-docs:
+    name: Generate documentation for features
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+  
+      - name: Generate documentation
+        uses: devcontainers/action@v1.4.1
+        with:
+          generate-docs: true
+          base-path-to-features: ./features/src
+
+      - name: Create a PR for documentation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git config --global user.email github-actions[bot]@users.noreply.github.com
+          git config --global user.name github-actions[bot]
+          git config pull.rebase false
+          branch="automated-documentation-update-${GITHUB_RUN_ID}"
+          git checkout -b "${branch}"
+          message='docs: automated documentation update'
+          git add features/src/**/README.md
+          git commit -m "${message}" || export NO_UPDATES=true
+          if [ "${NO_UPDATES}" != "true" ] ; then
+              git push origin "${branch}"
+              gh pr create --title "${message}" --body "Update documentation for features"
+          fi

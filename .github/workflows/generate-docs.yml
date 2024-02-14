@@ -2,6 +2,8 @@ name: Generate docs
 
 on:
   push:
+    branches:
+      - trunk
     paths:
       - 'features/src/**/devcontainer-feature.json'
       - 'features/src/**/NOTES.md'
@@ -29,24 +31,12 @@ jobs:
           base-path-to-features: ./features/src
 
       - name: Create a PR for documentation
+        uses: peter-evans/create-pull-request@v6.0.0
+        with:
+          add-paths: ':(glob)features/src/**/README.md'
+          commit-message: 'docs: automated documentation update'
+          title: 'docs: automated documentation update'
+          body: 'Update documentation for features'
+          labels: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e
-          git config --global user.email github-actions[bot]@users.noreply.github.com
-          git config --global user.name github-actions[bot]
-          git config pull.rebase false
-          branch="automated-documentation-update-${GITHUB_RUN_ID}"
-          git checkout -b "${branch}"
-          message='docs: automated documentation update'
-          git add features/src/**/README.md
-          git commit -m "${message}" || export NO_UPDATES=true
-          if [ "${NO_UPDATES}" != "true" ] ; then
-              git push origin "${branch}"
-              if [ "${{ github.event_name }}" = 'pull_request' ]; then
-                  base="${{ github.event.pull_request.base.ref }}"
-              else
-                  base="${{ github.event.repository.default_branch }}"
-              fi
-              gh pr create --title "${message}" --body "Update documentation for features" --base "${base}"
-          fi

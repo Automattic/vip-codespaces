@@ -133,6 +133,10 @@ jobs:
             --cache-to type=gha,mode=max
         if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
 
+      - name: Publish image
+        run: docker push --all-tags ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
+
   publish-features:
     name: Publish features
     runs-on: ubuntu-latest

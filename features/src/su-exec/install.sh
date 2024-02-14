@@ -29,15 +29,15 @@ case "${ID_LIKE}" in
             PACKAGES="${PACKAGES} libc6-dev"
         fi
 
-        if ! which cc >/dev/null 2>&1; then
+        if ! hash cc >/dev/null 2>&1; then
             PACKAGES="${PACKAGES} tcc"
         fi
 
-        if ! which wget >/dev/null 2>&1; then
+        if ! hash wget >/dev/null 2>&1; then
             PACKAGES="${PACKAGES} wget"
         fi
 
-        if ! which update-ca-certificates >/dev/null 2>&1; then
+        if ! hash update-ca-certificates >/dev/null 2>&1; then
             PACKAGES="${PACKAGES} ca-certificates"
         fi
 

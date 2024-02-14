@@ -2,6 +2,9 @@ name: Validate Features
 
 on:
   pull_request:
+    paths:
+      - "features/src/**/devcontainer-feature.json"
+      - ".github/workflows/validate.yml"
 
 permissions:
   contents: read

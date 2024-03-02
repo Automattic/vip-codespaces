@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
   
       - name: Generate documentation
-        uses: devcontainers/action@v1.4.1
+        uses: devcontainers/action@v1.4.2
         with:
           generate-docs: true
           base-path-to-features: ./features/src

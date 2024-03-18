@@ -1,16 +1,13 @@
 {
     "id": "wp-cli",
     "name": "WP CLI",
-    "version": "1.1.0",
-    "description": "Sets up wp-cli into the Dev Environment",
+    "version": "1.1.1",
+    "description": "Sets up wp-cli in the devcontainer",
     "options": {
         "nightly": {
             "type": "boolean",
             "default": false,
             "description": "Whether to install WP CLI nightly"
         }
-    },
-    "installsAfter": [
-        "ghcr.io/automattic/vip-codespaces/php"
-    ]
+    }
 }

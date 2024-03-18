@@ -1,7 +1,7 @@
 
 # WP CLI (wp-cli)
 
-Sets up wp-cli into the Dev Environment
+Sets up wp-cli in the devcontainer
 
 ## Example Usage
 

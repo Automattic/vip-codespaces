@@ -9,3 +9,8 @@ updates:
     package-ecosystem: docker
     schedule:
       interval: daily
+
+  - directory: images/src/ubuntu-base
+    package-ecosystem: docker
+    schedule:
+      interval: daily

@@ -6,16 +6,9 @@
     "x-build": {
         "name": "WPVIP",
         "image-name": "wpvip-base",
-        "image-version": "0.0.1"
+        "image-version": "0.0.2"
     },
     "remoteUser": "vscode",
-    "forwardPorts": [80],
-    "portsAttributes": {
-        "80": {
-            "label": "Application",
-            "onAutoForward": "notify"
-        }
-    },
     "postStartCommand": "/usr/local/bin/post-start.sh",
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {

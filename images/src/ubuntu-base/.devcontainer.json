@@ -27,7 +27,7 @@
             "username": "vscode"
         },
         "ghcr.io/devcontainers/features/github-cli:1.0.12": {},
-        "ghcr.io/devcontainers/features/git:1.2.1": {},
+        "ghcr.io/devcontainers/features/git:1.3.0": {},
         "./.devcontainer/local-features/sudo": {},
         "./.devcontainer/local-features/cleanup": {},
         "./.devcontainer/local-features/syslog": {}

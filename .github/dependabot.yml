@@ -10,23 +10,23 @@ updates:
         patterns:
           - "docker/*"
 
-  - directory: images/src/alpine-base
+  - directory: base-images/src/alpine-base
     package-ecosystem: docker
     schedule:
       interval: daily
 
-  - directory: images/src/ubuntu-base
+  - directory: base-images/src/ubuntu-base
     package-ecosystem: docker
+    schedule:
+      interval: daily
+
+  - directory: base-images/src/ubuntu-base
+    package-ecosystem: devcontainers
     schedule:
       interval: daily
 
   - directory: images/src/wpvip-base
     package-ecosystem: docker
-    schedule:
-      interval: daily
-
-  - directory: images/src/ubuntu-base
-    package-ecosystem: devcontainers
     schedule:
       interval: daily
 

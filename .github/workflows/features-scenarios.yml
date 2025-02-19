@@ -71,7 +71,7 @@ jobs:
           REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
           for image in alpine-base ubuntu-base; do
             devcontainer build \
-              --workspace-folder images/src/${image} \
+              --workspace-folder base-images/src/${image} \
               --image-name="ghcr.io/${REPO}/${image}:latest" \
               --cache-from type=gha
           done

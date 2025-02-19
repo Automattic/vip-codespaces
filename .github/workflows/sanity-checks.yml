@@ -20,7 +20,7 @@ jobs:
         run: |
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
-          for image in images/src/*; do
+          for image in base-images/src/*; do
             changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
             if [ -n "${changes}" ]; then
               if ! echo "${changes}" | grep -q "${image}/.devcontainer.json"; then

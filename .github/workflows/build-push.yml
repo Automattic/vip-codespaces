@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Base Image
 
 on:
   push:
@@ -10,8 +10,21 @@ permissions:
   contents: read
 
 jobs:
-  prepare:
-    name: Prepare list of images to build
+  prepare-base:
+    name: Prepare list of base images to build
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.set-matrix.outputs.images }}
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set matrix
+        id: set-matrix
+        run: echo images="$(jq '."x-build"' base-images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
+
+  prepare-others:
+    name: Prepare list of other images to build
     runs-on: ubuntu-latest
     outputs:
       images: ${{ steps.set-matrix.outputs.images }}
@@ -23,8 +36,8 @@ jobs:
         id: set-matrix
         run: echo images="$(jq '."x-build"' images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
 
-  publish-images:
-    needs: prepare
+  publish-base-images:
+    needs: prepare-base
     name: 'Publish ${{ matrix.image.name }}'
     runs-on: ubuntu-latest
     permissions:
@@ -33,7 +46,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ${{ fromJson(needs.prepare.outputs.images) }}
+        image: ${{ fromJson(needs.prepare-base.outputs.images) }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -49,7 +62,7 @@ jobs:
             else
               base="${{ github.event.before }}"
               head="${{ github.event.after }}"
-              image="images/src/${{ matrix.image.image-name }}"
+              image="base-images/src/${{ matrix.image.image-name }}"
               changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
               if [ -n "${changes}" ]; then
                 echo needs_build=true >> "${GITHUB_OUTPUT}"
@@ -73,7 +86,7 @@ jobs:
                 "containerd-snapshotter": true
               }
             }
-  
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@4574d27a4764455b42196d70a065bc6853246a25 # v3.4.0
         if: steps.changes.outputs.needs_build == 'true'
@@ -118,7 +131,7 @@ jobs:
       - name: Build image
         run: |
           devcontainer build \
-            --workspace-folder images/src/${{ matrix.image.image-name }} \
+            --workspace-folder base-images/src/${{ matrix.image.image-name }} \
             --platform linux/amd64,linux/arm64 \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }}.${{ steps.set-versions.outputs.patch }} \
             --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }} \
@@ -222,3 +235,116 @@ jobs:
       - name: Publish templates
         run: devcontainer templates publish templates/src --namespace "${{ github.repository }}"
         if: steps.changes.outputs.needs_build == 'true'
+
+  publish-other-images:
+    needs:
+      - prepare-others
+      - publish-base-images
+      - publish-features
+    name: 'Publish ${{ matrix.image.name }}'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.prepare-others.outputs.images) }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            if [ "${{ github.event.forced }}" = "true" ]; then
+              echo needs_build=true >> "${GITHUB_OUTPUT}"
+            else
+              base="${{ github.event.before }}"
+              head="${{ github.event.after }}"
+              image="images/src/${{ matrix.image.image-name }}"
+              changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
+              if [ -n "${changes}" ]; then
+                echo needs_build=true >> "${GITHUB_OUTPUT}"
+              else
+                echo needs_build=false >> "${GITHUB_OUTPUT}"
+              fi
+            fi
+          else
+            echo needs_build=true >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Expose GitHub Runtime
+        uses: Automattic/vip-actions/expose-github-runtime@e1faabf165941008de4c0c1381df153e49d8ad2c # v0.6.0
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@370a7dad4b8ce8dbf00f9363e1652e5074dd6abe # v4.1.0
+        with:
+          daemon-config: |
+            {
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@4574d27a4764455b42196d70a065bc6853246a25 # v3.4.0
+        if: steps.changes.outputs.needs_build == 'true'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f7ce87c1d6bead3e36075b2ce75da1f6cc28aaca # v3.9.0
+        if: steps.changes.outputs.needs_build == 'true'
+
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        if: steps.changes.outputs.needs_build == 'true'
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase repository name
+        run: echo "REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> "${GITHUB_ENV}"
+
+      - name: Set versions
+        if: steps.changes.outputs.needs_build == 'true'
+        id: set-versions
+        run: |
+          echo major="$(echo "${{ matrix.image.image-version }}" | cut -d. -f1)" >> "${GITHUB_OUTPUT}"
+          echo minor="$(echo "${{ matrix.image.image-version }}" | cut -d. -f2)" >> "${GITHUB_OUTPUT}"
+          echo patch="$(echo "${{ matrix.image.image-version }}" | cut -d. -f3)" >> "${GITHUB_OUTPUT}"
+
+      - name: Check if image already exists
+        if: steps.changes.outputs.needs_build == 'true'
+        id: exists
+        run: |
+          if docker buildx imagetools inspect "ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }}.${{ steps.set-versions.outputs.patch }}" > /dev/null 2>&1; then
+            echo exists=true >> "${GITHUB_OUTPUT}"
+          else
+            echo exists=false >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Install @devcontainers/cli
+        run: npm install -g @devcontainers/cli
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
+
+      - name: Build image
+        run: |
+          devcontainer build \
+            --workspace-folder images/src/${{ matrix.image.image-name }} \
+            --platform linux/amd64,linux/arm64 \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }}.${{ steps.set-versions.outputs.patch }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }}.${{ steps.set-versions.outputs.minor }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:${{ steps.set-versions.outputs.major }} \
+            --image-name=ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}:latest \
+            --output type=docker \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}
+
+      - name: Publish image
+        run: docker push --all-tags ghcr.io/${{ env.REPO }}/${{ matrix.image.image-name }}
+        if: ${{ steps.changes.outputs.needs_build == 'true' && steps.exists.outputs.exists != 'true' }}

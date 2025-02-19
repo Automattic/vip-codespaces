@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build Base Image
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Set matrix
         id: set-matrix
-        run: echo images="$(jq '."x-build"' images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
+        run: echo images="$(jq '."x-build"' base-images/src/*/.devcontainer.json | jq --slurp -c .)" >> "${GITHUB_OUTPUT}"
 
   build:
     needs: prepare
@@ -43,7 +43,7 @@ jobs:
         run: |
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
-          image="images/src/${{ matrix.image.image-name }}"
+          image="base-images/src/${{ matrix.image.image-name }}"
           changes="$(git diff --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
           if [ -n "${changes}" ]; then
             echo needs_build=true >> "${GITHUB_OUTPUT}"
@@ -70,7 +70,7 @@ jobs:
       - name: Build image
         run: |
           devcontainer build \
-            --workspace-folder "images/src/${{ matrix.image.image-name }}" \
+            --workspace-folder "base-images/src/${{ matrix.image.image-name }}" \
             --platform linux/amd64,linux/arm64 \
             --output type=image \
             --cache-from type=gha \

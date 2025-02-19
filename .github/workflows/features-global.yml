@@ -50,7 +50,7 @@ jobs:
             IMAGE=ubuntu-base
           fi
           devcontainer build \
-            --workspace-folder "images/src/${IMAGE}" \
+            --workspace-folder "base-images/src/${IMAGE}" \
             --image-name="ghcr.io/${REPO}/${IMAGE}:latest" \
             --cache-from type=gha
 

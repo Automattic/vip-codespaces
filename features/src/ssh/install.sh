@@ -36,6 +36,7 @@ if [ "${ENABLED:-}" = "true" ]; then
         ;;
 
         "alpine")
+            apk upgrade --no-cache 'openssh*' openssl
             # shellcheck disable=SC2086
             apk add --no-cache openssh-server-pam openssl
             ln -sf /usr/sbin/sshd.pam /usr/sbin/sshd

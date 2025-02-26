@@ -2,7 +2,7 @@
     "id": "ssh",
     "name": "SSH",
     "description": "Sets up SSH into the Dev Environment",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/ssh",
     "options": {
         "enabled": {

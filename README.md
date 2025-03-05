@@ -1,10 +1,10 @@
 # VIP Codespaces
 
-A development environment for WordPress VIP sites using GitHub Codespaces and VS Code Remote Containers.
+A development environment for WordPress VIP sites using GitHub Codespaces and VS Code Development Containers.
 
 ## Overview
 
-VIP Codespaces provides a containerized development environment for WordPress VIP sites, making it easy to set up and maintain a consistent development environment across teams. It leverages GitHub Codespaces and VS Code (and forks) Remote Containers to provide a seamless development experience.
+VIP Codespaces provides a containerized development environment for WordPress VIP sites, making it easy to set up and maintain a consistent development environment across teams. It leverages GitHub Codespaces and VS Code (and forks) [Development Containers](https://containers.dev/) to provide a seamless development experience.
 
 ## Features
 
@@ -25,14 +25,15 @@ VIP Codespaces provides a containerized development environment for WordPress VI
 
 ### Using with GitHub Codespaces
 
-1. Add the `.devcontainer` configuration to your WordPress VIP project
+1. We provide the `.devcontainer/devcontainer.json` in our [Skeleton template repository](https://github.com/Automattic/vip-go-skeleton/tree/production/.devcontainer). For older codebases, you will need to add the `.devcontainer/devcontainer.json` configuration to your WordPress VIP repository manually
 2. Start a new Codespace from your repository
 3. Wait for the environment to build and initialize
 4. Access your WordPress site at the forwarded port (typically port 80)
 
-### Using with VS Code/Cursor/Windsurf Remote Containers
 
-1. Add the `.devcontainer` configuration to your WordPress VIP project
+### Using with VS Code/Cursor/Windsurf Development Containers
+
+1. Add the `.devcontainer/devcontainer.json` configuration to your WordPress VIP project
 2. Open the project in VS Code
 3. Click on the Remote Containers extension icon and select "Reopen in Container"
 4. Wait for the environment to build and initialize
@@ -55,7 +56,7 @@ Example configuration:
 
 ```json
 {
-    "name": "VIP Development Environment",
+    "name": "WordPress VIP Development Environment",
     "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
     "features": {
         "ghcr.io/automattic/vip-codespaces/nginx:latest": {},

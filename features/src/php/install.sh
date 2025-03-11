@@ -512,7 +512,7 @@ case "${ID_LIKE}" in
                 curl -SLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb
                 dpkg -i /tmp/debsuryorg-archive-keyring.deb
                 rm -f /tmp/debsuryorg-archive-keyring.deb
-                echo "deb https://packages.sury.org/php/ ${CODENAME} main" > /etc/apt/sources.list.d/php.list
+                echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ ${CODENAME} main" > /etc/apt/sources.list.d/php.list
             ;;
 
             "ubuntu")

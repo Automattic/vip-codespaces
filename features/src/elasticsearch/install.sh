@@ -14,7 +14,7 @@ fi
 : "${INSTALLDATATOWORKSPACES:?}"
 : "${INSTALL_RUNIT_SERVICE:=true}"
 
-ES_VERSION="${VERSION:-7.17.25}"
+ES_VERSION="${VERSION:-7.17.28}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Elasticsearch...'

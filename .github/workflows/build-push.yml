@@ -78,7 +78,7 @@ jobs:
         uses: Automattic/vip-actions/expose-github-runtime@e1faabf165941008de4c0c1381df153e49d8ad2c # v0.6.0
 
       - name: Set up Docker
-        uses: docker/setup-docker-action@c2d73c1a11a9b44be6d855121d75c3e0dac814c1 # v4.2.0
+        uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
         with:
           daemon-config: |
             {
@@ -96,7 +96,7 @@ jobs:
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io
@@ -176,7 +176,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -221,7 +221,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -281,7 +281,7 @@ jobs:
         uses: Automattic/vip-actions/expose-github-runtime@e1faabf165941008de4c0c1381df153e49d8ad2c # v0.6.0
 
       - name: Set up Docker
-        uses: docker/setup-docker-action@c2d73c1a11a9b44be6d855121d75c3e0dac814c1 # v4.2.0
+        uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
         with:
           daemon-config: |
             {
@@ -299,7 +299,7 @@ jobs:
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io

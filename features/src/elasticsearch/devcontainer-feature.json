@@ -2,7 +2,7 @@
     "id": "elasticsearch",
     "name": "Elasticsearch",
     "description": "Sets up Elasticsearch into the Dev Environment",
-    "version": "1.2.5",
+    "version": "1.3.0",
     "containerEnv": {
         "ES_TMPDIR": "/usr/share/elasticsearch/tmp"
     },

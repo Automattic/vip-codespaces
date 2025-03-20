@@ -16,6 +16,9 @@ NGINX_USER=
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing phpMyAdmin...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/phpmyadmin
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/phpmyadmin/
+
     # shellcheck source=/dev/null
     . /etc/os-release
     : "${ID:=}"

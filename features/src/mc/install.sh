@@ -12,6 +12,9 @@ fi
 if [ "${ENABLED:-}" = "true" ]; then
     echo '(*) Installing Midnight Commander...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/mc
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/mc/
+
     # shellcheck source=/dev/null
     . /etc/os-release
 

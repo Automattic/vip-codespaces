@@ -15,6 +15,9 @@ VIP_CLI_VERSION="${VERSION:-latest}"
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/vip-cli
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/vip-cli/
+
     if ! hash node >/dev/null 2>&1 || ! hash npm >/dev/null 2>&1; then
         # shellcheck source=/dev/null
         . /etc/os-release

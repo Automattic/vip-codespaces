@@ -465,6 +465,9 @@ setup_php84_deb() {
 
 echo "(*) Installing PHP ${PHP_VERSION}..."
 
+install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/php
+install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/php/
+
 # shellcheck source=/dev/null
 . /etc/os-release
 

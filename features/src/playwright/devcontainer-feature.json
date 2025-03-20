@@ -3,7 +3,7 @@
     "name": "Playwright",
     "description": "Sets up Playwright into the Dev Environment",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/playwright",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "options": {
         "enabled": {
             "type": "boolean",

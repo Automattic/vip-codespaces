@@ -30,6 +30,9 @@ WP_MULTISITE_TYPE="${MULTISITE_TYPE:-subdirectory}"
 
 echo '(*) Downloading WordPress...'
 
+install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/wordpress
+install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/wordpress/
+
 install -d -m 0755 -o root -g root /etc/wp-cli /usr/share/wordpress
 install -m 0644 -o root -g root wp-cli.yaml /etc/wp-cli
 install -d -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" -m 0755 /wp

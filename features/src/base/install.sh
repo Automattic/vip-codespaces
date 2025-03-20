@@ -22,6 +22,9 @@ install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" .bashrc "${HOME_DIR}/.bashrc"
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" 001-welcome.sh "${HOME_DIR}/.local/share/vip-codespaces/login/001-welcome.sh"
 
+install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/base
+install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/base/
+
 # shellcheck source=/dev/null
 . /etc/os-release
 

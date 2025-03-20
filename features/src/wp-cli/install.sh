@@ -13,6 +13,9 @@ fi
 
 echo '(*) Installing wp-cli...'
 
+install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/wp-cli
+install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/wp-cli/
+
 if [ "${NIGHTLY}" = "true" ]; then
     url="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli-nightly.phar"
 else

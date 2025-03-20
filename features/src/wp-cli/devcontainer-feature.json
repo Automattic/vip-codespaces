@@ -1,7 +1,7 @@
 {
     "id": "wp-cli",
     "name": "WP CLI",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "description": "Sets up wp-cli in the devcontainer",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/wp-cli",
     "options": {

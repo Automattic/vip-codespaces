@@ -42,6 +42,7 @@ jobs:
           - mc
           - memcached
           - nginx
+          - playwright
           - ssh
           - su-exec
           - vip-cli

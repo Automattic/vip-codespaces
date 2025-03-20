@@ -17,6 +17,9 @@ fi
 if [ "${ENABLED}" != "false" ]; then
     echo '(*) Installing VIP Go mu-plugins...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/vip-go-mu-plugins
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/vip-go-mu-plugins/
+
     PACKAGES=""
     if ! hash git >/dev/null 2>&1; then
         PACKAGES="${PACKAGES} git"

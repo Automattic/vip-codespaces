@@ -16,6 +16,9 @@ fi
 if [ "${ENABLED}" = 'true' ]; then
     echo '(*) Installing cron...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/cron
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/cron/
+
     # shellcheck source=/dev/null
     . /etc/os-release
     : "${ID:=}"

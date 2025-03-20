@@ -13,6 +13,9 @@ fi
 
 echo '(*) Installing Dev Tools...'
 
+install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/dev-tools
+install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/dev-tools/
+
 install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" /wp/wp-content/mu-plugins
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" dev-env-plugin.php /wp/wp-content/mu-plugins/dev-env-plugin.php
 

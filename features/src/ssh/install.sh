@@ -16,6 +16,9 @@ SSHD_PORT="${PORT:-22}"
 if [ "${ENABLED:-}" = "true" ]; then
     echo '(*) Installing OpenSSH server...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/ssh
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/ssh/
+
     # shellcheck source=/dev/null
     . /etc/os-release
 

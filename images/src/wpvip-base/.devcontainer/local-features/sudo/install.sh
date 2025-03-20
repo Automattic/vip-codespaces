@@ -7,6 +7,11 @@ if [ "$(id -u || true)" -ne 0 ]; then
     exit 1
 fi
 
+ls -lha
+cat devcontainer-*
+cat ../devcontainer-features.builtin.env
+env | sort
+
 if [ -n "${_REMOTE_USER}" ] && [ "${_REMOTE_USER}" != "root" ]; then
     echo "(*) Adding ${_REMOTE_USER} to sudoers"
     echo "${_REMOTE_USER} ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/${_REMOTE_USER}"

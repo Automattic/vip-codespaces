@@ -16,8 +16,12 @@ fi
 : "${WP_CLI_PATH=/usr/local/bin/wp}"
 : "${INSTALL_RUNIT_SERVICE:=true}"
 
+
 if [ "${ENABLED}" = 'true' ]; then
     echo '(*) Installing Cron Control Runner...'
+
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/cron-control-runner
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/cron-control-runner/
 
     # shellcheck source=/dev/null
     . /etc/os-release

@@ -16,6 +16,9 @@ WPTL_VERSION="${VERSION:=}"
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing WordPress Test Library...'
 
+    install -d -D -m 0755 /usr/local/etc/vscode-dev-containers/vip-codespaces/wptl
+    install -m 0644 devcontainer-feature.json devcontainer-features.env /usr/local/etc/vscode-dev-containers/vip-codespaces/wptl/
+
     PACKAGES=""
     if ! hash svn >/dev/null 2>&1; then
         PACKAGES="${PACKAGES} subversion"

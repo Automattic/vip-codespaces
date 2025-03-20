@@ -1,6 +1,6 @@
 {
     "id": "su-exec",
     "name": "su-exec",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Provides su-exec for running commands as another user"
 }

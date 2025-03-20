@@ -10,6 +10,9 @@ if [[ "$(id -u || true)" -eq 0 ]]; then
     check "su-exec works (group)" sh -c 'su-exec bin:daemon id -gn | grep -F daemon'
 fi
 
+check "/usr/local/etc/vscode-dev-containers/vip-codespaces/su-exec/devcontainer-feature.json exists" test -f /usr/local/etc/vscode-dev-containers/vip-codespaces/su-exec/devcontainer-feature.json
+check "/usr/local/etc/vscode-dev-containers/vip-codespaces/su-exec/devcontainer-features.env exists" test -f /usr/local/etc/vscode-dev-containers/vip-codespaces/su-exec/devcontainer-features.env
+
 # Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
 if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
     dir="$(ls -1 /etc/rc2.d)"

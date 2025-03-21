@@ -36,6 +36,7 @@ jobs:
           - dev-tools
           - elasticsearch
           - entrypoints
+          - internal-introspection
           - php
           - mailpit
           - mariadb

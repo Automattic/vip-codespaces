@@ -1,0 +1,12 @@
+{
+    "id": "internal-introspection",
+    "name": "Internal Introspection",
+    "description": "For internal use only! Do not use!",
+    "version": "1.0.0",
+    "entrypoint": "/usr/local/bin/internal-introspection-ep.sh",
+    "onCreateCommand": "/usr/local/bin/internal-introspection-on-create.sh",
+    "postCreateCommand": "/usr/local/bin/internal-introspection-post-create.sh",
+    "postStartCommand": "/usr/local/bin/internal-introspection-post-start.sh",
+    "postAttachCommand": "/usr/local/bin/internal-introspection-post-attach.sh",
+    "updateContentCommand": "/usr/local/bin/internal-introspection-update-content.sh"
+}

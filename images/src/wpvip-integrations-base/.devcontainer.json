@@ -1,0 +1,51 @@
+{
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": "."
+    },
+    "x-build": {
+        "name": "WPVIP Integrations",
+        "image-name": "wpvip-integrations-base",
+        "image-version": "0.0.1"
+    },
+    "remoteUser": "vscode",
+    "updateContentCommand": "/usr/local/bin/update-content.sh",
+    "features": {
+        "ghcr.io/automattic/vip-codespaces/base:latest": {},
+        "ghcr.io/automattic/vip-codespaces/entrypoints:latest": {},
+        "ghcr.io/automattic/vip-codespaces/nginx:latest": {},
+        "ghcr.io/automattic/vip-codespaces/php:latest": {},
+        "ghcr.io/automattic/vip-codespaces/mariadb:latest": {
+            "installDatabaseToWorkspaces": true
+        },
+        "ghcr.io/automattic/vip-codespaces/wp-cli:latest": {},
+        "ghcr.io/automattic/vip-codespaces/memcached:latest": {},
+        "ghcr.io/automattic/vip-codespaces/vip-cli:latest": {},
+        "ghcr.io/automattic/vip-codespaces/mailpit:latest": {},
+        "ghcr.io/automattic/vip-codespaces/phpmyadmin:latest": {
+            "enabled": true
+        },
+        "ghcr.io/automattic/vip-codespaces/xdebug:latest": {
+            "enabled": true,
+            "mode": "debug"
+        },
+        "ghcr.io/automattic/vip-codespaces/desktop-lite:latest": {},
+        "ghcr.io/automattic/vip-codespaces/playwright:latest": {},
+        "ghcr.io/automattic/vip-codespaces/wptl:latest": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dlech.chmod",
+                "dbaeumer.vscode-eslint",
+                "GitHub.copilot",
+                "esbenp.prettier-vscode",
+                "timonwong.shellcheck",
+                "ms-azuretools.vscode-docker",
+                "zhiayang.tabindentspacealign",
+                "emilast.LogFileHighlighter",
+                "automattic.logwatcher"
+            ]
+        }
+    }
+}

@@ -6,7 +6,7 @@
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.34"
+        "image-version": "0.0.35"
     },
     "remoteUser": "vscode",
     "containerEnv": {
@@ -19,7 +19,7 @@
         "SHELL": "/bin/bash"
     },
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2.5.2": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.3": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,

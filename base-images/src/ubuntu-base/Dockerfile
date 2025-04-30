@@ -1,4 +1,4 @@
-FROM buildpack-deps:noble-curl@sha256:130fe02e4ba5e3b75a59e13385d0712f2debc246348ba27ecc10fcf3b2a92356
+FROM buildpack-deps:noble-curl@sha256:51f429c2a2b5168c65bc7558cc49947a35e0a8af6523b1b757e5ac6328a3d5c7
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \

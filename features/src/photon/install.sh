@@ -106,7 +106,7 @@ if [ "${ENABLED}" = 'true' ]; then
     fi
 
     install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" /usr/share/webapps/photon
-    svn co https://code.svn.wordpress.org/photon/ /usr/share/webapps/photon
+    svn co https://code.svn.wordpress.org/photon/ /usr/share/webapps/photon -r645
     rm -rf /usr/share/webapps/photon/.svn /usr/share/webapps/photon/tests
     chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /usr/share/webapps/photon
     ln -s /etc/photon/config.php /usr/share/webapps/photon/config.php

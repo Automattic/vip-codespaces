@@ -1,0 +1,25 @@
+name: Generate Changelog for PR
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  contents: read
+
+jobs:
+  changelog:
+    name: Generate Changelog for PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    if: >
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/changelog'
+    steps:
+      - name: Generate changelog for PR
+        uses: Automattic/vip-actions/ai-changelog-generator@a6fbe0e57d8f43f81d8b8f245c9c0d2b464ac4f2
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}

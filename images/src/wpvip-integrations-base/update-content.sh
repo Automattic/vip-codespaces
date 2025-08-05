@@ -6,3 +6,7 @@ if [ -d node_modules ]; then
 else
     npm ci
 fi
+
+if npm ls playwright > /dev/null; then
+    npx playwright install
+fi

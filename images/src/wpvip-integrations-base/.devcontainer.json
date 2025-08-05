@@ -6,7 +6,7 @@
     "x-build": {
         "name": "WPVIP Integrations",
         "image-name": "wpvip-integrations-base",
-        "image-version": "0.0.1"
+        "image-version": "0.0.2"
     },
     "remoteUser": "vscode",
     "updateContentCommand": "/usr/local/bin/update-content.sh",

@@ -3,7 +3,7 @@
     "name": "Playwright",
     "description": "Sets up Playwright into the Dev Environment",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/playwright",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "options": {
         "enabled": {
             "type": "boolean",
@@ -14,6 +14,13 @@
             "type": "string",
             "default": "latest",
             "description": "Playwright version to install"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-playwright.playwright"
+            ]
         }
     }
 }

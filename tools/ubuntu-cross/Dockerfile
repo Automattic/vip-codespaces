@@ -1,0 +1,17 @@
+FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:bb6377a9163e77e2d9f73a4615c3ee0470c25a3be1c371b706740757a07ec381 AS xx
+FROM --platform=${BUILDPLATFORM} ubuntu:noble@sha256:9cbed754112939e914291337b5e554b07ad7c392491dba6daf25eef1332a22e8 AS build
+COPY --from=xx / /
+
+RUN <<EOF
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get install -y --no-install-recommends eatmydata
+    eatmydata apt-get install -y --no-install-recommends clang make
+    rm -rf /var/lib/apt/lists/*
+    for i in linux/arm linux/arm64 linux/386 linux/amd64; do
+        TARGETPLATFORM="${i}" xx-clang --setup-target-triple
+        TARGETPLATFORM="${i}" eatmydata xx-apt-get install -y gcc g++ libc6-dev libstdc++-13-dev
+    done
+EOF
+
+WORKDIR /src

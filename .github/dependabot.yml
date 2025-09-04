@@ -34,3 +34,8 @@ updates:
     package-ecosystem: devcontainers
     schedule:
       interval: daily
+
+  - directory: tools/ubuntu-cross
+    package-ecosystem: docker
+    schedule:
+      interval: daily

@@ -1,0 +1,61 @@
+name: Build ubuntu-cross Docker Image
+
+on:
+  push:
+    branches:
+      - master
+    paths: 
+      - '.github/workflows/ubuntu-cross.yml'
+      - 'tools/ubuntu-cross/**'
+  pull_request:
+    paths: 
+      - '.github/workflows/ubuntu-cross.yml'
+      - 'tools/ubuntu-cross/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ubuntu-cross
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
+        with:
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.base_ref == null }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        id: push
+        with:
+          context: .
+          file: ./tools/ubuntu-cross/Dockerfile
+          push: ${{ github.base_ref == null }}
+          tags: ghcr.io/automattic/vip-codespaces/ubuntu-cross:latest
+          cache-from: type=gha,scope=ubuntu-cross
+          cache-to: type=gha,mode=max,scope=ubuntu-cross
+          no-cache: ${{ github.event_name == 'workflow_dispatch' }}
+
+      - name: Attest provenance
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-name: ghcr.io/automattic/vip-codespaces/ubuntu-cross
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+        if: ${{ github.base_ref == null }}

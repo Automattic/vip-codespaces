@@ -3,7 +3,7 @@ name: Build ubuntu-cross Docker Image
 on:
   push:
     branches:
-      - master
+      - trunk
     paths: 
       - '.github/workflows/ubuntu-cross.yml'
       - 'tools/ubuntu-cross/**'

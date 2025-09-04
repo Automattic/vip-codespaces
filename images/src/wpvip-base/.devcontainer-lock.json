@@ -5,10 +5,10 @@
       "resolved": "ghcr.io/automattic/vip-codespaces/wp-cli@sha256:fbeac1e95f0898138d645135401ea642859d1ad69bf1f87e3d0c64a54bca97d0",
       "integrity": "sha256:fbeac1e95f0898138d645135401ea642859d1ad69bf1f87e3d0c64a54bca97d0"
     },
-    "ghcr.io/devcontainers-contrib/features/composer:1.0.0": {
-      "version": "1.0.0",
-      "resolved": "ghcr.io/devcontainers-contrib/features/composer@sha256:672688d643dc534d73a97b406746363e0206889e3360a3235aff5cac75368c98",
-      "integrity": "sha256:672688d643dc534d73a97b406746363e0206889e3360a3235aff5cac75368c98"
+    "ghcr.io/devcontainers-contrib/features/composer:1.0.1": {
+      "version": "1.0.1",
+      "resolved": "ghcr.io/devcontainers-extra/features/composer@sha256:92bd9a7d6b294cdf231e7c4c36897da20e09e65d580db516d768c8b309496a76",
+      "integrity": "sha256:92bd9a7d6b294cdf231e7c4c36897da20e09e65d580db516d768c8b309496a76"
     },
     "ghcr.io/devcontainers/features/common-utils:2.5.3": {
       "version": "2.5.3",

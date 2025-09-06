@@ -6,21 +6,21 @@
     "x-build": {
         "name": "WPVIP",
         "image-name": "wpvip-base",
-        "image-version": "0.0.20"
+        "image-version": "0.0.21"
     },
     "remoteUser": "vscode",
     "postStartCommand": "/usr/local/bin/post-start.sh",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2.5.3": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.4": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,
             "upgradePackages": true,
             "username": "vscode"
         },
-        "ghcr.io/devcontainers/features/git:1.3.3": {},
+        "ghcr.io/devcontainers/features/git:1.3.4": {},
         "ghcr.io/devcontainers/features/github-cli:1.0.14": {},
-        "ghcr.io/devcontainers/features/node:1.6.2": {},
+        "ghcr.io/devcontainers/features/node:1.6.3": {},
         "ghcr.io/devcontainers-contrib/features/composer:1.0.1": {},
         "ghcr.io/automattic/vip-codespaces/wp-cli:1.2.0": {},
         "./.devcontainer/local-features/sudo": {}

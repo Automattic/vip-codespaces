@@ -338,6 +338,7 @@ setup_php81_deb() {
     fi
 
     update-rc.d -f php8.1-fpm remove
+    update-rc.d -f cron remove
 }
 
 setup_php82_deb() {
@@ -379,6 +380,7 @@ setup_php82_deb() {
     fi
 
     update-rc.d -f php8.2-fpm remove
+    update-rc.d -f cron remove
 }
 
 setup_php83_deb() {
@@ -420,6 +422,7 @@ setup_php83_deb() {
     fi
 
     update-rc.d -f php8.3-fpm remove
+    update-rc.d -f cron remove
 }
 
 setup_php84_deb() {
@@ -461,6 +464,7 @@ setup_php84_deb() {
     fi
 
     update-rc.d -f php8.4-fpm remove
+    update-rc.d -f cron remove
 }
 
 echo "(*) Installing PHP ${PHP_VERSION}..."

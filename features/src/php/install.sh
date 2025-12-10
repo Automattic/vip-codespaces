@@ -312,6 +312,7 @@ setup_php81_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
+        anacron \
         php8.1-cli php8.1-fpm \
         php8.1-apcu php8.1-curl php8.1-gd php8.1-gmp php8.1-mbstring \
         php8.1-memcache php8.1-memcached php8.1-mysql php8.1-sqlite3 php8.1-xml php8.1-zip ${EXTENSIONS}
@@ -338,7 +339,8 @@ setup_php81_deb() {
     fi
 
     update-rc.d -f php8.1-fpm remove
-    update-rc.d -f cron remove
+    update-rc.d -f anacron remove
+    rm -f /etc/cron.*/*anacron
 }
 
 setup_php82_deb() {
@@ -354,6 +356,7 @@ setup_php82_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
+        anacron \
         php8.2-cli php8.2-fpm \
         php8.2-apcu php8.2-curl php8.2-gd php8.2-gmp php8.2-mbstring \
         php8.2-memcache php8.2-memcached php8.2-mysql php8.2-sqlite3 php8.2-xml php8.2-zip ${EXTENSIONS}
@@ -380,7 +383,8 @@ setup_php82_deb() {
     fi
 
     update-rc.d -f php8.2-fpm remove
-    update-rc.d -f cron remove
+    update-rc.d -f anacron remove
+    rm -f /etc/cron.*/*anacron
 }
 
 setup_php83_deb() {
@@ -396,6 +400,7 @@ setup_php83_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
+        anacron \
         php8.3-cli php8.3-fpm \
         php8.3-apcu php8.3-curl php8.3-gd php8.3-gmp php8.3-mbstring \
         php8.3-memcache php8.3-memcached php8.3-mysql php8.3-sqlite3 php8.3-xml php8.3-zip ${EXTENSIONS}
@@ -422,7 +427,8 @@ setup_php83_deb() {
     fi
 
     update-rc.d -f php8.3-fpm remove
-    update-rc.d -f cron remove
+    update-rc.d -f anacron remove
+    rm -f /etc/cron.*/*anacron
 }
 
 setup_php84_deb() {
@@ -438,6 +444,7 @@ setup_php84_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
+        anacron \
         php8.4-cli php8.4-fpm \
         php8.4-apcu php8.4-curl php8.4-gd php8.4-gmp php8.4-mbstring \
         php8.4-memcache php8.4-memcached php8.4-mysql php8.4-sqlite3 php8.4-xml php8.4-zip ${EXTENSIONS}
@@ -464,7 +471,8 @@ setup_php84_deb() {
     fi
 
     update-rc.d -f php8.4-fpm remove
-    update-rc.d -f cron remove
+    update-rc.d -f anacron remove
+    rm -f /etc/cron.*/*anacron
 }
 
 echo "(*) Installing PHP ${PHP_VERSION}..."

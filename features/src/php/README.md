@@ -15,7 +15,7 @@ Installs PHP into the Dev Environment
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | PHP version | string | 8.2 |
+| version | PHP version | string | 8.3 |
 | composer | Whether to install Composer | boolean | true |
 | install-runit-service | Whether to install a runit service for Mailpit | boolean | true |
 | lite-install | Whether to install a minimal set of PHP extensions | boolean | false |

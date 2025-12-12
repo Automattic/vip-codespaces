@@ -6,12 +6,12 @@
     "x-build": {
         "name": "WPVIP",
         "image-name": "wpvip-base",
-        "image-version": "0.0.21"
+        "image-version": "0.0.22"
     },
     "remoteUser": "vscode",
     "postStartCommand": "/usr/local/bin/post-start.sh",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2.5.4": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.5": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,

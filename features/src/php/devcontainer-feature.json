@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.9.0",
+    "version": "2.10.0",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/php",
     "options": {
         "version": {
@@ -44,7 +44,7 @@
             "settings": {
                 "intelephense.environment.documentRoot": "/wp",
                 "intelephense.environment.includePaths": ["/wp"],
-                "intelephense.environment.phpVersion": "8.1.0",
+                "intelephense.environment.phpVersion": "8.3.0",
                 "intelephense.stubs": [
                     "apcu", "bcmath", "calendar", "Core", "ctype", "curl", "date", "dom", "exif", "fileinfo", "filter", "fpm", "ftp", "gd", "gmagick", "gmp",
                     "hash", "iconv", "igbinary", "intl", "json", "libxml", "mbstring", "memcache", "memcached", "meta", "mysqli", "newrelic", "openssl",

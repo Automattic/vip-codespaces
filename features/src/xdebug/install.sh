@@ -26,7 +26,7 @@ xdebug_81_alpine() {
 }
 
 xdebug_82_alpine() {
-    apk add --no-cache php82-pecl-xdebug
+    apk add --no-cache php82-pecl-xdebug -X https://dl-cdn.alpinelinux.org/alpine/v3.22/community
     rm -f /etc/php81/conf.d/50_xdebug.ini
 }
 
@@ -36,15 +36,7 @@ xdebug_83_alpine() {
 }
 
 xdebug_84_alpine() {
-    alpine_version="$(cat /etc/alpine-release)"
-    if [ "$(printf '%s\n' "3.21" "${alpine_version}" | sort -V | head -n1 || true)" = "3.21" ]; then
-        REPOS=""
-    else
-        REPOS="-X https://dl-cdn.alpinelinux.org/alpine/v3.21/community"
-    fi
-
-    # shellcheck disable=SC2086 # We need to expand $REPOS
-    apk add --no-cache php84-pecl-xdebug ${REPOS}
+    apk add --no-cache php84-pecl-xdebug
     rm -f /etc/php81/conf.d/50_xdebug.ini
 }
 

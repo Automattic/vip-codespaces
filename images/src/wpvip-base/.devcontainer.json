@@ -6,7 +6,7 @@
     "x-build": {
         "name": "WPVIP",
         "image-name": "wpvip-base",
-        "image-version": "0.0.23"
+        "image-version": "0.0.24"
     },
     "remoteUser": "vscode",
     "postStartCommand": "/usr/local/bin/post-start.sh",

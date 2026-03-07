@@ -10,6 +10,7 @@ else
     check "php-fpm is running" pgrep php-fpm
 fi
 
+sleep 1
 check "Port 9000 is open" sh -c 'netstat -lnt | grep :9000 '
 
 check "php can run" php --version

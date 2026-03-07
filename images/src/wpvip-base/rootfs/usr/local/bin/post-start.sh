@@ -19,13 +19,13 @@ echo "Checking out submodules..."
 
 echo "Waiting for MySQL to come online..."
 second=0
-while ! mysqladmin ping -uroot -ppassword -hdatabase --silent && [ "${second}" -lt 60 ]; do
+while ! mysqladmin ping -uroot -ppassword -hdatabase --silent --ssl=0 && [ "${second}" -lt 60 ]; do
     sleep 1
-    second=$((second+1))
+    second=$((second + 1))
 done
-if ! mysqladmin ping -uroot -ppassword -hdatabase --silent; then
+if ! mysqladmin ping -uroot -ppassword -hdatabase --silent --ssl=0; then
     echo "ERROR: mysql has failed to come online"
-    exit 1;
+    exit 1
 fi
 
 sudo -u www-data -E wp core install \

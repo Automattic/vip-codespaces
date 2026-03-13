@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:7f82cfd583c0305afe20080361edf35bd7f7f6e286431718cc4036afc5e5d3ce AS xx
+FROM --platform=${BUILDPLATFORM} tonistiigi/xx:master@sha256:7e8c9d88e47741bb0d35981494920eee2857cd75a40193567fe6c1a16adf785d AS xx
 FROM --platform=${BUILDPLATFORM} ubuntu:noble@sha256:d1e2e92c075e5ca139d51a140fff46f84315c0fdce203eab2807c7e495eff4f9 AS build
 COPY --from=xx / /
 

@@ -96,7 +96,7 @@ jobs:
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io
@@ -176,7 +176,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -221,7 +221,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -299,7 +299,7 @@ jobs:
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io

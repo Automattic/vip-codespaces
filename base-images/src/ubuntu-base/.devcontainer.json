@@ -19,7 +19,7 @@
         "SHELL": "/bin/bash"
     },
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2.5.7": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.9": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,

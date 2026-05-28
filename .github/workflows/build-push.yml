@@ -78,7 +78,7 @@ jobs:
         uses: Automattic/vip-actions/expose-github-runtime@7b98dcb98d652bf02037977b1b85abb971c345d0 # v0.7.1
 
       - name: Set up Docker
-        uses: docker/setup-docker-action@b2189fbf2a6592b51fee7cdd93ee2bfaeba733db # v5.1.0
+        uses: docker/setup-docker-action@0234bb73ccb40f0c430b795634f9247e2b5c2d23 # v5.2.0
         with:
           daemon-config: |
             {
@@ -88,15 +88,15 @@ jobs:
             }
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4.0.0
+        uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+        uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io
@@ -176,7 +176,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -221,7 +221,7 @@ jobs:
           fi
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: https://ghcr.io
           username: ${{ github.actor }}}
@@ -281,7 +281,7 @@ jobs:
         uses: Automattic/vip-actions/expose-github-runtime@7b98dcb98d652bf02037977b1b85abb971c345d0 # v0.7.1
 
       - name: Set up Docker
-        uses: docker/setup-docker-action@b2189fbf2a6592b51fee7cdd93ee2bfaeba733db # v5.1.0
+        uses: docker/setup-docker-action@0234bb73ccb40f0c430b795634f9247e2b5c2d23 # v5.2.0
         with:
           daemon-config: |
             {
@@ -291,15 +291,15 @@ jobs:
             }
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4.0.0
+        uses: docker/setup-qemu-action@06116385d9baf250c9f4dcb4858b16962ea869c3 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+        uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         if: steps.changes.outputs.needs_build == 'true'
         with:
           registry: https://ghcr.io

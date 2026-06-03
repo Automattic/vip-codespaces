@@ -22,7 +22,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
   
       - name: Generate documentation
         uses: devcontainers/action@1082abd5d2bf3a11abccba70eef98df068277772 # v1.4.3

@@ -12,13 +12,13 @@ chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
 install -d /run/mysqld -o "${MARIADB_USER}" -g "${MARIADB_USER}"
 
 if [ ! -d "${MARIADB_DATADIR}/mysql" ]; then
-    mysql_install_db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
+    mariadb-install-db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
 fi
 
 if [ -x /sbin/chpst ]; then
     # shellcheck disable=SC2086,SC2154 # there could be multiple options in EXTRA_OPTIONS
     exec chpst -u "${MARIADB_USER}:${MARIADB_USER}" \
-        mysqld \
+        mariadbd \
             --datadir="${MARIADB_DATADIR}" \
             --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
             --max_allowed_packet=67M \
@@ -27,7 +27,7 @@ if [ -x /sbin/chpst ]; then
 else
     # shellcheck disable=SC2086 # there could be multiple options in EXTRA_OPTIONS
     exec su-exec "${MARIADB_USER}:${MARIADB_USER}" \
-        mysqld \
+        mariadbd \
             --datadir="${MARIADB_DATADIR}" \
             --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
             --max_allowed_packet=67M \

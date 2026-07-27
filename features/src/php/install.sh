@@ -523,15 +523,14 @@ case "${ID_LIKE}" in
                 ;;
 
             "ubuntu")
-                if [ "${CODENAME}" != "resolute" ]; then
-                    echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu ${CODENAME} main" > /etc/apt/sources.list.d/php.list
-                    curl -sSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x71DAEAAB4AD4CAB6" | gpg --dearmor > /etc/apt/trusted.gpg.d/ppa-ondrej-php.gpg
+                # resolute does not yet have a dedicated PPA suite; noble is the last known-compatible suite
+                if [ "${CODENAME}" = "resolute" ]; then
+                    PPA_SUITE="noble"
                 else
-                    curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb
-                    dpkg -i /tmp/debsuryorg-archive-keyring.deb
-                    rm -f /tmp/debsuryorg-archive-keyring.deb
-                    echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ ${CODENAME} main" > /etc/apt/sources.list.d/php.list
+                    PPA_SUITE="${CODENAME}"
                 fi
+                echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu ${PPA_SUITE} main" > /etc/apt/sources.list.d/php.list
+                curl -sSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x71DAEAAB4AD4CAB6" | gpg --dearmor > /etc/apt/trusted.gpg.d/ppa-ondrej-php.gpg
                 ;;
 
             *)

@@ -433,6 +433,7 @@ case "${ID_LIKE}" in
 
         case "${PHP_VERSION}" in
             "8.0" | "8.1" | "8.2")
+                PHP_VERSION="8.2"
                 PHP_INI_DIR=/etc/php/8.2
                 setup_php82_deb
                 ;;
@@ -483,6 +484,7 @@ case "${ID_LIKE}" in
 
         case "${PHP_VERSION}" in
             "8.0" | "8.1" | "8.2")
+                PHP_VERSION="8.2"
                 PHP_INI_DIR=/etc/php82
                 setup_php82_alpine
                 ;;

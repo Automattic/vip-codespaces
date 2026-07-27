@@ -30,7 +30,7 @@ jobs:
           - php84-ubuntu-base
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.1
 
       - name: Install @devcontainers/cli
         run: npm install -g @devcontainers/cli

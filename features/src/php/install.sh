@@ -17,73 +17,6 @@ PHP_VERSION="${VERSION}"
 : "${LITE_INSTALL:=}"
 : "${SKIP_GMAGICK:=}"
 
-setup_php81_alpine() {
-    if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="icu-data-full ghostscript php81-bcmath php81-pecl-mcrypt php81-soap php81-pecl-igbinary php81-pecl-ssh2 php81-pecl-timezonedb"
-    else
-        EXTENSIONS=
-    fi
-
-    # shellcheck disable=SC2086 # We need to expand $REPOS
-    apk add --no-cache \
-        php81 php81-fpm php81-pear \
-        php81-pecl-apcu \
-        php81-calendar \
-        php81-ctype \
-        php81-curl \
-        php81-dom \
-        php81-exif \
-        php81-fileinfo \
-        php81-ftp \
-        php81-gd \
-        php81-gmp \
-        php81-iconv \
-        php81-json \
-        php81-mbstring \
-        php81-pecl-memcache \
-        php81-pecl-memcached \
-        php81-mysqli \
-        php81-mysqlnd \
-        php81-opcache \
-        php81-openssl \
-        php81-pcntl \
-        php81-pdo \
-        php81-pdo_mysql \
-        php81-pdo_sqlite \
-        php81-phar \
-        php81-posix \
-        php81-session \
-        php81-shmop \
-        php81-simplexml \
-        php81-sockets \
-        php81-sodium \
-        php81-sqlite3 \
-        php81-sysvsem \
-        php81-sysvshm \
-        php81-tokenizer \
-        php81-xml \
-        php81-xmlreader \
-        php81-xmlwriter \
-        php81-zip ${EXTENSIONS} -X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community
-
-    if [ "${SKIP_GMAGICK}" != 'true' ]; then
-        apk add --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp -X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community
-        pecl81 channel-update pecl.php.net || true
-        pecl81 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-        apk del --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool
-        echo "extension=gmagick.so" > /etc/php81/conf.d/40_gmagick.ini
-    fi
-
-    [ ! -f /usr/bin/pear ] && ln -s /usr/bin/pear81 /usr/bin/pear
-    [ ! -f /usr/bin/peardev ] && ln -s /usr/bin/peardev81 /usr/bin/peardev
-    [ ! -f /usr/bin/pecl ] && ln -s /usr/bin/pecl81 /usr/bin/pecl
-    [ ! -f /usr/bin/phar.phar ] && ln -s /usr/bin/phar.phar81 /usr/bin/phar.phar
-    [ ! -f /usr/bin/phar ] && ln -s /usr/bin/phar81 /usr/bin/phar
-    [ ! -f /usr/bin/php ] && ln -s /usr/bin/php81 /usr/bin/php
-    [ ! -f /usr/sbin/php-fpm ] && ln -s /usr/sbin/php-fpm81 /usr/sbin/php-fpm
-    true
-}
-
 setup_php82_alpine() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
         EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-intl php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
@@ -289,50 +222,6 @@ setup_php84_alpine() {
     [ ! -f /usr/bin/php ] && ln -sf /usr/bin/php84 /usr/bin/php
     [ ! -f /usr/sbin/php-fpm ] && ln -sf /usr/sbin/php-fpm84 /usr/sbin/php-fpm
     true
-}
-
-setup_php81_deb() {
-    if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="ghostscript php8.1-bcmath php8.1-igbinary php8.1-intl php8.1-mcrypt php8.1-soap php8.1-ssh2"
-    else
-        EXTENSIONS=
-    fi
-
-    if [ "${SKIP_GMAGICK}" != 'true' ]; then
-        EXTENSIONS="${EXTENSIONS} php8.1-gmagick"
-    fi
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get install -y --no-install-recommends \
-        anacron \
-        php8.1-cli php8.1-fpm \
-        php8.1-apcu php8.1-curl php8.1-gd php8.1-gmp php8.1-mbstring \
-        php8.1-memcache php8.1-memcached php8.1-mysql php8.1-sqlite3 php8.1-xml php8.1-zip ${EXTENSIONS}
-    eatmydata apt-get install -y --no-install-recommends php-pear
-    phpdismod ffi gettext readline sysvmsg xsl
-
-    ln -s /usr/sbin/php-fpm8.1 /usr/sbin/php-fpm
-
-    if [ "${LITE_INSTALL}" != 'true' ]; then
-        PACKAGES="php8.1-dev"
-        if ! hash make > /dev/null 2>&1; then
-            PACKAGES="${PACKAGES} make"
-        fi
-
-        # shellcheck disable=SC2086
-        eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-        pecl channel-update pecl.php.net || true
-        pecl install timezonedb < /dev/null
-        echo "extension=timezonedb.so" > /etc/php/8.1/mods-available/timezonedb.ini
-        phpenmod timezonedb
-
-        # shellcheck disable=SC2086
-        eatmydata apt-get remove --purge -y ${PACKAGES}
-    fi
-
-    update-rc.d -f php8.1-fpm remove
-    update-rc.d -f anacron remove
-    rm -f /etc/cron.*/*anacron
 }
 
 setup_php82_deb() {
@@ -543,13 +432,8 @@ case "${ID_LIKE}" in
         apt-get update
 
         case "${PHP_VERSION}" in
-            "8.0" | "8.1")
-                PHP_VERSION="8.1"
-                PHP_INI_DIR=/etc/php/8.1
-                setup_php81_deb
-                ;;
-
-            "8.2")
+            "8.0" | "8.1" | "8.2")
+                PHP_VERSION="8.2"
                 PHP_INI_DIR=/etc/php/8.2
                 setup_php82_deb
                 ;;
@@ -599,13 +483,8 @@ case "${ID_LIKE}" in
         fi
 
         case "${PHP_VERSION}" in
-            "8.0" | "8.1")
-                PHP_VERSION="8.1"
-                PHP_INI_DIR=/etc/php81
-                setup_php81_alpine
-                ;;
-
-            "8.2")
+            "8.0" | "8.1" | "8.2")
+                PHP_VERSION="8.2"
                 PHP_INI_DIR=/etc/php82
                 setup_php82_alpine
                 ;;

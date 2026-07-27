@@ -43,8 +43,6 @@ jobs:
           - feature: nginx
           - feature: photon
           - feature: php
-            filter: '81'
-          - feature: php
             filter: '82'
           - feature: php
             filter: '83'

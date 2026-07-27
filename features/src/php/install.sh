@@ -68,7 +68,7 @@ setup_php81_alpine() {
 
     if [ "${SKIP_GMAGICK}" != 'true' ]; then
         apk add --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp -X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community
-        pecl81 channel-update pecl.php.net
+        pecl81 channel-update pecl.php.net || true
         pecl81 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
         apk del --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool
         echo "extension=gmagick.so" > /etc/php81/conf.d/40_gmagick.ini
@@ -134,7 +134,7 @@ setup_php82_alpine() {
 
     if [ "${SKIP_GMAGICK}" != 'true' ]; then
         apk add --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp -X https://dl-cdn.alpinelinux.org/alpine/v3.22/community
-        pecl82 channel-update pecl.php.net
+        pecl82 channel-update pecl.php.net || true
         pecl82 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
         apk del --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool
         echo "extension=gmagick.so" > /etc/php82/conf.d/40_gmagick.ini
@@ -201,7 +201,7 @@ setup_php83_alpine() {
 
     if [ "${SKIP_GMAGICK}" != 'true' ]; then
         apk add --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
-        pecl83 channel-update pecl.php.net
+        pecl83 channel-update pecl.php.net || true
         pecl83 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
         echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
         apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool
@@ -272,7 +272,7 @@ setup_php84_alpine() {
 
     if [ "${SKIP_GMAGICK}" != 'true' ]; then
         apk add --no-cache php84-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
-        pecl84 channel-update pecl.php.net
+        pecl84 channel-update pecl.php.net || true
         pecl84 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
         echo "extension=gmagick.so" > /etc/php84/conf.d/40_gmagick.ini
         apk del --no-cache php84-dev gcc make libc-dev graphicsmagick-dev libtool
@@ -321,7 +321,7 @@ setup_php81_deb() {
 
         # shellcheck disable=SC2086
         eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-        pecl channel-update pecl.php.net
+        pecl channel-update pecl.php.net || true
         pecl install timezonedb < /dev/null
         echo "extension=timezonedb.so" > /etc/php/8.1/mods-available/timezonedb.ini
         phpenmod timezonedb
@@ -365,7 +365,7 @@ setup_php82_deb() {
 
         # shellcheck disable=SC2086
         eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-        pecl channel-update pecl.php.net
+        pecl channel-update pecl.php.net || true
         pecl install timezonedb < /dev/null
         echo "extension=timezonedb.so" > /etc/php/8.2/mods-available/timezonedb.ini
         phpenmod timezonedb
@@ -409,7 +409,7 @@ setup_php83_deb() {
 
         # shellcheck disable=SC2086
         eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-        pecl channel-update pecl.php.net
+        pecl channel-update pecl.php.net || true
         pecl install timezonedb < /dev/null
         echo "extension=timezonedb.so" > /etc/php/8.3/mods-available/timezonedb.ini
         phpenmod timezonedb
@@ -453,7 +453,7 @@ setup_php84_deb() {
 
         # shellcheck disable=SC2086
         eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-        pecl channel-update pecl.php.net
+        pecl channel-update pecl.php.net || true
         pecl install timezonedb < /dev/null
         echo "extension=timezonedb.so" > /etc/php/8.4/mods-available/timezonedb.ini
         phpenmod timezonedb
@@ -643,7 +643,7 @@ case "${ID_LIKE}" in
         ;;
 esac
 
-pecl update-channels
+pecl update-channels || true
 rm -rf /tmp/pear ~/.pearrc
 
 install -d -m 0750 -o "${_REMOTE_USER}" -g adm /var/log/php-fpm

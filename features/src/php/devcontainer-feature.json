@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.10.0",
+    "version": "2.10.1",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/php",
     "options": {
         "version": {

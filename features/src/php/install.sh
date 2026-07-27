@@ -315,7 +315,7 @@ setup_php81_deb() {
 
     if [ "${LITE_INSTALL}" != 'true' ]; then
         PACKAGES="php8.1-dev"
-        if ! hash make >/dev/null 2>&1; then
+        if ! hash make > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} make"
         fi
 
@@ -359,7 +359,7 @@ setup_php82_deb() {
 
     if [ "${LITE_INSTALL}" != 'true' ]; then
         PACKAGES="php8.2-dev"
-        if ! hash make >/dev/null 2>&1; then
+        if ! hash make > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} make"
         fi
 
@@ -403,7 +403,7 @@ setup_php83_deb() {
 
     if [ "${LITE_INSTALL}" != 'true' ]; then
         PACKAGES="php8.3-dev"
-        if ! hash make >/dev/null 2>&1; then
+        if ! hash make > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} make"
         fi
 
@@ -447,7 +447,7 @@ setup_php84_deb() {
 
     if [ "${LITE_INSTALL}" != 'true' ]; then
         PACKAGES="php8.4-dev"
-        if ! hash make >/dev/null 2>&1; then
+        if ! hash make > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} make"
         fi
 
@@ -482,27 +482,27 @@ case "${ID_LIKE}" in
     "debian")
         export DEBIAN_FRONTEND=noninteractive
         PACKAGES=""
-        if ! hash eatmydata >/dev/null 2>&1; then
+        if ! hash eatmydata > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} eatmydata"
         fi
 
-        if ! hash curl >/dev/null 2>&1; then
+        if ! hash curl > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} curl"
         fi
 
-        if ! hash update-ca-certificates >/dev/null 2>&1; then
+        if ! hash update-ca-certificates > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} ca-certificates"
         fi
 
-        if ! hash gpg >/dev/null 2>&1; then
+        if ! hash gpg > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} gnupg2"
         fi
 
-        if ! hash lsb_release >/dev/null 2>&1; then
+        if ! hash lsb_release > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} lsb-release"
         fi
 
-        if ! hash envsubst >/dev/null 2>&1; then
+        if ! hash envsubst > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} gettext"
         fi
 
@@ -520,46 +520,54 @@ case "${ID_LIKE}" in
                 dpkg -i /tmp/debsuryorg-archive-keyring.deb
                 rm -f /tmp/debsuryorg-archive-keyring.deb
                 echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ ${CODENAME} main" > /etc/apt/sources.list.d/php.list
-            ;;
+                ;;
 
             "ubuntu")
-                echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu ${CODENAME} main" > /etc/apt/sources.list.d/php.list
-                curl -sSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x71DAEAAB4AD4CAB6" | gpg --dearmor > /etc/apt/trusted.gpg.d/ppa-ondrej-php.gpg
-            ;;
+                if [ "${CODENAME}" != "resolute" ]; then
+                    echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu ${CODENAME} main" > /etc/apt/sources.list.d/php.list
+                    curl -sSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x71DAEAAB4AD4CAB6" | gpg --dearmor > /etc/apt/trusted.gpg.d/ppa-ondrej-php.gpg
+                else
+                    curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb
+                    dpkg -i /tmp/debsuryorg-archive-keyring.deb
+                    rm -f /tmp/debsuryorg-archive-keyring.deb
+                    echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ ${CODENAME} main" > /etc/apt/sources.list.d/php.list
+                fi
+                ;;
 
             *)
                 echo "(!) Unsupported distribution: ${ID}"
                 exit 1
+                ;;
         esac
 
         apt-get update
 
         case "${PHP_VERSION}" in
-            "8.0"|"8.1")
+            "8.0" | "8.1")
                 PHP_VERSION="8.1"
                 PHP_INI_DIR=/etc/php/8.1
                 setup_php81_deb
-            ;;
+                ;;
 
             "8.2")
                 PHP_INI_DIR=/etc/php/8.2
                 setup_php82_deb
-            ;;
+                ;;
 
             "8.3")
                 PHP_INI_DIR=/etc/php/8.3
                 setup_php83_deb
-            ;;
+                ;;
 
             "8.4")
                 PHP_INI_DIR=/etc/php/8.4
                 setup_php84_deb
-            ;;
+                ;;
 
             *)
                 echo "(!) PHP version ${PHP_VERSION} is not supported."
                 exit 1
-            ;;
+                ;;
         esac
 
         echo "export PHP_INI_DIR=${PHP_INI_DIR}" > /etc/profile.d/php_ini_dir.sh
@@ -573,15 +581,15 @@ case "${ID_LIKE}" in
         apt-get autoremove --purge -y
         apt-get clean
         rm -rf /var/lib/apt/lists/*
-    ;;
+        ;;
 
     "alpine")
         PACKAGES=""
-        if ! hash curl >/dev/null 2>&1; then
+        if ! hash curl > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} curl"
         fi
 
-        if ! hash envsubst >/dev/null 2>&1; then
+        if ! hash envsubst > /dev/null 2>&1; then
             PACKAGES="${PACKAGES} gettext"
         fi
 
@@ -591,31 +599,31 @@ case "${ID_LIKE}" in
         fi
 
         case "${PHP_VERSION}" in
-            "8.0"|"8.1")
+            "8.0" | "8.1")
                 PHP_VERSION="8.1"
                 PHP_INI_DIR=/etc/php81
                 setup_php81_alpine
-            ;;
+                ;;
 
             "8.2")
                 PHP_INI_DIR=/etc/php82
                 setup_php82_alpine
-            ;;
+                ;;
 
             "8.3")
                 PHP_INI_DIR=/etc/php83
                 setup_php83_alpine
-            ;;
+                ;;
 
             "8.4")
                 PHP_INI_DIR=/etc/php84
                 setup_php84_alpine
-            ;;
+                ;;
 
             *)
                 echo "(!) PHP version ${PHP_VERSION} is not supported."
                 exit 1
-            ;;
+                ;;
         esac
 
         echo "export PHP_INI_DIR=${PHP_INI_DIR}" > /etc/profile.d/php_ini_dir.sh
@@ -627,11 +635,12 @@ case "${ID_LIKE}" in
         # shellcheck disable=SC2016
         envsubst '$_REMOTE_USER' < www.conf.tpl > "${PHP_INI_DIR}/php-fpm.d/www.conf"
         install -m 0644 -o root -g root docker.conf zz-docker.conf "${PHP_INI_DIR}/php-fpm.d/"
-    ;;
+        ;;
 
     *)
         echo "(!) Unsupported distribution: ${ID}"
         exit 1
+        ;;
 esac
 
 pecl update-channels

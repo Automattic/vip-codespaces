@@ -5,21 +5,36 @@ if hash sv > /dev/null 2>&1; then
     sudo sv stop tigervnc
     check "tigervnc is stopped" sudo sh -c 'sv status tigervnc | grep -E ^down:'
     sudo sv start tigervnc
-    sleep 1
+    # shellcheck disable=SC2034
+    for i in {1..10}; do
+        # shellcheck disable=SC2312
+        sudo sv status tigervnc | grep -Eq '^run:' && break
+        sleep 1
+    done
     check "tigervnc is running" sudo sh -c 'sv status tigervnc | grep -E ^run:'
 
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
     sudo sv stop openbox
     check "openbox is stopped" sudo sh -c 'sv status openbox | grep -E ^down:'
     sudo sv start openbox
-    sleep 1
+    # shellcheck disable=SC2034
+    for i in {1..10}; do
+        # shellcheck disable=SC2312
+        sudo sv status openbox | grep -Eq '^run:' && break
+        sleep 1
+    done
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
 
     check "novnc is running" sudo sh -c 'sv status novnc | grep -E ^run:'
     sudo sv stop novnc
     check "novnc is stopped" sudo sh -c 'sv status novnc | grep -E ^down:'
     sudo sv start novnc
-    sleep 1
+    # shellcheck disable=SC2034
+    for i in {1..10}; do
+        # shellcheck disable=SC2312
+        sudo sv status novnc | grep -Eq '^run:' && break
+        sleep 1
+    done
     check "novnc is running" sudo sh -c 'sv status novnc | grep -E ^run:'
 else
     check "tigervnc is running" pgrep Xtigervnc

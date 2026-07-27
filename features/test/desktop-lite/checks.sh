@@ -13,6 +13,11 @@ if hash sv > /dev/null 2>&1; then
     done
     check "tigervnc is running" sudo sh -c 'sv status tigervnc | grep -E ^run:'
 
+    # shellcheck disable=SC2312
+    if ! sudo sv status openbox | grep -E ^run:; then
+        sudo ps faux
+        sudo cat /var/log/*
+    fi
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
     sudo sv stop openbox
     check "openbox is stopped" sudo sh -c 'sv status openbox | grep -E ^down:'
@@ -23,6 +28,11 @@ if hash sv > /dev/null 2>&1; then
         sudo sv status openbox | grep -Eq '^run:' && break
         sleep 1
     done
+    # shellcheck disable=SC2312
+    if ! sudo sv status openbox | grep -E ^run:; then
+        sudo ps faux
+        sudo cat /var/log/*
+    fi
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
 
     check "novnc is running" sudo sh -c 'sv status novnc | grep -E ^run:'

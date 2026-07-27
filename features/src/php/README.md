@@ -7,7 +7,7 @@ Installs PHP into the Dev Environment
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/php:2": {}
+    "ghcr.io/Automattic/vip-codespaces/php:3": {}
 }
 ```
 

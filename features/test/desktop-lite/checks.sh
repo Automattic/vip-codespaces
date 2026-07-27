@@ -1,50 +1,41 @@
 #!/bin/bash
 
+# Wait for the X server to be available before running checks
+cnt=0
+while [[ ! -S /tmp/.X11-unix/X0 ]] && [[ "${cnt}" -lt 10 ]]; do
+    sleep 1
+    cnt=$((cnt + 1))
+done
+
+cnt=0
+while ! pgrep openbox > /dev/null 2>&1 && [[ "${cnt}" -lt 5 ]]; do
+    sleep 1
+    cnt=$((cnt + 1))
+done
+
+cnt=0
+while ! pgrep easy-novnc > /dev/null 2>&1 && [[ "${cnt}" -lt 5 ]]; do
+    sleep 1
+    cnt=$((cnt + 1))
+done
+
 if hash sv > /dev/null 2>&1; then
     check "tigervnc is running" sudo sh -c 'sv status tigervnc | grep -E ^run:'
     sudo sv stop tigervnc
     check "tigervnc is stopped" sudo sh -c 'sv status tigervnc | grep -E ^down:'
     sudo sv start tigervnc
-    # shellcheck disable=SC2034
-    for i in {1..10}; do
-        # shellcheck disable=SC2312
-        sudo sv status tigervnc | grep -Eq '^run:' && break
-        sleep 1
-    done
     check "tigervnc is running" sudo sh -c 'sv status tigervnc | grep -E ^run:'
 
-    # shellcheck disable=SC2312
-    if ! sudo sv status openbox | grep -E ^run:; then
-        sudo ps faux
-        sudo cat /var/log/*
-    fi
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
     sudo sv stop openbox
     check "openbox is stopped" sudo sh -c 'sv status openbox | grep -E ^down:'
     sudo sv start openbox
-    # shellcheck disable=SC2034
-    for i in {1..10}; do
-        # shellcheck disable=SC2312
-        sudo sv status openbox | grep -Eq '^run:' && break
-        sleep 1
-    done
-    # shellcheck disable=SC2312
-    if ! sudo sv status openbox | grep -E ^run:; then
-        sudo ps faux
-        sudo cat /var/log/*
-    fi
     check "openbox is running" sudo sh -c 'sv status openbox | grep -E ^run:'
 
     check "novnc is running" sudo sh -c 'sv status novnc | grep -E ^run:'
     sudo sv stop novnc
     check "novnc is stopped" sudo sh -c 'sv status novnc | grep -E ^down:'
     sudo sv start novnc
-    # shellcheck disable=SC2034
-    for i in {1..10}; do
-        # shellcheck disable=SC2312
-        sudo sv status novnc | grep -Eq '^run:' && break
-        sleep 1
-    done
     check "novnc is running" sudo sh -c 'sv status novnc | grep -E ^run:'
 else
     check "tigervnc is running" pgrep Xtigervnc

@@ -22,11 +22,9 @@ jobs:
       fail-fast: false
       matrix:
         test:
-          - php81-alpine-base
           - php82-alpine-base
           - php83-alpine-base
           - php84-alpine-base
-          - php81-ubuntu-base
           - php82-ubuntu-base
           - php83-ubuntu-base
           - php84-ubuntu-base

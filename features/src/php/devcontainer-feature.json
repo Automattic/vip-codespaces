@@ -2,12 +2,12 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.10.2",
+    "version": "3.0.0",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/php",
     "options": {
         "version": {
             "type": "string",
-            "enum": ["8.0", "8.1", "8.2", "8.3", "8.4"],
+            "enum": ["8.2", "8.3", "8.4"],
             "default": "8.3",
             "description": "PHP version"
         },

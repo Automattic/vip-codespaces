@@ -12,36 +12,19 @@ get_php_version() {
     fi
 }
 
-xdebug_81_alpine() {
-    alpine_version="$(cat /etc/alpine-release)"
-    if [ "$(printf '%s\n' "3.20" "${alpine_version}" | sort -V | head -n1 || true)" = "3.20" ]; then
-        REPOS="-X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community"
-    else
-        REPOS=""
-    fi
-
-    # shellcheck disable=SC2086 # We need to expand $REPOS
-    apk add --no-cache php81-pecl-xdebug ${REPOS}
-    rm -f /etc/php81/conf.d/50_xdebug.ini
-}
-
 xdebug_82_alpine() {
     apk add --no-cache php82-pecl-xdebug -X https://dl-cdn.alpinelinux.org/alpine/v3.22/community
-    rm -f /etc/php81/conf.d/50_xdebug.ini
+    rm -f /etc/php82/conf.d/50_xdebug.ini
 }
 
 xdebug_83_alpine() {
     apk add --no-cache php83-pecl-xdebug
-    rm -f /etc/php81/conf.d/50_xdebug.ini
+    rm -f /etc/php83/conf.d/50_xdebug.ini
 }
 
 xdebug_84_alpine() {
     apk add --no-cache php84-pecl-xdebug
-    rm -f /etc/php81/conf.d/50_xdebug.ini
-}
-
-xdebug_81_deb() {
-    apt-get install -y --no-install-recommends php8.1-xdebug
+    rm -f /etc/php84/conf.d/50_xdebug.ini
 }
 
 xdebug_82_deb() {
@@ -89,58 +72,52 @@ case "${ID_LIKE}" in
         export DEBIAN_FRONTEND=noninteractive
         apt-get update
         case "${PHP_VERSION}" in
-            8.1)
-                xdebug_81_deb
-            ;;
             8.2)
                 xdebug_82_deb
-            ;;
+                ;;
             8.3)
                 xdebug_83_deb
-            ;;
+                ;;
             8.4)
                 xdebug_84_deb
-            ;;
+                ;;
             *)
                 echo "(!) Unsupported PHP version: ${PHP_VERSION}"
                 exit 1
-            ;;
+                ;;
         esac
         PHP_INI_DIR="/etc/php/${PHP_VERSION}/mods-available"
         NEED_ENMOD=1
         SUFFIX=.debian
         apt-get clean
         rm -rf /var/lib/apt/lists/*
-    ;;
+        ;;
 
     alpine)
         case "${PHP_VERSION}" in
-            8.1)
-                xdebug_81_alpine
-            ;;
             8.2)
                 xdebug_82_alpine
-            ;;
+                ;;
             8.3)
                 xdebug_83_alpine
-            ;;
+                ;;
             8.4)
                 xdebug_84_alpine
-            ;;
+                ;;
             *)
                 echo "(!) Unsupported PHP version: ${PHP_VERSION}"
                 exit 1
-            ;;
+                ;;
         esac
         VER="$(echo "${PHP_VERSION}" | tr -d '.')"
         PHP_INI_DIR="/etc/php${VER}/conf.d"
         SUFFIX=.alpine
-    ;;
+        ;;
 
     *)
         echo "(!) Unsupported distribution: ${ID_LIKE}"
         exit 1
-    ;;
+        ;;
 esac
 
 sed "s/^xdebug\\.mode.*\$/xdebug.mode = \"${MODE}\"/" xdebug.ini > "${PHP_INI_DIR}/xdebug.ini"

@@ -6,7 +6,7 @@
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.43"
+        "image-version": "0.0.44"
     },
     "remoteUser": "vscode",
     "containerEnv": {
@@ -19,7 +19,7 @@
         "SHELL": "/bin/bash"
     },
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2.5.7": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.9": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,
@@ -27,7 +27,7 @@
             "username": "vscode"
         },
         "ghcr.io/devcontainers/features/github-cli:1.1.0": {},
-        "ghcr.io/devcontainers/features/git:1.3.5": {},
+        "ghcr.io/devcontainers/features/git:1.3.8": {},
         "./.devcontainer/local-features/sudo": {},
         "./.devcontainer/local-features/cleanup": {},
         "./.devcontainer/local-features/syslog": {}

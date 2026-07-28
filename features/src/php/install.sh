@@ -19,7 +19,7 @@ PHP_VERSION="${VERSION}"
 
 setup_php82_alpine() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-intl php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
+        EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
     else
         EXTENSIONS=
     fi
@@ -209,6 +209,14 @@ setup_php84_alpine() {
         pecl84 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
         echo "extension=gmagick.so" > /etc/php84/conf.d/40_gmagick.ini
         apk del --no-cache php84-dev gcc make libc-dev graphicsmagick-dev libtool
+    fi
+
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        apk add --no-cache php84-dev gcc make libc-dev
+        pecl84 channel-update pecl.php.net || true
+        pecl84 install timezonedb < /dev/null || true
+        echo "extension=timezonedb.so" > /etc/php84/conf.d/40_timezonedb.ini
+        apk del --no-cache php84-dev gcc make libc-dev
     fi
 
     # Alpine Edge: this symlink is broken

@@ -211,6 +211,14 @@ setup_php84_alpine() {
         apk del --no-cache php84-dev gcc make libc-dev graphicsmagick-dev libtool
     fi
 
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        apk add --no-cache php84-dev gcc make libc-dev
+        pecl84 channel-update pecl.php.net || true
+        pecl84 install timezonedb < /dev/null || true
+        echo "extension=timezonedb.so" > /etc/php84/conf.d/40_timezonedb.ini
+        apk del --no-cache php84-dev gcc make libc-dev
+    fi
+
     # Alpine Edge: this symlink is broken
     rm -f /usr/bin/phar.phar
 

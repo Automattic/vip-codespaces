@@ -19,7 +19,7 @@ PHP_VERSION="${VERSION}"
 
 setup_php82_alpine() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-intl php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
+        EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
     else
         EXTENSIONS=
     fi

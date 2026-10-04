@@ -75,12 +75,12 @@ if [ "${ENABLED}" = "true" ]; then
             "debian")
                 export DEBIAN_FRONTEND=noninteractive
                 apt-get update
-                apt-get install -y --no-install-recommends g++
+                apt-get install -y --no-install-recommends g++ make
                 CLEAN=1
                 ;;
 
             "alpine")
-                apk add --no-cache g++
+                apk add --no-cache g++ make
                 CLEAN=1
                 ;;
 
@@ -102,11 +102,11 @@ if [ "${ENABLED}" = "true" ]; then
         : "${ID_LIKE:=${ID}}"
 
         if [ "${ID_LIKE}" = "debian" ]; then
-            apt-get remove -y --purge g++
+            apt-get remove -y --purge g++ make
             apt-get clean
             rm -rf /var/lib/apt/lists/*
         elif [ "${ID_LIKE}" = "alpine" ]; then
-            apk del --no-cache g++
+            apk del --no-cache g++ make
         fi
     fi
 

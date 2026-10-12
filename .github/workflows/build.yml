@@ -77,7 +77,7 @@ jobs:
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Expose GitHub Runtime
-        uses: Automattic/vip-actions/expose-github-runtime@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a # v0.7.5
+        uses: Automattic/vip-actions/expose-github-runtime@6bf9fde7ac8acce516488384357e3e6fb28669cf # v0.7.6
         if: steps.changes.outputs.needs_build == 'true'
 
       - name: Build image
@@ -122,7 +122,7 @@ jobs:
           fi
 
       - name: Expose GitHub Runtime
-        uses: Automattic/vip-actions/expose-github-runtime@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a # v0.7.5
+        uses: Automattic/vip-actions/expose-github-runtime@6bf9fde7ac8acce516488384357e3e6fb28669cf # v0.7.6
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0

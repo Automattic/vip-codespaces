@@ -75,7 +75,7 @@ jobs:
           fi
 
       - name: Expose GitHub Runtime
-        uses: Automattic/vip-actions/expose-github-runtime@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a # v0.7.5
+        uses: Automattic/vip-actions/expose-github-runtime@eeb5b001885157fbbe6d06a89214b97fd5b03539 # v0.8.0
 
       - name: Set up Docker
         uses: docker/setup-docker-action@2bf61fb9464cc67f0cbdeabed6aa0380accd1c70 # v5.5.0
@@ -278,7 +278,7 @@ jobs:
           fi
 
       - name: Expose GitHub Runtime
-        uses: Automattic/vip-actions/expose-github-runtime@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a # v0.7.5
+        uses: Automattic/vip-actions/expose-github-runtime@eeb5b001885157fbbe6d06a89214b97fd5b03539 # v0.8.0
 
       - name: Set up Docker
         uses: docker/setup-docker-action@2bf61fb9464cc67f0cbdeabed6aa0380accd1c70 # v5.5.0

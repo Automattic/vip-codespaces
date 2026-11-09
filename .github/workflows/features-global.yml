@@ -36,7 +36,7 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Expose GitHub Runtime
-        uses: Automattic/vip-actions/expose-github-runtime@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a # v0.7.5
+        uses: Automattic/vip-actions/expose-github-runtime@ab67a34cd817b925d1cb7380ec2490e580b0bccd # v0.8.1
 
       - name: Build images
         run: |

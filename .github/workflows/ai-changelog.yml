@@ -20,6 +20,6 @@ jobs:
       github.event.comment.body == '/changelog'
     steps:
       - name: Generate changelog for PR
-        uses: Automattic/vip-actions/ai-changelog-generator@438cd00aac2463a2dbfb4a747ad7b1ac67a2575a
+        uses: Automattic/vip-actions/ai-changelog-generator@ab67a34cd817b925d1cb7380ec2490e580b0bccd
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
